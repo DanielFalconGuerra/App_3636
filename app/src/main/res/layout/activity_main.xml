@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity">
+
+        <RelativeLayout
+            android:id="@+id/interfazInicial"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:id="@+id/menu"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_centerHorizontal="false"
+                android:background="@color/black"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/logo"
+                    android:layout_width="154dp"
+                    android:layout_height="100dp"
+                    android:src="@mipmap/logo3636" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="100dp"
+                    android:layout_marginEnd="0dp"
+                    android:orientation="vertical">
+
+                    <Button
+                        android:id="@+id/inicio"
+                        android:layout_width="80dp"
+                        android:layout_height="40dp"
+                        android:text="INICIO"
+                        android:textColor="@color/white" />
+
+                    <Button
+                        android:id="@+id/contacto"
+                        android:layout_width="80dp"
+                        android:layout_height="40dp"
+                        android:text="CONTACTO"
+                        android:textColor="@color/white" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="20dp">
+
+                        <Button
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/ic_baseline_account_circle_24"
+
+                            />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/interfaz"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/menu">
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginVertical="120dp"
+                    android:text="¡BUSCAR!" />
+
+                <LinearLayout
+                    android:id="@+id/Layout_Buscar"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:background="@mipmap/popularbg">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="70dp"
+                        android:layout_marginStart="60dp"
+                        android:background="@color/white">
+
+                        <Spinner
+                            android:id="@+id/menu_tipoComida"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:spinnerMode="dropdown" />
+
+                        <Spinner
+                            android:id="@+id/menu_Horario"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:spinnerMode="dropdown" />
+                    </LinearLayout>
+
+                </LinearLayout>
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/Layout_Buscar"
+                    android:layout_centerHorizontal="true">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="20dp"
+
+                    >
+                    <TextView
+                        android:id="@+id/BuscarPorCategoText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="BUSCAR POR CATEGORÍA"
+                        android:textSize="25sp"
+                        android:layout_centerHorizontal="true"
+                        />
+
+                    <LinearLayout
+                        android:id="@+id/imageFood"
+                        android:layout_width="65dp"
+                        android:layout_height="61dp"
+                        android:layout_below="@+id/BuscarPorCategoText"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginVertical="20dp"
+                        android:background="@drawable/ic_baseline_food_bank_24"
+                        android:orientation="horizontal" />
+                    <LinearLayout
+                        android:id="@+id/layout_botonesRCB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/imageFood"
+                        android:layout_centerHorizontal="true">
+                        <Button
+                            android:id="@+id/btnRestaurant"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="RESTAURANTE"
+                            android:layout_marginEnd="15dp"
+                            android:layout_marginStart="15dp"/>
+                        <Button
+                            android:id="@+id/btnCoffee"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="CAFÉ"
+                            android:layout_marginEnd="15dp"/>
+                        <Button
+                            android:id="@+id/btnBar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="BAR"
+                            android:layout_marginEnd="15dp"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/BuscarPorCategoriaLayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/layout_botonesRCB"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginVertical="30dp">
+
+                        <Button
+                            android:id="@+id/previos_restaurant"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/ic_baseline_keyboard_arrow_left_24" />
+
+                        <LinearLayout
+                            android:layout_width="200dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/logoRestaurant"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                tools:src="@mipmap/lagenareria" />
+
+
+                            <TextView
+                                android:id="@+id/addressText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                tools:text="Direccion" />
+
+                            <TextView
+                                android:id="@+id/availabilityText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                tools:text="Disponibilidad" />
+
+                            <TextView
+                                android:id="@+id/typesOfFoodText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                tools:text="Tipo de comida" />
+
+                            <TextView
+                                android:id="@+id/phoneText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                tools:text="Telefono" />
+                        </LinearLayout>
+
+                        <Button
+                            android:id="@+id/next_restaurant"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/ic_baseline_keyboard_arrow_right_24" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/algoquetepglayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@+id/BuscarPorCategoriaLayout">
+                        <Button
+                            android:id="@+id/somethingyoumightlikebutton"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="ALGO QUE TE PODRÍA GUSTAR"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@+id/algoquetepglayout"
+                        >
+                        <Button
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="MÁS"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="prueba"/>
+                    </LinearLayout>
+
+                </RelativeLayout>
+                </ScrollView>
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

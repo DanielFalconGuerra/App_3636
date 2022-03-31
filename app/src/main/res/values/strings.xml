@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">3636</string>
+    <string-array name="TipodeComida">
+        <item>Japonesa</item>
+        <item>China</item>
+        <item>Italiana</item>
+        <item>Argentina</item>
+        <item>Mexicana</item>
+        <item>Bar</item>
+        <item>Mariscos</item>
+        <item>Carnes</item>
+        <item>Vegana</item>
+        <item>Americana</item>
+        <item>Postres</item>
+        <item>Restaurante - Bar</item>
+        <item>Café</item>
+        <item>Gourmet</item>
+    </string-array>
+
+    <string-array name="Horario">
+        <item>00:00</item>
+        <item>00:30</item>
+        <item>01:00</item>
+        <item>01:30</item>
+        <item>02:00</item>
+        <item>02:30</item>
+        <item>03:00</item>
+        <item>03:30</item>
+        <item>04:00</item>
+        <item>04:30</item>
+        <item>05:00</item>
+        <item>05:30</item>
+        <item>06:00</item>
+        <item>06:30</item>
+        <item>07:00</item>
+    </string-array>
+</resources>
