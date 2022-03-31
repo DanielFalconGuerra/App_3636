@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.3636">
         <activity
+            android:name=".More"
+            android:exported="false" />
+        <activity
             android:name=".SomethingYouMightLike"
             android:exported="false" />
         <activity

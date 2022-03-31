@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".More">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true">
+
+                <LinearLayout
+                    android:id="@+id/joinOurPagelayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/grey"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Siempre feliz de atenderte"
+                        android:textColor="@color/yellow"
+                        android:textSize="30sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="UNETE A NUESTRA PÁGINA"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
+
+                    <ImageView
+                        android:layout_width="65dp"
+                        android:layout_height="61dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_baseline_food_bank_24" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginVertical="20dp"
+                        android:orientation="vertical">
+
+                        <EditText
+                            android:id="@+id/txtRestaurantName"
+                            android:layout_width="250dp"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="15dp"
+                            android:background="@color/white"
+                            android:text="Nombre del restaurant" />
+
+                        <EditText
+                            android:id="@+id/txtContactName"
+                            android:layout_width="250dp"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="15dp"
+                            android:background="@color/white"
+                            android:text="Nombre del contacto" />
+
+                        <EditText
+                            android:id="@+id/txtAddress"
+                            android:layout_width="250dp"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="15dp"
+                            android:background="@color/white"
+                            android:text="Direccion" />
+
+                        <EditText
+                            android:id="@+id/txtPhone"
+                            android:layout_width="250dp"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="15dp"
+                            android:background="@color/white"
+                            android:text="Número telefónico" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginBottom="15dp"
+                            android:gravity="center"
+                            android:text="O llámenos ahora para solicitar más información"
+                            android:textColor="@color/white" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginBottom="15dp"
+                            android:gravity="center"
+                            android:text="4626249165"
+                            android:textColor="@color/white"
+                            android:textSize="25sp" />
+
+                        <Button
+                            android:id="@+id/btnJoin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="15dp"
+                            android:text="UNIRSE" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginBottom="15dp"
+                            android:gravity="center"
+                            android:text="¿Quieres conocer nuestros eventos y promociones?"
+                            android:textColor="@color/yellow"
+                            android:textSize="15sp"
+                            android:layout_marginVertical="25dp"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginBottom="30dp"
+                            android:gravity="center"
+                            android:text="RECIBIR CORREO ELECTRÓNICO"
+                            android:textColor="@color/black"
+                            android:textSize="15sp"/>
+                        <EditText
+                            android:id="@+id/txtAddEmail"
+                            android:layout_width="250dp"
+                            android:layout_height="50dp"
+                            android:text="Captura tu email"
+                            android:background="@color/white"
+                            android:layout_gravity="center"
+                            />
+                        <Button
+                            android:id="@+id/btnSubscribe"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="Suscribirte"
+                            android:textSize="20dp"
+                            android:layout_gravity="center"/>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/grey"
+                            android:orientation="vertical"
+                            >
+                            <ImageView
+                                android:layout_width="120dp"
+                                android:layout_marginVertical="15dp"
+                                android:layout_height="60dp"
+                                android:layout_gravity="center"
+                                android:src="@mipmap/logosoft"/>
+                            <TextView
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="El software que abre el apetito"
+                                android:textColor="@color/white"
+                                android:layout_gravity="center"/>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/grey"
+                                android:orientation="vertical">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginVertical="15dp"
+                                    android:text="SOFTAPPETIT"
+                                    android:textColor="@color/yellow"
+                                    android:layout_gravity="center"
+                                    android:textSize="25sp"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginVertical="5dp"
+                                    android:text="Modulo Administrador"
+                                    android:textColor="@color/white"
+                                    android:layout_gravity="center"
+                                    android:textSize="15sp"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginVertical="5dp"
+                                    android:text="Administrativo"
+                                    android:textColor="@color/white"
+                                    android:layout_gravity="center"
+                                    android:textSize="15sp"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginVertical="5dp"
+                                    android:text="Mesero"
+                                    android:textColor="@color/white"
+                                    android:layout_gravity="center"
+                                    android:textSize="15sp"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginVertical="5dp"
+                                    android:text="Comensal"
+                                    android:textColor="@color/white"
+                                    android:layout_gravity="center"
+                                    android:textSize="15sp"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginVertical="5dp"
+                                    android:text="Menu Digital QR interactivo"
+                                    android:textColor="@color/white"
+                                    android:layout_gravity="center"
+                                    android:textSize="15sp"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginVertical="5dp"
+                                    android:text="Servicio a domicilio"
+                                    android:textColor="@color/white"
+                                    android:layout_gravity="center"
+                                    android:textSize="15sp"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginVertical="5dp"
+                                    android:text="Fast food"
+                                    android:textColor="@color/white"
+                                    android:layout_gravity="center"
+                                    android:textSize="15sp"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginVertical="5dp"
+                                    android:text="Somelier Digital"
+                                    android:textColor="@color/white"
+                                    android:layout_gravity="center"
+                                    android:textSize="15sp"/>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+
+            </ScrollView>
+        </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -250,6 +250,11 @@ public class MainActivity extends AppCompatActivity {
             Intent switchInterface = new Intent(this, SomethingYouMightLike.class);
             startActivity(switchInterface);
         });
+        Button btnMore = findViewById(R.id.btnMore);
+        btnMore.setOnClickListener(view -> {
+            Intent moreInterface = new Intent(this, More.class);
+            startActivity(moreInterface);
+        });
         //Mostrar informacion de restaurantes
         //LinearLayout datosRestaurantes = (LinearLayout) findViewById(R.id.datosRestaurantes);
         //datosRestaurantes.addView(layout);
