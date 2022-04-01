@@ -10,10 +10,11 @@
         <entry key="..\:/Escritorio/app/src/main/res/layout/activity_more.xml" value="0.1" />
         <entry key="..\:/Escritorio/app/src/main/res/layout/activity_show_restaurants_found.xml" value="0.22" />
         <entry key="..\:/Escritorio/app/src/main/res/layout/activity_something_you_might_like.xml" value="0.1" />
+        <entry key="..\:/Users/juan-/StudioProjects/App_3636/app/src/main/res/layout/activity_main.xml" value="0.2" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
