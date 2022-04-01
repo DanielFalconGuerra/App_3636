@@ -82,9 +82,9 @@ public class DatabaseConnection {
         try {
             Connection conexion=DriverManager.getConnection("jdbc:mysql://10.0.2.2/demo","root" ,"");
             Statement comando=conexion.createStatement();
-            ResultSet registro = comando.executeQuery("select * from restaurante");
+            ResultSet registro = comando.executeQuery("select * from restaurante where IDRestaurante = 2");
             if (registro.next()) {
-                datos = registro.getString("Direccion");
+                datos = registro.getString("Restaurante");
                 //Toast.makeText(this,datos,Toast.LENGTH_LONG).show();
                 //tv1.setText(datos);
                 //tf2.setText(registro.getString("precio"));

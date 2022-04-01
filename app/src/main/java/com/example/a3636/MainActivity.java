@@ -39,6 +39,12 @@ public class MainActivity extends AppCompatActivity {
         adapterHorario.setDropDownViewResource(android.R.layout.simple_spinner_item);
         spinnerHorario.setAdapter(adapterHorario);
 
+        Button btnSearchRestaurant = findViewById(R.id.btnSearchRestaurant);
+        btnSearchRestaurant.setOnClickListener(view -> {
+            Intent showRestaurantFound = new Intent(this, ShowRestaurantsFound.class);
+            startActivity(showRestaurantFound);
+        });
+
         //Codigo para Buscar Por Categoría
         Button btnRestaurant = findViewById(R.id.btnRestaurant);
         Button btnCoffee = findViewById(R.id.btnCoffee);
