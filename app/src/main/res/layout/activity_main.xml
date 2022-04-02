@@ -154,7 +154,7 @@
                             android:layout_height="wrap_content"
                             android:text="RESTAURANTE"
                             android:layout_marginEnd="15dp"
-                            android:layout_marginStart="15dp"/>
+                            android:layout_marginStart="15dp" />
                         <Button
                             android:id="@+id/btnCoffee"
                             android:layout_width="wrap_content"
@@ -193,32 +193,37 @@
                                 android:id="@+id/logoRestaurant"
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
-                                tools:src="@mipmap/lagenareria" />
+                                tools:src="@mipmap/lagenareria"
+                                android:layout_gravity="center"/>
 
 
                             <TextView
                                 android:id="@+id/addressText"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                tools:text="Direccion" />
+                                tools:text="Direccion"
+                                android:layout_gravity="center"/>
 
                             <TextView
                                 android:id="@+id/availabilityText"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                tools:text="Disponibilidad" />
+                                tools:text="Disponibilidad"
+                                android:layout_gravity="center"/>
 
                             <TextView
                                 android:id="@+id/typesOfFoodText"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                tools:text="Tipo de comida" />
+                                tools:text="Tipo de comida"
+                                android:layout_gravity="center"/>
 
                             <TextView
                                 android:id="@+id/phoneText"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                tools:text="Telefono" />
+                                tools:text="Telefono"
+                                android:layout_gravity="center"/>
                         </LinearLayout>
 
                         <Button
