@@ -32,17 +32,32 @@ public class MainActivity extends AppCompatActivity {
 
         //Spinner para Tipo de Comida
         Spinner spinnerTipoComida = findViewById(R.id.menu_tipoComida);
-        ArrayAdapter<CharSequence>adapter=ArrayAdapter.createFromResource(this,R.array.TipodeComida, android.R.layout.simple_spinner_item);
+        String foodType[];
+        //Obtener tipos de comida de base de datos
+        connection.CONN();
+        foodType = connection.getTypesOfFood();
+        //ArrayAdapter<CharSequence>adapter=ArrayAdapter.createFromResource(this,R.array.TipodeComida, android.R.layout.simple_spinner_item);
+        ArrayAdapter <CharSequence>adapter= new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, foodType);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         spinnerTipoComida.setAdapter(adapter);
         //Spinner para Horario
         Spinner spinnerHorario = findViewById(R.id.menu_Horario);
-        ArrayAdapter<CharSequence>adapterHorario=ArrayAdapter.createFromResource(this,R.array.Horario, android.R.layout.simple_spinner_item);
-        adapterHorario.setDropDownViewResource(android.R.layout.simple_spinner_item);
-        spinnerHorario.setAdapter(adapterHorario);
+        //Obtener tipos de comida de base de datos
+        String hours[];
+        connection.CONN();
+        //Obtener horarios de restaurantes
+        hours = connection.getHoraries();
+        //ArrayAdapter<CharSequence>adapter=ArrayAdapter.createFromResource(this,R.array.TipodeComida, android.R.layout.simple_spinner_item);
+        ArrayAdapter <CharSequence>adapterHour= new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, hours);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        spinnerHorario.setAdapter(adapterHour);
 
         Button btnSearchRestaurant = findViewById(R.id.btnSearchRestaurant);
         btnSearchRestaurant.setOnClickListener(view -> {
+            String typeFood = spinnerTipoComida.getSelectedItem().toString();
+            String hour = spinnerHorario.getSelectedItem().toString();
+            Toast.makeText(this,typeFood, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,hour, Toast.LENGTH_SHORT).show();
             Intent showRestaurantFound = new Intent(this, ShowRestaurantsFound.class);
             startActivity(showRestaurantFound);
         });

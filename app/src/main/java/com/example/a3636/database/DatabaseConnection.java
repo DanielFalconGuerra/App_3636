@@ -75,7 +75,41 @@ public class DatabaseConnection {
         };
         thread.start();
     }
+    public String[] getTypesOfFood(){
+        String typesOfFood [] = new String[14];
+        int numberTypes = 0;
+        try {
+            Connection conexion=DriverManager.getConnection("jdbc:mysql://10.0.2.2/demo","root" ,"");
+            Statement command=conexion.createStatement();
+            ResultSet types = command.executeQuery("select * from tipocomida");
+            while (types.next()) {
+                typesOfFood[numberTypes] = types.getString("Tipocomida");
+                numberTypes++;
+            }
+            conexion.close();
+        } catch(SQLException ex){
+            typesOfFood[numberTypes] = ex.toString();
+        }
+        return typesOfFood;
+    }
 
+    public String[] getHoraries(){
+        String horaries [] = new String[50];
+        int numberHours = 0;
+        try {
+            Connection conexion=DriverManager.getConnection("jdbc:mysql://10.0.2.2/demo","root" ,"");
+            Statement command=conexion.createStatement();
+            ResultSet hours = command.executeQuery("select * from horarios");
+            while (hours.next()) {
+                horaries[numberHours] = hours.getString("Horario");
+                numberHours++;
+            }
+            conexion.close();
+        } catch(SQLException ex){
+            horaries[numberHours] = ex.toString();
+        }
+        return horaries;
+    }
     public String MortarRestaurants(){
         //Toast.makeText(this, "Texto de prueba", Toast.LENGTH_SHORT).show();
         String datos = "";
