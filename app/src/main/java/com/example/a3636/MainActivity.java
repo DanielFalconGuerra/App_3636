@@ -56,9 +56,9 @@ public class MainActivity extends AppCompatActivity {
         btnSearchRestaurant.setOnClickListener(view -> {
             String typeFood = spinnerTipoComida.getSelectedItem().toString();
             String hour = spinnerHorario.getSelectedItem().toString();
-            Toast.makeText(this,typeFood, Toast.LENGTH_SHORT).show();
-            Toast.makeText(this,hour, Toast.LENGTH_SHORT).show();
             Intent showRestaurantFound = new Intent(this, ShowRestaurantsFound.class);
+            showRestaurantFound.putExtra("typeFood", typeFood);
+            showRestaurantFound.putExtra("hour", hour);
             startActivity(showRestaurantFound);
         });
 
