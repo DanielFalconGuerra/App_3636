@@ -2,9 +2,12 @@ package com.example.a3636;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -123,20 +126,54 @@ public class ShowRestaurantsFound extends AppCompatActivity {
                             if(timeToReview.after(startTime) && timeToReview.before(finalTime)){
                                 //Obtener datos del restaurante
                                 Toast.makeText(this,"ID Restaurant Found Tried " + IDRestaurantFound[i],Toast.LENGTH_SHORT).show();
-                                LinearLayout layout = new LinearLayout(this);
+                                LinearLayout layout = findViewById(R.id.ShowRestaurantFound);
                                 layout.setOrientation(LinearLayout.VERTICAL);
                                 TextView nameBusiness = new TextView(this);
+                                TextView addressBusiness = new TextView(this);
+                                TextView typeOfFoodBusiness = new TextView(this);
+                                TextView phoneBusiness = new TextView(this);
+                                TextView availabilityBusiness = new TextView(this);
+                                ImageView logoBusiness = new ImageView(this);
                                 if(IDRestaurantFound[i].equals("1")){
                                     nameBusiness.setText("La Genarería");
+                                    addressBusiness.setText("Dirección: Irapuato, Guanajuato. Plaza 3636 Gómez Morín");
+                                    typeOfFoodBusiness.setText("Tipos de Comida: Americana, Restaurante - Bar, Bar");
+                                    phoneBusiness.setText("Teléfono: 462 200 4863");
+                                    availabilityBusiness.setText("Disponibilidad el día de hoy: 14:00 a 23:00");
+                                    LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(300, 300);
+                                    layoutParams.gravity= Gravity.CENTER;
+                                    logoBusiness.setLayoutParams(layoutParams);
+                                    logoBusiness.setImageResource(R.mipmap.lagenareria);
                                 }else
                                 if(IDRestaurantFound[i].equals("2")){
                                     nameBusiness.setText("Arena 88");
+                                    addressBusiness.setText("Dirección: Irapuato, Guanajuato. Plaza 3636 Gómez Morín");
+                                    typeOfFoodBusiness.setText("Tipos de Comida: Bar, Restaurante - Bar, Mariscos");
+                                    phoneBusiness.setText("Teléfono: 462 688 3664");
+                                    availabilityBusiness.setText("Disponibilidad el día de hoy: 12:00 a 23:00");
+                                    LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(300, 300);
+                                    layoutParams.gravity= Gravity.CENTER;
+                                    logoBusiness.setLayoutParams(layoutParams);
+                                    logoBusiness.setImageResource(R.mipmap.arena88);
                                 }else
                                 if(IDRestaurantFound[i].equals("16")){
                                     nameBusiness.setText("Costilla Winebarlechon");
+                                    addressBusiness.setText("Dirección: Irapuato, Guanajuato. Plaza 3636 Gómez Morín");
+                                    typeOfFoodBusiness.setText("Tipos de Comida: Bar, Restaurante - Bar, Café");
+                                    phoneBusiness.setText("Teléfono: 462 607 9612");
+                                    availabilityBusiness.setText("Disponibilidad el día de hoy: 10:00 a 22:00");
+                                    LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(300, 300);
+                                    layoutParams.gravity= Gravity.CENTER;
+                                    logoBusiness.setLayoutParams(layoutParams);
+                                    logoBusiness.setImageResource(R.mipmap.costilla);
                                 }else
                                     nameBusiness.setText("Error");
                                 layout.addView(nameBusiness);
+                                layout.addView(addressBusiness);
+                                layout.addView(typeOfFoodBusiness);
+                                layout.addView(phoneBusiness);
+                                layout.addView(availabilityBusiness);
+                                layout.addView(logoBusiness);
                             }else{
                                 Toast.makeText(this,"Error",Toast.LENGTH_SHORT).show();
                             }
@@ -148,17 +185,6 @@ public class ShowRestaurantsFound extends AppCompatActivity {
             }
         }
 
-        Button btnRealizarConsulta = findViewById(R.id.btnRealizarConsulta);
-        btnRealizarConsulta.setOnClickListener(view -> {
-            dbConnect.CONN();
-            String datos = dbConnect.MortarRestaurants();
-            LinearLayout layoutDatos = new LinearLayout(this);
-            layoutDatos.setOrientation(LinearLayout.VERTICAL);
-            TextView tvDatos = new TextView(this);
-            tvDatos.setText(datos);
-            layoutDatos.addView(tvDatos);
-            Toast.makeText(this,datos,Toast.LENGTH_SHORT).show();
-        });
     }
     public int getDayToDatabase(String day){
         switch (day) {
