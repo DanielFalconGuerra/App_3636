@@ -3,6 +3,7 @@ package com.example.a3636;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -33,6 +34,7 @@ public class ShowRestaurantsFound extends AppCompatActivity {
         *           Hay un error obteniendo la fecha, devuelve un dia de mas en la fecha
         *
         * */
+
         String fecha = new SimpleDateFormat("yyyy/MM/dd").format(Calendar.getInstance().getTime());
         String year = "", month = "", day = "";
         year = fecha.substring(0,4);
@@ -52,6 +54,99 @@ public class ShowRestaurantsFound extends AppCompatActivity {
         Toast.makeText(this,dayOfWeek,Toast.LENGTH_SHORT).show();
         int dayWeek = getDayToDatabase(dayOfWeek);
         Toast.makeText(this,String.valueOf(dayWeek),Toast.LENGTH_SHORT).show();
+
+        //Obtener tipos de comida y IDs
+        String getIDsAndTypesFood[][] = new String[2][14];
+        getIDsAndTypesFood = dbConnect.getTypesFoodAndIDs();
+        int idTypeFood = 0;
+        for(int i = 0; i < 14; i++){
+            //Toast.makeText(this,getIDsAndTypesFood[i][j],Toast.LENGTH_SHORT).show();
+            if(typeFood.equals(getIDsAndTypesFood[i][1])){
+                //Toast.makeText(this," IDRestaurante: " + getIDsAndTypesFood[i][0],Toast.LENGTH_SHORT).show();
+                idTypeFood = Integer.parseInt(getIDsAndTypesFood[i][0]);
+                break;
+            }
+        }
+
+        //Obtener tipos de comida de cada restaurante
+        String IDsRestaurantes[][] = new String[3][3];
+        String IDRestaurantFound[] = new String[17];
+
+        IDsRestaurantes = dbConnect.getTypesFoodEachRestaurant();
+        int cont = 0;
+        for(int i = 0; i < 3; i++){
+            for(int j = 0; j < 3; j++){
+                //Toast.makeText(this,IDsRestaurantes[i][j],Toast.LENGTH_SHORT).show();
+                if(idTypeFood == Integer.parseInt(IDsRestaurantes[i][j])){
+                    //Consultar ID de Restaurante
+                    //IDRestaurantFound[cont] = String.valueOf(i + 1);
+                    IDRestaurantFound[cont] = dbConnect.getIDRestaurant(String.valueOf(i + 1));
+                    cont++;
+                }
+            }
+        }
+
+        for(int i = 0; i < 3; i++){
+            if(IDRestaurantFound[i] != null){
+                Toast.makeText(this,"ID Restaurant Found " + IDRestaurantFound[i],Toast.LENGTH_SHORT).show();
+                //Obtener el horario de los restaurantes
+                String schedule[] = dbConnect.getScheduleOfRestaurant(IDRestaurantFound[i],String.valueOf(dayWeek));
+                Log.d("prueba", IDRestaurantFound[i]);
+                Log.d("prueba", schedule[0]);
+                String openingTime = schedule[0];
+                String closingTime = schedule[1];
+                Log.d("prueba", openingTime);
+                Toast.makeText(this,"openingTime: "+openingTime+" "+closingTime,Toast.LENGTH_SHORT).show();
+                if(!(openingTime.equals("") && closingTime.equals(""))){
+                    Toast.makeText(this,"Horario: "+openingTime+" "+closingTime,Toast.LENGTH_SHORT).show();
+                    //Obtener los horarios reales a partir de los IDs
+                    String schedulesReceivedOne = dbConnect.getSchedule(openingTime);
+                    String schedulesReceivedTwo = dbConnect.getSchedule(closingTime);
+                    Toast.makeText(this,"Horario a probar: "+schedulesReceivedOne+" "+closingTime,Toast.LENGTH_SHORT).show();
+                    //Comparar horarios para revisar que el restaurante se encuentre abierto
+                    if(schedulesReceivedOne.equals(hour)){
+                        Toast.makeText(this,"ID Restaurant Found Tried " + IDRestaurantFound[i],Toast.LENGTH_SHORT).show();
+                    }else{
+                        if(schedulesReceivedTwo.equals(hour)){
+                            Toast.makeText(this,"Error",Toast.LENGTH_SHORT).show();
+                        }else{
+                            Date timeToReview = null;
+                            Date startTime = null;
+                            Date finalTime = null;
+                            try {
+                                timeToReview = new SimpleDateFormat("HH:mm").parse(hour.trim());
+                                startTime = new SimpleDateFormat("HH:mm").parse(schedulesReceivedOne.trim());
+                                finalTime = new SimpleDateFormat("HH:mm").parse(schedulesReceivedTwo.trim());
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            if(timeToReview.after(startTime) && timeToReview.before(finalTime)){
+                                //Obtener datos del restaurante
+                                Toast.makeText(this,"ID Restaurant Found Tried " + IDRestaurantFound[i],Toast.LENGTH_SHORT).show();
+                                LinearLayout layout = new LinearLayout(this);
+                                layout.setOrientation(LinearLayout.VERTICAL);
+                                TextView nameBusiness = new TextView(this);
+                                if(IDRestaurantFound[i].equals("1")){
+                                    nameBusiness.setText("La Genarería");
+                                }else
+                                if(IDRestaurantFound[i].equals("2")){
+                                    nameBusiness.setText("Arena 88");
+                                }else
+                                if(IDRestaurantFound[i].equals("16")){
+                                    nameBusiness.setText("Costilla Winebarlechon");
+                                }else
+                                    nameBusiness.setText("Error");
+                                layout.addView(nameBusiness);
+                            }else{
+                                Toast.makeText(this,"Error",Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+                }else{
+                    Toast.makeText(this,"Error",Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
 
         Button btnRealizarConsulta = findViewById(R.id.btnRealizarConsulta);
         btnRealizarConsulta.setOnClickListener(view -> {

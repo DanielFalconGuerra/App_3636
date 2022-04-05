@@ -281,7 +281,6 @@ public class MainActivity extends AppCompatActivity {
         //Mostrar informacion de restaurantes
         //LinearLayout datosRestaurantes = (LinearLayout) findViewById(R.id.datosRestaurantes);
         //datosRestaurantes.addView(layout);
-
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
