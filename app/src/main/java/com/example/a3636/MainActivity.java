@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
@@ -103,6 +104,11 @@ public class MainActivity extends AppCompatActivity {
         AtomicReference<Boolean> restaurantSelected = new AtomicReference<>(true);
         AtomicReference<Boolean> coffeeSelected = new AtomicReference<>(true);
         AtomicReference<Boolean> barSelected = new AtomicReference<>(true);
+
+        addressText.setGravity(Gravity.CENTER);
+        typesOfFoodText.setGravity(Gravity.CENTER);
+        phoneText.setGravity(Gravity.CENTER);
+        availabilityText.setGravity(Gravity.CENTER);
 
         btnRestaurant.setOnClickListener(view -> {
             restaurantSelected.set(true);

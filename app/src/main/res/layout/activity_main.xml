@@ -63,150 +63,164 @@
                     </LinearLayout>
 
                 </LinearLayout>
+
                 <ScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/Layout_Buscar"
-                    android:layout_centerHorizontal="true">
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="20dp"
+                    android:layout_centerHorizontal="true"
+                    android:background="@color/white">
 
-                    >
-                    <TextView
-                        android:id="@+id/BuscarPorCategoText"
-                        android:layout_width="wrap_content"
+                    <RelativeLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="BUSCAR POR CATEGORÍA"
-                        android:textSize="25sp"
-                        android:layout_centerHorizontal="true"
-                        />
-
-                    <LinearLayout
-                        android:id="@+id/imageFood"
-                        android:layout_width="65dp"
-                        android:layout_height="61dp"
-                        android:layout_below="@+id/BuscarPorCategoText"
-                        android:layout_centerHorizontal="true"
                         android:layout_marginVertical="20dp"
-                        android:background="@drawable/ic_baseline_food_bank_24"
-                        android:orientation="horizontal" />
-                    <LinearLayout
-                        android:id="@+id/layout_botonesRCB"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/imageFood"
-                        android:layout_centerHorizontal="true">
-                        <Button
-                            android:id="@+id/btnRestaurant"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="RESTAURANTE"
-                            android:layout_marginEnd="15dp"
-                            android:layout_marginStart="15dp" />
-                        <Button
-                            android:id="@+id/btnCoffee"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="CAFÉ"
-                            android:layout_marginEnd="15dp"/>
-                        <Button
-                            android:id="@+id/btnBar"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="BAR"
-                            android:layout_marginEnd="15dp"/>
+                        android:background="@color/white"
+                        >
 
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/BuscarPorCategoriaLayout"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/layout_botonesRCB"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginVertical="30dp">
-
-                        <Button
-                            android:id="@+id/previos_restaurant"
+                        <TextView
+                            android:id="@+id/BuscarPorCategoText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/ic_baseline_keyboard_arrow_left_24" />
+                            android:layout_centerHorizontal="true"
+                            android:text="BUSCAR POR CATEGORÍA"
+                            android:textSize="25sp" />
 
                         <LinearLayout
-                            android:layout_width="200dp"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                            android:id="@+id/imageFood"
+                            android:layout_width="65dp"
+                            android:layout_height="61dp"
+                            android:layout_below="@+id/BuscarPorCategoText"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginVertical="20dp"
+                            android:background="@drawable/ic_baseline_food_bank_24"
+                            android:orientation="horizontal" />
 
-                            <ImageView
-                                android:id="@+id/logoRestaurant"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                tools:src="@mipmap/lagenareria"
-                                android:layout_gravity="center"/>
-
-
-                            <TextView
-                                android:id="@+id/addressText"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                tools:text="Direccion"
-                                android:layout_gravity="center"/>
-
-                            <TextView
-                                android:id="@+id/availabilityText"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                tools:text="Disponibilidad"
-                                android:layout_gravity="center"/>
-
-                            <TextView
-                                android:id="@+id/typesOfFoodText"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                tools:text="Tipo de comida"
-                                android:layout_gravity="center"/>
-
-                            <TextView
-                                android:id="@+id/phoneText"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                tools:text="Telefono"
-                                android:layout_gravity="center"/>
-                        </LinearLayout>
-
-                        <Button
-                            android:id="@+id/next_restaurant"
+                        <LinearLayout
+                            android:id="@+id/layout_botonesRCB"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/ic_baseline_keyboard_arrow_right_24" />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:id="@+id/algoquetepglayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_below="@+id/BuscarPorCategoriaLayout">
-                        <Button
-                            android:id="@+id/somethingyoumightlikebutton"
+                            android:layout_below="@+id/imageFood"
+                            android:layout_centerHorizontal="true">
+
+                            <Button
+                                android:id="@+id/btnRestaurant"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="15dp"
+                                android:layout_marginEnd="15dp"
+                                android:text="RESTAURANTE" />
+
+                            <Button
+                                android:id="@+id/btnCoffee"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="15dp"
+                                android:text="CAFÉ" />
+
+                            <Button
+                                android:id="@+id/btnBar"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="15dp"
+                                android:text="BAR" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/BuscarPorCategoriaLayout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/layout_botonesRCB"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginVertical="30dp"
+                            android:background="@color/white">
+
+                            <Button
+                                android:id="@+id/previos_restaurant"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/ic_baseline_keyboard_arrow_left_24" />
+
+                            <LinearLayout
+                                android:layout_width="200dp"
+                                android:layout_height="wrap_content"
+                                android:background="@color/white"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:id="@+id/logoRestaurant"
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:layout_gravity="center"
+                                    tools:src="@mipmap/lagenareria" />
+
+
+                                <TextView
+                                    android:id="@+id/addressText"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    tools:text="Direccion" />
+
+                                <TextView
+                                    android:id="@+id/availabilityText"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    tools:text="Disponibilidad" />
+
+                                <TextView
+                                    android:id="@+id/typesOfFoodText"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    tools:text="Tipo de comida" />
+
+                                <TextView
+                                    android:id="@+id/phoneText"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    tools:text="Telefono" />
+                            </LinearLayout>
+
+                            <Button
+                                android:id="@+id/next_restaurant"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/ic_baseline_keyboard_arrow_right_24" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/algoquetepglayout"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:text="ALGO QUE TE PODRÍA GUSTAR"/>
-                    </LinearLayout>
+                            android:layout_below="@+id/BuscarPorCategoriaLayout"
+                            android:background="@color/white">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_below="@+id/algoquetepglayout"
-                        android:orientation="vertical">
-                        <Button
-                            android:id="@+id/btnMore"
+                            <Button
+                                android:id="@+id/somethingyoumightlikebutton"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="ALGO QUE TE PODRÍA GUSTAR" />
+                        </LinearLayout>
+
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:text="MÁS"/>
-                    </LinearLayout>
+                            android:layout_below="@+id/algoquetepglayout"
+                            android:background="@color/white"
+                            android:orientation="vertical">
 
-                </RelativeLayout>
+                            <Button
+                                android:id="@+id/btnMore"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="MÁS" />
+                        </LinearLayout>
+
+                    </RelativeLayout>
                 </ScrollView>
             </RelativeLayout>
 

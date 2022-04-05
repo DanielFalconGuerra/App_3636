@@ -17,7 +17,6 @@ public class DatabaseConnection {
     public Connection CONN()
     {
         final String class_jdbc = "com.mysql.jdbc.Driver";
-
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                 .permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -33,7 +32,6 @@ public class DatabaseConnection {
             conn = DriverManager.getConnection(gURL + gIP + ":" + gPORT + "/" + gDATABASE, gUSR, gPSW);
         } catch (SQLException se) {
             Log.e("ERROR1", se.getMessage());
-            //Toast.makeText(this,se.getMessage(), Toast.LENGTH_LONG).show();
         } catch (ClassNotFoundException e) {
             Log.e("ERROR2", e.getMessage());
         } catch (Exception e) {
@@ -141,20 +139,17 @@ public class DatabaseConnection {
         String schedule[] = new String[2];
         schedule[0] = "";
         schedule[1] = "";
-        int columnNumber = 0;
         int rowsNumber = 0;
         try {
             Connection conexion=DriverManager.getConnection("jdbc:mysql://10.0.2.2/demo","root" ,"");
             Statement command=conexion.createStatement();
             String queries = "select IDHorario1Dia" + day + ", IDHorario2Dia" + day + " from horario_restaurante where IDRestaurante = " + idRestaurant + " and IDDia" + day + " = " + day;
             ResultSet hours = command.executeQuery(queries);
-            //select IDHorario1Dia1, IDHorario2Dia1 from horario_restaurante where IDRestaurante = 16 and IDDia1 = 1
             while (hours.next()) {
                 String idScheduleOne = hours.getString("IDHorario1Dia"+day);
                 String idScheduleTwo = hours.getString("IDHorario2Dia"+day);
                 schedule[rowsNumber] = idScheduleOne;
                 schedule[++rowsNumber] = idScheduleTwo;
-                //rowsNumber++;
             }
             conexion.close();
         } catch(SQLException ex){
@@ -205,7 +200,6 @@ public class DatabaseConnection {
         return idRestaurant;
     }
 
-
     public String getSchedule(String scheduleReceived){
         String scheduleToSend = "";
         try {
@@ -220,30 +214,5 @@ public class DatabaseConnection {
             return ex.toString();
         }
         return scheduleToSend;
-    }
-
-    public String MortarRestaurants(){
-        //Toast.makeText(this, "Texto de prueba", Toast.LENGTH_SHORT).show();
-        String datos = "";
-        try {
-            Connection conexion=DriverManager.getConnection("jdbc:mysql://10.0.2.2/demo","root" ,"");
-            Statement comando=conexion.createStatement();
-            ResultSet registro = comando.executeQuery("select * from restaurante where IDRestaurante = 2");
-            if (registro.next()) {
-                datos = registro.getString("Restaurante");
-                //Toast.makeText(this,datos,Toast.LENGTH_LONG).show();
-                //tv1.setText(datos);
-                //tf2.setText(registro.getString("precio"));
-
-            } else {
-                //Toast.makeText(this,registro.getString("Error"),Toast.LENGTH_LONG).show();
-                datos = "Error de Conexión";
-            }
-            conexion.close();
-        } catch(SQLException ex){
-            //setTitle(ex.toString());
-            datos = ex.toString();
-        }
-        return datos;
     }
 }
