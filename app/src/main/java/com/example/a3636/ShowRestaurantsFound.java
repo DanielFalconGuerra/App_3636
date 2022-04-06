@@ -31,22 +31,23 @@ public class ShowRestaurantsFound extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_restaurants_found);
         DatabaseConnection dbConnect = new DatabaseConnection();
+        final int[] countRestaurantFound = {0};
         //Datos recibidos de restaurantes
         String typeFood = getIntent().getStringExtra("typeFood");
         String hour = getIntent().getStringExtra("hour");
         //Iniciar y terminar animacion
-        LottieAnimationView imageToTest = findViewById(R.id.imageToTest);
-        imageToTest.addAnimatorListener(new Animator.AnimatorListener() {
+        LottieAnimationView imageAnimation = findViewById(R.id.imageAnimation);
+        imageAnimation.addAnimatorListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
                 Log.e("Animation:","start");
-                imageToTest.setVisibility(View.VISIBLE);
+                imageAnimation.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onAnimationEnd(Animator animation) {
                 Log.e("Animation:","end");
-                imageToTest.setVisibility(View.GONE);
+                imageAnimation.setVisibility(View.GONE);
 
                 //Detectar dia de la semana
                 /*
@@ -190,12 +191,55 @@ public class ShowRestaurantsFound extends AppCompatActivity {
                                         layout.addView(phoneBusiness);
                                         layout.addView(availabilityBusiness);
                                     }else{
-                                        Toast.makeText(ShowRestaurantsFound.this,"Error",Toast.LENGTH_SHORT).show();
+                                        if(countRestaurantFound[0] == 0){
+                                            Toast.makeText(ShowRestaurantsFound.this,"Error",Toast.LENGTH_SHORT).show();
+                                            TextView RestaurantNotFound = new TextView(ShowRestaurantsFound.this);
+                                            TextView actionsToPerform = new TextView(ShowRestaurantsFound.this);
+                                            LinearLayout layout = findViewById(R.id.ShowRestaurantFound);
+                                            layout.setOrientation(LinearLayout.VERTICAL);
+                                            RestaurantNotFound.setText("Restaurantes no encontrados");
+                                            actionsToPerform.setText("Pruebe con un horario y/o tipo de comida distinto");
+                                            RestaurantNotFound.setTextSize(TypedValue.COMPLEX_UNIT_SP,24);
+                                            actionsToPerform.setTextSize(TypedValue.COMPLEX_UNIT_SP,18);
+                                            RestaurantNotFound.setGravity(Gravity.CENTER);
+                                            actionsToPerform.setGravity(Gravity.CENTER);
+                                            imageAnimation.setAnimation(R.raw.tomatoerror);
+                                            imageAnimation.playAnimation();
+                                            imageAnimation.setVisibility(View.VISIBLE);
+                                            imageAnimation.setRepeatCount(10);
+                                            layout.addView(RestaurantNotFound);
+                                            layout.addView(actionsToPerform);
+                                            countRestaurantFound[0] += 1;
+                                        }
                                     }
                                 }
                             }
                         }else{
-                            Toast.makeText(ShowRestaurantsFound.this,"Error",Toast.LENGTH_SHORT).show();
+                            if(countRestaurantFound[0] == 0){
+                                Toast.makeText(ShowRestaurantsFound.this,"Error",Toast.LENGTH_SHORT).show();
+                                TextView RestaurantNotFound = new TextView(ShowRestaurantsFound.this);
+                                TextView actionsToPerform = new TextView(ShowRestaurantsFound.this);
+                                LinearLayout layout = findViewById(R.id.ShowRestaurantFound);
+                                layout.setOrientation(LinearLayout.VERTICAL);
+                                RestaurantNotFound.setText("Restaurantes no encontrados");
+                                actionsToPerform.setText("Pruebe con un horario y/o tipo de comida distinto");
+                                RestaurantNotFound.setTextSize(TypedValue.COMPLEX_UNIT_SP,24);
+                                actionsToPerform.setTextSize(TypedValue.COMPLEX_UNIT_SP,18);
+                                RestaurantNotFound.setGravity(Gravity.CENTER);
+                                actionsToPerform.setGravity(Gravity.CENTER);
+                                imageAnimation.setAnimation(R.raw.tomatoerror);
+                                imageAnimation.playAnimation();
+                                imageAnimation.setVisibility(View.VISIBLE);
+                                imageAnimation.setRepeatCount(10);
+                                layout.addView(RestaurantNotFound);
+                                layout.addView(actionsToPerform);
+                                countRestaurantFound[0] += 1;
+                                /*
+                                *
+                                * Hace falta corregir animacion cuando no encuentra ningun restaurante que venda cierto tipo de comida
+                                *
+                                * */
+                            }
                         }
                     }
                 }
