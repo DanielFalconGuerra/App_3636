@@ -100,148 +100,67 @@ public class ShowRestaurantsFound extends AppCompatActivity {
                         }
                     }
                 }
-
-                for(int i = 0; i < 3; i++){
-                    if(IDRestaurantFound[i] != null){
-                        //Obtener el horario de los restaurantes
-                        String schedule[] = dbConnect.getScheduleOfRestaurant(IDRestaurantFound[i],String.valueOf(dayWeek));
-                        Log.d("prueba", IDRestaurantFound[i]);
-                        Log.d("prueba", schedule[0]);
-                        String openingTime = schedule[0];
-                        String closingTime = schedule[1];
-                        Log.d("prueba", openingTime);
-                        if(!(openingTime.equals("") && closingTime.equals(""))){
-                            //Obtener los horarios reales a partir de los IDs
-                            String schedulesReceivedOne = dbConnect.getSchedule(openingTime);
-                            String schedulesReceivedTwo = dbConnect.getSchedule(closingTime);
-                            //Comparar horarios para revisar que el restaurante se encuentre abierto
-                            if(schedulesReceivedOne.equals(hour)){
-                            }else{
-                                if(schedulesReceivedTwo.equals(hour)){
-                                    Toast.makeText(ShowRestaurantsFound.this,"Error",Toast.LENGTH_SHORT).show();
+                //if para verificar que se encontró al menos un restaurante
+                if(IDRestaurantFound[0]!=null){
+                    for(int i = 0; i < 3; i++){
+                        if(IDRestaurantFound[i] != null){
+                            //Obtener el horario de los restaurantes
+                            String schedule[] = dbConnect.getScheduleOfRestaurant(IDRestaurantFound[i],String.valueOf(dayWeek));
+                            Log.d("prueba", IDRestaurantFound[i]);
+                            Log.d("prueba", schedule[0]);
+                            String openingTime = schedule[0];
+                            String closingTime = schedule[1];
+                            Log.d("prueba", openingTime);
+                            if(!(openingTime.equals("") && closingTime.equals(""))){
+                                //Obtener los horarios reales a partir de los IDs
+                                String schedulesReceivedOne = dbConnect.getSchedule(openingTime);
+                                String schedulesReceivedTwo = dbConnect.getSchedule(closingTime);
+                                //Comparar horarios para revisar que el restaurante se encuentre abierto
+                                if(schedulesReceivedOne.equals(hour)){
                                 }else{
-                                    Date timeToReview = null;
-                                    Date startTime = null;
-                                    Date finalTime = null;
-                                    try {
-                                        timeToReview = new SimpleDateFormat("HH:mm").parse(hour.trim());
-                                        startTime = new SimpleDateFormat("HH:mm").parse(schedulesReceivedOne.trim());
-                                        finalTime = new SimpleDateFormat("HH:mm").parse(schedulesReceivedTwo.trim());
-                                    } catch (ParseException e) {
-                                        e.printStackTrace();
-                                    }
-                                    if(timeToReview.after(startTime) && timeToReview.before(finalTime)){
-                                        //Obtener datos del restaurante
-                                        LinearLayout layout = findViewById(R.id.ShowRestaurantFound);
-                                        layout.setOrientation(LinearLayout.VERTICAL);
-                                        TextView nameBusiness = new TextView(ShowRestaurantsFound.this);
-                                        TextView addressBusiness = new TextView(ShowRestaurantsFound.this);
-                                        TextView typeOfFoodBusiness = new TextView(ShowRestaurantsFound.this);
-                                        TextView phoneBusiness = new TextView(ShowRestaurantsFound.this);
-                                        TextView availabilityBusiness = new TextView(ShowRestaurantsFound.this);
-                                        ImageView logoBusiness = new ImageView(ShowRestaurantsFound.this);
-
-                                        nameBusiness.setGravity(Gravity.CENTER);
-                                        nameBusiness.setTextSize(TypedValue.COMPLEX_UNIT_SP,24);
-                                        addressBusiness.setGravity(Gravity.CENTER);
-                                        typeOfFoodBusiness.setGravity(Gravity.CENTER);
-                                        phoneBusiness.setGravity(Gravity.CENTER);
-                                        availabilityBusiness.setGravity(Gravity.CENTER);
-                                        availabilityBusiness.setPadding(0,0,0,50);
-
-                                        if(IDRestaurantFound[i].equals("1")){
-                                            nameBusiness.setText("La Genarería");
-                                            addressBusiness.setText("Dirección: Irapuato, Guanajuato. Plaza 3636 Gómez Morín");
-                                            typeOfFoodBusiness.setText("Tipos de Comida: Americana, Restaurante - Bar, Bar");
-                                            phoneBusiness.setText("Teléfono: 462 200 4863");
-                                            availabilityBusiness.setText("Disponibilidad el día de hoy: 14:00 a 23:00");
-                                            LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(300, 300);
-                                            layoutParams.gravity= Gravity.CENTER;
-                                            logoBusiness.setLayoutParams(layoutParams);
-                                            logoBusiness.setImageResource(R.mipmap.lagenareria);
-                                        }else
-                                        if(IDRestaurantFound[i].equals("2")){
-                                            nameBusiness.setText("Arena 88");
-                                            addressBusiness.setText("Dirección: Irapuato, Guanajuato. Plaza 3636 Gómez Morín");
-                                            typeOfFoodBusiness.setText("Tipos de Comida: Bar, Restaurante - Bar, Mariscos");
-                                            phoneBusiness.setText("Teléfono: 462 688 3664");
-                                            availabilityBusiness.setText("Disponibilidad el día de hoy: 12:00 a 23:00");
-                                            LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(300, 300);
-                                            layoutParams.gravity= Gravity.CENTER;
-                                            logoBusiness.setLayoutParams(layoutParams);
-                                            logoBusiness.setImageResource(R.mipmap.arena88);
-                                        }else
-                                        if(IDRestaurantFound[i].equals("16")){
-                                            nameBusiness.setText("Costilla Winebarlechon");
-                                            addressBusiness.setText("Dirección: Irapuato, Guanajuato. Plaza 3636 Gómez Morín");
-                                            typeOfFoodBusiness.setText("Tipos de Comida: Bar, Restaurante - Bar, Café");
-                                            phoneBusiness.setText("Teléfono: 462 607 9612");
-                                            availabilityBusiness.setText("Disponibilidad el día de hoy: 10:00 a 22:00");
-                                            LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(300, 300);
-                                            layoutParams.gravity= Gravity.CENTER;
-                                            logoBusiness.setLayoutParams(layoutParams);
-                                            logoBusiness.setImageResource(R.mipmap.costilla);
-                                        }else
-                                            nameBusiness.setText("Error");
-
-                                        layout.addView(logoBusiness);
-                                        layout.addView(nameBusiness);
-                                        layout.addView(addressBusiness);
-                                        layout.addView(typeOfFoodBusiness);
-                                        layout.addView(phoneBusiness);
-                                        layout.addView(availabilityBusiness);
+                                    if(schedulesReceivedTwo.equals(hour)){
+                                        Toast.makeText(ShowRestaurantsFound.this,"Error",Toast.LENGTH_SHORT).show();
                                     }else{
-                                        if(countRestaurantFound[0] == 0){
-                                            Toast.makeText(ShowRestaurantsFound.this,"Error",Toast.LENGTH_SHORT).show();
-                                            TextView RestaurantNotFound = new TextView(ShowRestaurantsFound.this);
-                                            TextView actionsToPerform = new TextView(ShowRestaurantsFound.this);
+                                        Date timeToReview = null;
+                                        Date startTime = null;
+                                        Date finalTime = null;
+                                        try {
+                                            timeToReview = new SimpleDateFormat("HH:mm").parse(hour.trim());
+                                            startTime = new SimpleDateFormat("HH:mm").parse(schedulesReceivedOne.trim());
+                                            finalTime = new SimpleDateFormat("HH:mm").parse(schedulesReceivedTwo.trim());
+                                        } catch (ParseException e) {
+                                            e.printStackTrace();
+                                        }
+                                        if(timeToReview.after(startTime) && timeToReview.before(finalTime)){
+                                            //Obtener datos del restaurante
                                             LinearLayout layout = findViewById(R.id.ShowRestaurantFound);
-                                            layout.setOrientation(LinearLayout.VERTICAL);
-                                            RestaurantNotFound.setText("Restaurantes no encontrados");
-                                            actionsToPerform.setText("Pruebe con un horario y/o tipo de comida distinto");
-                                            RestaurantNotFound.setTextSize(TypedValue.COMPLEX_UNIT_SP,24);
-                                            actionsToPerform.setTextSize(TypedValue.COMPLEX_UNIT_SP,18);
-                                            RestaurantNotFound.setGravity(Gravity.CENTER);
-                                            actionsToPerform.setGravity(Gravity.CENTER);
-                                            imageAnimation.setAnimation(R.raw.tomatoerror);
-                                            imageAnimation.playAnimation();
-                                            imageAnimation.setVisibility(View.VISIBLE);
-                                            imageAnimation.setRepeatCount(10);
-                                            layout.addView(RestaurantNotFound);
-                                            layout.addView(actionsToPerform);
-                                            countRestaurantFound[0] += 1;
+                                            layout.addView(showRestaurantsFound(IDRestaurantFound[i]));
+                                        }else{
+                                            if(countRestaurantFound[0] == 0){
+                                                LinearLayout layout = findViewById(R.id.ShowRestaurantFound);
+                                                layout.addView(errorRestaurantsNotFound());
+                                                countRestaurantFound[0] += 1;
+                                            }
                                         }
                                     }
                                 }
-                            }
-                        }else{
-                            if(countRestaurantFound[0] == 0){
-                                Toast.makeText(ShowRestaurantsFound.this,"Error",Toast.LENGTH_SHORT).show();
-                                TextView RestaurantNotFound = new TextView(ShowRestaurantsFound.this);
-                                TextView actionsToPerform = new TextView(ShowRestaurantsFound.this);
-                                LinearLayout layout = findViewById(R.id.ShowRestaurantFound);
-                                layout.setOrientation(LinearLayout.VERTICAL);
-                                RestaurantNotFound.setText("Restaurantes no encontrados");
-                                actionsToPerform.setText("Pruebe con un horario y/o tipo de comida distinto");
-                                RestaurantNotFound.setTextSize(TypedValue.COMPLEX_UNIT_SP,24);
-                                actionsToPerform.setTextSize(TypedValue.COMPLEX_UNIT_SP,18);
-                                RestaurantNotFound.setGravity(Gravity.CENTER);
-                                actionsToPerform.setGravity(Gravity.CENTER);
-                                imageAnimation.setAnimation(R.raw.tomatoerror);
-                                imageAnimation.playAnimation();
-                                imageAnimation.setVisibility(View.VISIBLE);
-                                imageAnimation.setRepeatCount(10);
-                                layout.addView(RestaurantNotFound);
-                                layout.addView(actionsToPerform);
-                                countRestaurantFound[0] += 1;
-                                /*
-                                *
-                                * Hace falta corregir animacion cuando no encuentra ningun restaurante que venda cierto tipo de comida
-                                *
-                                * */
+                            }else{
+                                if(countRestaurantFound[0] == 0){
+                                    LinearLayout layout = findViewById(R.id.ShowRestaurantFound);
+                                    layout.addView(errorRestaurantsNotFound());
+                                    /*
+                                     *
+                                     * Hace falta corregir animacion cuando no encuentra ningun restaurante que venda cierto tipo de comida
+                                     *
+                                     * */
+                                    countRestaurantFound[0] += 1;
+                                }
                             }
                         }
                     }
+                }else{
+                    LinearLayout layout = findViewById(R.id.ShowRestaurantFound);
+                    layout.addView(errorRestaurantsNotFound());
                 }
             }
 
@@ -277,5 +196,87 @@ public class ShowRestaurantsFound extends AppCompatActivity {
             default:
                 return 0;
         }
+    }
+    public LinearLayout errorRestaurantsNotFound(){
+        Toast.makeText(ShowRestaurantsFound.this,"Error",Toast.LENGTH_SHORT).show();
+        LottieAnimationView imageAnimation = findViewById(R.id.imageAnimation);
+        TextView RestaurantNotFound = new TextView(ShowRestaurantsFound.this);
+        TextView actionsToPerform = new TextView(ShowRestaurantsFound.this);
+        LinearLayout layout = new LinearLayout(ShowRestaurantsFound.this);
+        layout.setOrientation(LinearLayout.VERTICAL);
+        RestaurantNotFound.setText("Restaurantes no encontrados");
+        actionsToPerform.setText("Pruebe con un horario y/o tipo de comida distinto");
+        RestaurantNotFound.setTextSize(TypedValue.COMPLEX_UNIT_SP,24);
+        actionsToPerform.setTextSize(TypedValue.COMPLEX_UNIT_SP,18);
+        RestaurantNotFound.setGravity(Gravity.CENTER);
+        actionsToPerform.setGravity(Gravity.CENTER);
+        imageAnimation.setAnimation(R.raw.tomatoerror);
+        imageAnimation.playAnimation();
+        imageAnimation.setVisibility(View.VISIBLE);
+        imageAnimation.setRepeatCount(10);
+        layout.addView(RestaurantNotFound);
+        layout.addView(actionsToPerform);
+        return layout;
+    }
+    public LinearLayout showRestaurantsFound(String idRestaurant){
+        LinearLayout layout = new LinearLayout(ShowRestaurantsFound.this);
+        layout.setOrientation(LinearLayout.VERTICAL);
+        TextView nameBusiness = new TextView(ShowRestaurantsFound.this);
+        TextView addressBusiness = new TextView(ShowRestaurantsFound.this);
+        TextView typeOfFoodBusiness = new TextView(ShowRestaurantsFound.this);
+        TextView phoneBusiness = new TextView(ShowRestaurantsFound.this);
+        TextView availabilityBusiness = new TextView(ShowRestaurantsFound.this);
+        ImageView logoBusiness = new ImageView(ShowRestaurantsFound.this);
+
+        nameBusiness.setGravity(Gravity.CENTER);
+        nameBusiness.setTextSize(TypedValue.COMPLEX_UNIT_SP,24);
+        addressBusiness.setGravity(Gravity.CENTER);
+        typeOfFoodBusiness.setGravity(Gravity.CENTER);
+        phoneBusiness.setGravity(Gravity.CENTER);
+        availabilityBusiness.setGravity(Gravity.CENTER);
+        availabilityBusiness.setPadding(0,0,0,50);
+
+        if(idRestaurant.equals("1")){
+            nameBusiness.setText("La Genarería");
+            addressBusiness.setText("Dirección: Irapuato, Guanajuato. Plaza 3636 Gómez Morín");
+            typeOfFoodBusiness.setText("Tipos de Comida: Americana, Restaurante - Bar, Bar");
+            phoneBusiness.setText("Teléfono: 462 200 4863");
+            availabilityBusiness.setText("Disponibilidad el día de hoy: 14:00 a 23:00");
+            LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(300, 300);
+            layoutParams.gravity= Gravity.CENTER;
+            logoBusiness.setLayoutParams(layoutParams);
+            logoBusiness.setImageResource(R.mipmap.lagenareria);
+        }else
+        if(idRestaurant.equals("2")){
+            nameBusiness.setText("Arena 88");
+            addressBusiness.setText("Dirección: Irapuato, Guanajuato. Plaza 3636 Gómez Morín");
+            typeOfFoodBusiness.setText("Tipos de Comida: Bar, Restaurante - Bar, Mariscos");
+            phoneBusiness.setText("Teléfono: 462 688 3664");
+            availabilityBusiness.setText("Disponibilidad el día de hoy: 12:00 a 23:00");
+            LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(300, 300);
+            layoutParams.gravity= Gravity.CENTER;
+            logoBusiness.setLayoutParams(layoutParams);
+            logoBusiness.setImageResource(R.mipmap.arena88);
+        }else
+        if(idRestaurant.equals("16")){
+            nameBusiness.setText("Costilla Winebarlechon");
+            addressBusiness.setText("Dirección: Irapuato, Guanajuato. Plaza 3636 Gómez Morín");
+            typeOfFoodBusiness.setText("Tipos de Comida: Bar, Restaurante - Bar, Café");
+            phoneBusiness.setText("Teléfono: 462 607 9612");
+            availabilityBusiness.setText("Disponibilidad el día de hoy: 10:00 a 22:00");
+            LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(300, 300);
+            layoutParams.gravity= Gravity.CENTER;
+            logoBusiness.setLayoutParams(layoutParams);
+            logoBusiness.setImageResource(R.mipmap.costilla);
+        }else
+            nameBusiness.setText("Error");
+
+        layout.addView(logoBusiness);
+        layout.addView(nameBusiness);
+        layout.addView(addressBusiness);
+        layout.addView(typeOfFoodBusiness);
+        layout.addView(phoneBusiness);
+        layout.addView(availabilityBusiness);
+        return layout;
     }
 }
