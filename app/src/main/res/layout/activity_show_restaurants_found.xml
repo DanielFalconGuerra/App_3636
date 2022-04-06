@@ -11,7 +11,24 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ShowRestaurantsFound">
+        <LinearLayout
+            android:id="@+id/layoutAnimation"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:flow_verticalAlign="center"
+            android:orientation="vertical"
+            >
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/imageToTest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:lottie_url="REPLACE_JSON_URL"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/jumpingsquares"
+                app:lottie_repeatCount="1"/>
 
+        </LinearLayout>
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="0dp"
