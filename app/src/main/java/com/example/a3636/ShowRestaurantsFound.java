@@ -148,11 +148,6 @@ public class ShowRestaurantsFound extends AppCompatActivity {
                                 if(countRestaurantFound[0] == 0){
                                     LinearLayout layout = findViewById(R.id.ShowRestaurantFound);
                                     layout.addView(errorRestaurantsNotFound());
-                                    /*
-                                     *
-                                     * Hace falta corregir animacion cuando no encuentra ningun restaurante que venda cierto tipo de comida
-                                     *
-                                     * */
                                     countRestaurantFound[0] += 1;
                                 }
                             }

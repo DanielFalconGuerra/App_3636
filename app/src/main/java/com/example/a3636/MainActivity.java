@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        TypesOfFoodAndSchedules typesOfFoodAndSchedules = new TypesOfFoodAndSchedules();
         AtomicInteger identificadorDeRestaurante = new AtomicInteger();
 
         //Spinner para Tipo de Comida
@@ -36,7 +36,8 @@ public class MainActivity extends AppCompatActivity {
         String foodType[];
         //Obtener tipos de comida de base de datos
         connection.CONN();
-        foodType = connection.getTypesOfFood();
+        //foodType = connection.getTypesOfFood();
+        foodType = typesOfFoodAndSchedules.getTypesOfFood();
         //ArrayAdapter<CharSequence>adapter=ArrayAdapter.createFromResource(this,R.array.TipodeComida, android.R.layout.simple_spinner_item);
         ArrayAdapter <CharSequence>adapter= new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, foodType);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
@@ -47,7 +48,8 @@ public class MainActivity extends AppCompatActivity {
         String hours[];
         connection.CONN();
         //Obtener horarios de restaurantes
-        hours = connection.getHoraries();
+        //hours = connection.getHoraries();
+        hours = typesOfFoodAndSchedules.getItemsToArraySchedules();
         //ArrayAdapter<CharSequence>adapter=ArrayAdapter.createFromResource(this,R.array.TipodeComida, android.R.layout.simple_spinner_item);
         ArrayAdapter <CharSequence>adapterHour= new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, hours);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
