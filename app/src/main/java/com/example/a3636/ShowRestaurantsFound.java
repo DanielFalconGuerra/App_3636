@@ -37,6 +37,7 @@ public class ShowRestaurantsFound extends AppCompatActivity {
         String hour = getIntent().getStringExtra("hour");
         //Iniciar y terminar animacion
         LottieAnimationView imageAnimation = findViewById(R.id.imageAnimation);
+        ImageView logoSoft = findViewById(R.id.logoSoft);
         imageAnimation.addAnimatorListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
@@ -48,14 +49,7 @@ public class ShowRestaurantsFound extends AppCompatActivity {
             public void onAnimationEnd(Animator animation) {
                 Log.e("Animation:","end");
                 imageAnimation.setVisibility(View.GONE);
-
-                //Detectar dia de la semana
-                /*
-                 *
-                 *           Hay un error obteniendo la fecha, devuelve un dia de mas en la fecha
-                 *
-                 * */
-
+                logoSoft.setVisibility(View.INVISIBLE);
                 String fecha = new SimpleDateFormat("yyyy/MM/dd").format(Calendar.getInstance().getTime());
                 String year = "", month = "", day = "";
                 year = fecha.substring(0,4);
@@ -104,58 +98,66 @@ public class ShowRestaurantsFound extends AppCompatActivity {
                 if(IDRestaurantFound[0]!=null){
                     for(int i = 0; i < 3; i++){
                         if(IDRestaurantFound[i] != null){
-                            //Obtener el horario de los restaurantes
-                            String schedule[] = dbConnect.getScheduleOfRestaurant(IDRestaurantFound[i],String.valueOf(dayWeek));
-                            Log.d("prueba", IDRestaurantFound[i]);
-                            Log.d("prueba", schedule[0]);
-                            String openingTime = schedule[0];
-                            String closingTime = schedule[1];
-                            Log.d("prueba", openingTime);
-                            if(!(openingTime.equals("") && closingTime.equals(""))){
-                                //Obtener los horarios reales a partir de los IDs
-                                String schedulesReceivedOne = dbConnect.getSchedule(openingTime);
-                                String schedulesReceivedTwo = dbConnect.getSchedule(closingTime);
-                                //Comparar horarios para revisar que el restaurante se encuentre abierto
-                                if(schedulesReceivedOne.equals(hour)){
-                                }else{
-                                    if(schedulesReceivedTwo.equals(hour)){
-                                        Toast.makeText(ShowRestaurantsFound.this,"Error",Toast.LENGTH_SHORT).show();
+                            //Obtener los dias que los restuarantes no estan cerrados
+                            String IDDIa = dbConnect.getDayClosedRestaurant(IDRestaurantFound[i],String.valueOf(dayWeek));
+                            Log.d("IDDia",IDDIa);
+                            if(!IDDIa.equals("8")){
+                                //Obtener el horario de los restaurantes
+                                String schedule[] = dbConnect.getScheduleOfRestaurant(IDRestaurantFound[i],String.valueOf(dayWeek));
+                                Log.d("prueba", IDRestaurantFound[i]);
+                                Log.d("prueba_horario", schedule[0]);
+                                String openingTime = schedule[0];
+                                String closingTime = schedule[1];
+                                Log.d("prueba", openingTime);
+                                if(!(openingTime.equals("") && closingTime.equals(""))){
+                                    //Obtener los horarios reales a partir de los IDs
+                                    String schedulesReceivedOne = dbConnect.getSchedule(openingTime);
+                                    String schedulesReceivedTwo = dbConnect.getSchedule(closingTime);
+                                    //Comparar horarios para revisar que el restaurante se encuentre abierto
+                                    if(schedulesReceivedOne.equals(hour)){
                                     }else{
-                                        Date timeToReview = null;
-                                        Date startTime = null;
-                                        Date finalTime = null;
-                                        try {
-                                            timeToReview = new SimpleDateFormat("HH:mm").parse(hour.trim());
-                                            startTime = new SimpleDateFormat("HH:mm").parse(schedulesReceivedOne.trim());
-                                            finalTime = new SimpleDateFormat("HH:mm").parse(schedulesReceivedTwo.trim());
-                                        } catch (ParseException e) {
-                                            e.printStackTrace();
-                                        }
-                                        if(timeToReview.after(startTime) && timeToReview.before(finalTime)){
-                                            //Obtener datos del restaurante
-                                            LinearLayout layout = findViewById(R.id.ShowRestaurantFound);
-                                            layout.addView(showRestaurantsFound(IDRestaurantFound[i]));
+                                        if(schedulesReceivedTwo.equals(hour)){
+                                            Toast.makeText(ShowRestaurantsFound.this,"Error",Toast.LENGTH_SHORT).show();
                                         }else{
-                                            if(countRestaurantFound[0] == 0){
+                                            Date timeToReview = null;
+                                            Date startTime = null;
+                                            Date finalTime = null;
+                                            try {
+                                                timeToReview = new SimpleDateFormat("HH:mm").parse(hour.trim());
+                                                startTime = new SimpleDateFormat("HH:mm").parse(schedulesReceivedOne.trim());
+                                                finalTime = new SimpleDateFormat("HH:mm").parse(schedulesReceivedTwo.trim());
+                                            } catch (ParseException e) {
+                                                e.printStackTrace();
+                                            }
+                                            if(timeToReview.after(startTime) && timeToReview.before(finalTime)){
+                                                //Obtener datos del restaurante
                                                 LinearLayout layout = findViewById(R.id.ShowRestaurantFound);
-                                                layout.addView(errorRestaurantsNotFound());
-                                                countRestaurantFound[0] += 1;
+                                                layout.addView(showRestaurantsFound(IDRestaurantFound[i]));
+                                            }else{
+                                                if(countRestaurantFound[0] == 0){
+                                                    LinearLayout layout = findViewById(R.id.ShowRestaurantFound);
+                                                    layout.addView(errorRestaurantsNotFound());
+                                                    countRestaurantFound[0] += 1;
+                                                }
                                             }
                                         }
                                     }
-                                }
-                            }else{
-                                if(countRestaurantFound[0] == 0){
-                                    LinearLayout layout = findViewById(R.id.ShowRestaurantFound);
-                                    layout.addView(errorRestaurantsNotFound());
-                                    countRestaurantFound[0] += 1;
+                                }else{
+                                    if(countRestaurantFound[0] == 0){
+                                        LinearLayout layout = findViewById(R.id.ShowRestaurantFound);
+                                        layout.addView(errorRestaurantsNotFound());
+                                        countRestaurantFound[0] += 1;
+                                    }
                                 }
                             }
                         }
                     }
                 }else{
-                    LinearLayout layout = findViewById(R.id.ShowRestaurantFound);
-                    layout.addView(errorRestaurantsNotFound());
+                    if(countRestaurantFound[0] == 0){
+                        LinearLayout layout = findViewById(R.id.ShowRestaurantFound);
+                        layout.addView(errorRestaurantsNotFound());
+                        countRestaurantFound[0] += 1;
+                    }
                 }
             }
 
@@ -175,20 +177,28 @@ public class ShowRestaurantsFound extends AppCompatActivity {
     public int getDayToDatabase(String day){
         switch (day) {
             case "MONDAY":
+                Log.d("diaSemana","MONDAY");
                 return 1;
             case "TUESDAY":
+                Log.d("diaSemana","TUESDAY");
                 return 2;
             case "WEDNESDAY":
+                Log.d("diaSemana","WEDNESDAY");
                 return 3;
             case "THURSDAY":
+                Log.d("diaSemana","THURSDAY");
                 return 4;
             case "FRIDAY":
+                Log.d("diaSemana","FRIDAY");
                 return 5;
             case "SATURDAY":
+                Log.d("diaSemana","SATURDAY");
                 return 6;
             case "SUNDAY":
+                Log.d("diaSemana","SUNDAY");
                 return 7;
             default:
+                Log.d("diaSemana","Cero");
                 return 0;
         }
     }
@@ -222,6 +232,7 @@ public class ShowRestaurantsFound extends AppCompatActivity {
         TextView phoneBusiness = new TextView(ShowRestaurantsFound.this);
         TextView availabilityBusiness = new TextView(ShowRestaurantsFound.this);
         ImageView logoBusiness = new ImageView(ShowRestaurantsFound.this);
+        Button btnShowMenu = new Button(this);
 
         nameBusiness.setGravity(Gravity.CENTER);
         nameBusiness.setTextSize(TypedValue.COMPLEX_UNIT_SP,24);
@@ -230,6 +241,7 @@ public class ShowRestaurantsFound extends AppCompatActivity {
         phoneBusiness.setGravity(Gravity.CENTER);
         availabilityBusiness.setGravity(Gravity.CENTER);
         availabilityBusiness.setPadding(0,0,0,50);
+        btnShowMenu.setText("Menu"); btnShowMenu.setText("Menu");
 
         if(idRestaurant.equals("1")){
             nameBusiness.setText("La Genarería");
@@ -272,6 +284,10 @@ public class ShowRestaurantsFound extends AppCompatActivity {
         layout.addView(typeOfFoodBusiness);
         layout.addView(phoneBusiness);
         layout.addView(availabilityBusiness);
+        layout.addView(btnShowMenu);
+        btnShowMenu.setOnClickListener(view -> {
+            Toast.makeText(this,"Menu selected", Toast.LENGTH_SHORT).show();
+        });
         return layout;
     }
 }

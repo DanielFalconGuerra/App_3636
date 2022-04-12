@@ -134,6 +134,22 @@ public class DatabaseConnection {
         }
         return idFood;
     }
+    public String getDayClosedRestaurant(String idRestaurant, String day){
+        String IDDay = "";
+        try {
+            Connection conexion=DriverManager.getConnection("jdbc:mysql://10.0.2.2/demo","root" ,"");
+            Statement command=conexion.createStatement();
+            String queries = "select IDDia" + day + " from horario_restaurante where IDRestaurante = " + idRestaurant;
+            ResultSet hours = command.executeQuery(queries);
+            while (hours.next()) {
+                IDDay = hours.getString("IDDia"+day);
+            }
+            conexion.close();
+        } catch(SQLException ex){
+            IDDay = ex.toString();
+        }
+        return IDDay;
+    }
 
     public String[] getScheduleOfRestaurant(String idRestaurant, String day){
         String schedule[] = new String[2];
