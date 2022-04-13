@@ -63,7 +63,9 @@
                             android:layout_gravity="center"
                             android:layout_marginBottom="15dp"
                             android:background="@color/white"
-                            android:text="Nombre del restaurant" />
+                            android:hint="Nombre del restaurant"
+                            android:textColorHint="@color/grey"
+                            android:textColor="@color/black"/>
 
                         <EditText
                             android:id="@+id/txtContactName"
@@ -72,7 +74,9 @@
                             android:layout_gravity="center"
                             android:layout_marginBottom="15dp"
                             android:background="@color/white"
-                            android:text="Nombre del contacto" />
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/grey"
+                            android:hint="Nombre del contacto" />
 
                         <EditText
                             android:id="@+id/txtMail"
@@ -81,7 +85,9 @@
                             android:layout_gravity="center"
                             android:layout_marginBottom="15dp"
                             android:background="@color/white"
-                            android:text="Correo electrónico" />
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/grey"
+                            android:hint="Correo electrónico" />
 
                         <EditText
                             android:id="@+id/txtAddress"
@@ -90,7 +96,9 @@
                             android:layout_gravity="center"
                             android:layout_marginBottom="15dp"
                             android:background="@color/white"
-                            android:text="Direccion" />
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/grey"
+                            android:hint="Direccion" />
 
                         <EditText
                             android:id="@+id/txtPhone"
@@ -99,7 +107,9 @@
                             android:layout_gravity="center"
                             android:layout_marginBottom="15dp"
                             android:background="@color/white"
-                            android:text="Número telefónico" />
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/grey"
+                            android:hint="Número telefónico" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -154,8 +164,10 @@
                             android:id="@+id/txtAddEmail"
                             android:layout_width="250dp"
                             android:layout_height="50dp"
-                            android:text="Captura tu email"
-                            android:background="@color/white"
+                            android:hint="Captura tu email"
+                            android:textColorHint="@color/grey"
+                            android:textColor="@color/black"
+                            android:background="@color/yellowBackground"
                             android:layout_gravity="center"
                             />
                         <Button
