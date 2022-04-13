@@ -74,6 +74,7 @@ public class Interface3636 extends AppCompatActivity {
         Button somethingyoumightlikebutton = findViewById(R.id.somethingyoumightlikebutton);
 
         ImageView logoRestaurant = findViewById(R.id.logoRestaurant);
+        TextView nameText = findViewById(R.id.nameText);
         TextView addressText = findViewById(R.id.addressText);
         TextView availabilityText = findViewById(R.id.availabilityText);
         TextView typesOfFoodText = findViewById(R.id.typesOfFoodText);
@@ -83,18 +84,21 @@ public class Interface3636 extends AppCompatActivity {
         RestaurantInformation LaGenareria = new RestaurantInformation();
         RestaurantInformation CostillaWinebarlechon = new RestaurantInformation();
 
+        Arena88.setNameText("Arena 88");
         Arena88.setAddressText("Dirección: Irapuato, Guanajuato. Plaza 3636 Gómez Morín");
         Arena88.setTypesOfFoodText("Tipos de Comida: Bar, Restaurante - Bar, Mariscos");
         Arena88.setPhoneText("Teléfono: 462 688 3664");
         Arena88.setAvailabilityText("Disponibilidad el día de hoy: 12:00 a 23:00");
         Arena88.setLogoRestaurant("@mipmap/arena88.jpg");
 
+        LaGenareria.setNameText("La Genareria");
         LaGenareria.setAddressText("Dirección: Irapuato, Guanajuato. Plaza 3636 Gómez Morín");
         LaGenareria.setTypesOfFoodText("Tipos de Comida: Americana, Restaurante - Bar, Bar");
         LaGenareria.setPhoneText("Teléfono: 462 200 4863");
         LaGenareria.setAvailabilityText("Disponibilidad el día de hoy: 14:00 a 23:00");
         LaGenareria.setLogoRestaurant("@mipmap/lagenareria.png");
 
+        CostillaWinebarlechon.setNameText("Costilla Winebarlechon");
         CostillaWinebarlechon.setAddressText("Dirección: Irapuato, Guanajuato. Plaza 3636 Gómez Morín");
         CostillaWinebarlechon.setTypesOfFoodText("Tipos de Comida: Bar, Restaurante - Bar, Café");
         CostillaWinebarlechon.setPhoneText("Teléfono: 462 607 9612");
@@ -117,6 +121,7 @@ public class Interface3636 extends AppCompatActivity {
 
             identificadorDeRestaurante.set(0);
 
+            nameText.setText(Arena88.getNameText());
             addressText.setText(Arena88.getAddressText());
             typesOfFoodText.setText(Arena88.getTypesOfFoodText());
             phoneText.setText(Arena88.getPhoneText());
@@ -128,6 +133,7 @@ public class Interface3636 extends AppCompatActivity {
             coffeeSelected.set(true);
             barSelected.set(false);
             identificadorDeRestaurante.set(1);
+            nameText.setText(CostillaWinebarlechon.getNameText());
             addressText.setText(CostillaWinebarlechon.getAddressText());
             typesOfFoodText.setText(CostillaWinebarlechon.getTypesOfFoodText());
             phoneText.setText(CostillaWinebarlechon.getPhoneText());
@@ -139,6 +145,7 @@ public class Interface3636 extends AppCompatActivity {
             coffeeSelected.set(false);
             barSelected.set(true);
             identificadorDeRestaurante.set(0);
+            nameText.setText(CostillaWinebarlechon.getNameText());
             addressText.setText(CostillaWinebarlechon.getAddressText());
             typesOfFoodText.setText(CostillaWinebarlechon.getTypesOfFoodText());
             phoneText.setText(CostillaWinebarlechon.getPhoneText());
@@ -151,6 +158,7 @@ public class Interface3636 extends AppCompatActivity {
                 switch (identificadorDeRestaurante.get()){
                     case 0:
                         identificadorDeRestaurante.set(2);
+                        nameText.setText(CostillaWinebarlechon.getNameText());
                         addressText.setText(CostillaWinebarlechon.getAddressText());
                         typesOfFoodText.setText(CostillaWinebarlechon.getTypesOfFoodText());
                         phoneText.setText(CostillaWinebarlechon.getPhoneText());
@@ -159,6 +167,7 @@ public class Interface3636 extends AppCompatActivity {
                         break;
                     case 1:
                         identificadorDeRestaurante.set(0);
+                        nameText.setText(Arena88.getNameText());
                         addressText.setText(Arena88.getAddressText());
                         typesOfFoodText.setText(Arena88.getTypesOfFoodText());
                         phoneText.setText(Arena88.getPhoneText());
@@ -167,6 +176,7 @@ public class Interface3636 extends AppCompatActivity {
                         break;
                     case 2:
                         identificadorDeRestaurante.set(1);
+                        nameText.setText(LaGenareria.getNameText());
                         addressText.setText(LaGenareria.getAddressText());
                         typesOfFoodText.setText(LaGenareria.getTypesOfFoodText());
                         phoneText.setText(LaGenareria.getPhoneText());
@@ -175,6 +185,7 @@ public class Interface3636 extends AppCompatActivity {
                 }
             }else
             if(coffeeSelected.get()){
+                nameText.setText(CostillaWinebarlechon.getNameText());
                 addressText.setText(CostillaWinebarlechon.getAddressText());
                 typesOfFoodText.setText(CostillaWinebarlechon.getTypesOfFoodText());
                 phoneText.setText(CostillaWinebarlechon.getPhoneText());
@@ -185,6 +196,7 @@ public class Interface3636 extends AppCompatActivity {
                 switch (identificadorDeRestaurante.get()){
                     case 0:
                         identificadorDeRestaurante.set(2);
+                        nameText.setText(LaGenareria.getNameText());
                         addressText.setText(LaGenareria.getAddressText());
                         typesOfFoodText.setText(LaGenareria.getTypesOfFoodText());
                         phoneText.setText(LaGenareria.getPhoneText());
@@ -193,6 +205,7 @@ public class Interface3636 extends AppCompatActivity {
                         break;
                     case 1:
                         identificadorDeRestaurante.set(0);
+                        nameText.setText(CostillaWinebarlechon.getNameText());
                         addressText.setText(CostillaWinebarlechon.getAddressText());
                         typesOfFoodText.setText(CostillaWinebarlechon.getTypesOfFoodText());
                         phoneText.setText(CostillaWinebarlechon.getPhoneText());
@@ -201,6 +214,7 @@ public class Interface3636 extends AppCompatActivity {
                         break;
                     case 2:
                         identificadorDeRestaurante.set(1);
+                        nameText.setText(Arena88.getNameText());
                         addressText.setText(Arena88.getAddressText());
                         typesOfFoodText.setText(Arena88.getTypesOfFoodText());
                         phoneText.setText(Arena88.getPhoneText());
@@ -215,6 +229,7 @@ public class Interface3636 extends AppCompatActivity {
                 switch (identificadorDeRestaurante.get()){
                     case 0:
                         identificadorDeRestaurante.set(1);
+                        nameText.setText(LaGenareria.getNameText());
                         addressText.setText(LaGenareria.getAddressText());
                         typesOfFoodText.setText(LaGenareria.getTypesOfFoodText());
                         phoneText.setText(LaGenareria.getPhoneText());
@@ -223,6 +238,7 @@ public class Interface3636 extends AppCompatActivity {
                         break;
                     case 1:
                         identificadorDeRestaurante.set(2);
+                        nameText.setText(CostillaWinebarlechon.getNameText());
                         addressText.setText(CostillaWinebarlechon.getAddressText());
                         typesOfFoodText.setText(CostillaWinebarlechon.getTypesOfFoodText());
                         phoneText.setText(CostillaWinebarlechon.getPhoneText());
@@ -231,6 +247,7 @@ public class Interface3636 extends AppCompatActivity {
                         break;
                     case 2:
                         identificadorDeRestaurante.set(0);
+                        nameText.setText(Arena88.getNameText());
                         addressText.setText(Arena88.getAddressText());
                         typesOfFoodText.setText(Arena88.getTypesOfFoodText());
                         phoneText.setText(Arena88.getPhoneText());
@@ -240,6 +257,7 @@ public class Interface3636 extends AppCompatActivity {
                 }
             }else
             if(coffeeSelected.get()){
+                nameText.setText(CostillaWinebarlechon.getNameText());
                 addressText.setText(CostillaWinebarlechon.getAddressText());
                 typesOfFoodText.setText(CostillaWinebarlechon.getTypesOfFoodText());
                 phoneText.setText(CostillaWinebarlechon.getPhoneText());
@@ -250,6 +268,7 @@ public class Interface3636 extends AppCompatActivity {
                 switch (identificadorDeRestaurante.get()){
                     case 0:
                         identificadorDeRestaurante.set(1);
+                        nameText.setText(LaGenareria.getNameText());
                         addressText.setText(LaGenareria.getAddressText());
                         typesOfFoodText.setText(LaGenareria.getTypesOfFoodText());
                         phoneText.setText(LaGenareria.getPhoneText());
@@ -258,6 +277,7 @@ public class Interface3636 extends AppCompatActivity {
                         break;
                     case 1:
                         identificadorDeRestaurante.set(2);
+                        nameText.setText(Arena88.getNameText());
                         addressText.setText(Arena88.getAddressText());
                         typesOfFoodText.setText(Arena88.getTypesOfFoodText());
                         phoneText.setText(Arena88.getPhoneText());
@@ -266,6 +286,7 @@ public class Interface3636 extends AppCompatActivity {
                         break;
                     case 2:
                         identificadorDeRestaurante.set(0);
+                        nameText.setText(CostillaWinebarlechon.getNameText());
                         addressText.setText(CostillaWinebarlechon.getAddressText());
                         typesOfFoodText.setText(CostillaWinebarlechon.getTypesOfFoodText());
                         phoneText.setText(CostillaWinebarlechon.getPhoneText());
@@ -284,9 +305,6 @@ public class Interface3636 extends AppCompatActivity {
             Intent moreInterface = new Intent(this, More.class);
             startActivity(moreInterface);
         });
-        //Mostrar informacion de restaurantes
-        //LinearLayout datosRestaurantes = (LinearLayout) findViewById(R.id.datosRestaurantes);
-        //datosRestaurantes.addView(layout);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu){

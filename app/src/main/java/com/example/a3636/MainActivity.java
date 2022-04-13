@@ -8,6 +8,7 @@ import android.animation.Animator;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -43,10 +44,13 @@ public class MainActivity extends AppCompatActivity {
     TextView tv1;
     TextView latitud,longitud;
     TextView direccion;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        TextView addressFound = findViewById(R.id.addressFound);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        TextView txtSearchingAddress = findViewById(R.id.txtSearchingAddress);
         LottieAnimationView imageAnimationLocation = findViewById(R.id.imageAnimationLocation);
         imageAnimationLocation.addAnimatorListener(new Animator.AnimatorListener() {
             @Override
@@ -59,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
             public void onAnimationEnd(Animator animation) {
                 Log.e("Animation:","end");
                 imageAnimationLocation.setVisibility(View.GONE);
+                txtSearchingAddress.setVisibility(View.GONE);
                 LinearLayout layoutLocation = findViewById(R.id.layoutLocation);
                 layoutLocation.setVisibility(View.VISIBLE);
                 latitud = (TextView) findViewById(R.id.txtLatitud);
@@ -71,13 +76,11 @@ public class MainActivity extends AppCompatActivity {
                     locationStart();
                     Button btnSearch = findViewById(R.id.btnSearch);
                     Button btnTest = findViewById(R.id.btnTest);
-                    TextView addressFound = findViewById(R.id.addressFound);
                     btnSearch.setOnClickListener(view -> {
                         String dir = (String) direccion.getText();
                         if(dir.equals("")){
                             direccion.setText("La ubicacion no ha podido ser obtenida");
                             btnSearch.setVisibility(View.GONE);
-                            addressFound.setText("Dirección encontrada");
                             direccion.setGravity(Gravity.CENTER);
                             elementsError();
                         }else{
@@ -108,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
                     });
+                    btnTest.setVisibility(View.GONE);
                     btnTest.setOnClickListener(view -> {
                         DatabaseConnection connection = new DatabaseConnection();
                         connection.CONN();
@@ -148,6 +152,8 @@ public class MainActivity extends AppCompatActivity {
         tvSuggestions.setGravity(Gravity.CENTER);
         tvError.setPadding(0,30,0,20);
         tvSuggestions.setPadding(0,10,0,20);
+        tvError.setTextColor(Color.GRAY);
+        tvSuggestions.setTextColor(Color.GRAY);
         layout.addView(tvError);
         layout.addView(tvSuggestions);
         layoutButton.setGravity(Gravity.CENTER);
@@ -199,6 +205,8 @@ public class MainActivity extends AppCompatActivity {
                     Address DirCalle = list.get(0);
                     direccion.setText(DirCalle.getAddressLine(0));
                     Log.d("direccion", DirCalle.getAddressLine(0));
+                    TextView addressFound = findViewById(R.id.addressFound);
+                    addressFound.setText("Su Dirección ha sido detectada");
                 }
             } catch (IOException e) {
                 e.printStackTrace();

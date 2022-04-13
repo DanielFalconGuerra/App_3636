@@ -25,40 +25,48 @@
             <RelativeLayout
                 android:id="@+id/interfaz"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:gravity="center">
 
                 <Button
                     android:id="@+id/btnSearchRestaurant"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginVertical="120dp"
+                    android:layout_marginVertical="180dp"
                     android:text="¡BUSCAR!" />
 
                 <LinearLayout
                     android:id="@+id/Layout_Buscar"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:background="@mipmap/popularbg">
+                    android:layout_height="250dp"
+                    android:background="@mipmap/popularbg"
+                    android:gravity="center">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginVertical="70dp"
-                        android:layout_marginStart="60dp"
-                        android:background="@color/white">
+                        android:orientation="vertical"
+                        android:background="@color/black">
 
                         <Spinner
                             android:id="@+id/menu_tipoComida"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:spinnerMode="dropdown" />
+                            android:spinnerMode="dropdown"
+                            android:gravity="center"
+                            android:background="@color/black"
+                            android:layout_gravity="center"/>
 
                         <Spinner
                             android:id="@+id/menu_Horario"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:spinnerMode="dropdown" />
+                            android:spinnerMode="dropdown"
+                            android:gravity="center"
+                            android:background="@color/black"
+                            android:layout_gravity="center"/>
                     </LinearLayout>
 
                 </LinearLayout>
@@ -83,7 +91,8 @@
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
                             android:text="BUSCAR POR CATEGORÍA"
-                            android:textSize="25sp" />
+                            android:textSize="25sp"
+                            android:textColor="@color/grey"/>
 
                         <LinearLayout
                             android:id="@+id/imageFood"
@@ -92,6 +101,7 @@
                             android:layout_below="@+id/BuscarPorCategoText"
                             android:layout_centerHorizontal="true"
                             android:layout_marginVertical="20dp"
+                            android:backgroundTint="@color/grey"
                             android:background="@drawable/ic_baseline_food_bank_24"
                             android:orientation="horizontal" />
 
@@ -149,17 +159,26 @@
 
                                 <ImageView
                                     android:id="@+id/logoRestaurant"
-                                    android:layout_width="50dp"
-                                    android:layout_height="50dp"
+                                    android:layout_width="80dp"
+                                    android:layout_height="80dp"
                                     android:layout_gravity="center"
                                     tools:src="@mipmap/lagenareria" />
 
-
+                                <TextView
+                                    android:id="@+id/nameText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:textColor="@color/grey"
+                                    android:textSize="20sp"
+                                    tools:text="Nombre" />
                                 <TextView
                                     android:id="@+id/addressText"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
+                                    android:textColor="@color/grey"
                                     tools:text="Direccion" />
 
                                 <TextView
@@ -167,13 +186,15 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
-                                    tools:text="Disponibilidad" />
+                                    tools:text="Disponibilidad"
+                                    android:textColor="@color/grey"/>
 
                                 <TextView
                                     android:id="@+id/typesOfFoodText"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
+                                    android:textColor="@color/grey"
                                     tools:text="Tipo de comida" />
 
                                 <TextView
@@ -181,6 +202,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
+                                    android:textColor="@color/grey"
                                     tools:text="Telefono" />
                             </LinearLayout>
 
@@ -217,6 +239,10 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:text="MÁS" />
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="20sp"
+                                android:background="@color/white"/>
                         </LinearLayout>
 
                     </RelativeLayout>

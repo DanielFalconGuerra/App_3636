@@ -4,6 +4,7 @@ package com.example.a3636.restaurantdata;
 public class RestaurantInformation {
 
     private String logoRestaurant = "";
+    private String nameText = "";
     private String addressText = "";
     private String availabilityText = "";
     private String typesOfFoodText = "";
@@ -11,11 +12,16 @@ public class RestaurantInformation {
 
     public RestaurantInformation() {
         this.logoRestaurant = logoRestaurant;
+        this.nameText = nameText;
         this.addressText = addressText;
         this.availabilityText = availabilityText;
         this.typesOfFoodText = typesOfFoodText;
         this.phoneText = phoneText;
     }
+
+    public String getNameText() { return nameText; }
+
+    public void setNameText(String nameText) { this.nameText = nameText; }
 
     public String getLogoRestaurant() {
         return logoRestaurant;

@@ -10,10 +10,13 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         tools:context=".MainActivity">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center">
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/imageAnimationLocation"
                 android:layout_width="match_parent"
@@ -25,6 +28,14 @@
                 app:lottie_rawRes="@raw/mapspinlocationred"
                 app:lottie_repeatCount="1"
                 android:layout_gravity="center_vertical" />
+            <TextView
+                android:id="@+id/txtSearchingAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Buscando su dirección actual!!!"
+                android:textColor="@color/yellow"
+                android:gravity="center"
+                android:textSize="30sp"/>
         </LinearLayout>
         <LinearLayout
             android:id="@+id/layoutLocation"
@@ -76,6 +87,9 @@
                 android:layout_height="wrap_content"
                 android:text="Direccion"
                 android:textSize="25sp"
+                android:textColor="@color/grey"
+                android:gravity="center"
+                android:layout_marginVertical="15sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtLongitud" />
@@ -117,7 +131,8 @@
                     android:layout_marginVertical="45dp"
                     android:layout_marginStart="10dp"
                     android:visibility="gone"
-                    android:layout_gravity="center"/>
+                    android:layout_gravity="center"
+                    android:background="@color/yellowBackground"/>
             </LinearLayout>
         </LinearLayout>
 
