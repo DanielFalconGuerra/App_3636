@@ -14,8 +14,13 @@ import java.util.Arrays;
 import java.util.Collection;
 
 public class DatabaseConnection {
+    final String ip = "192.168.0.34";
+    final String user = "daniel";
+    final String pss = "1234";
+    final String db = "demo";
     public Connection CONN()
     {
+        //10.0.2.2
         final String class_jdbc = "com.mysql.jdbc.Driver";
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                 .permitAll().build();
@@ -24,11 +29,11 @@ public class DatabaseConnection {
         try {
             Class.forName(class_jdbc);
             String gURL = "jdbc:mysql://";
-            String gIP = "10.0.2.2";
+            String gIP = ip;
             String gPORT = "3306";
-            String gDATABASE = "demo";
-            String gUSR = "root";
-            String gPSW = "";
+            String gDATABASE = db;
+            String gUSR = user;
+            String gPSW = pss;
             conn = DriverManager.getConnection(gURL + gIP + ":" + gPORT + "/" + gDATABASE, gUSR, gPSW);
         } catch (SQLException se) {
             Log.e("ERROR1", se.getMessage());
@@ -80,7 +85,7 @@ public class DatabaseConnection {
         String typesOfFood [] = new String[14];
         int numberTypes = 0;
         try {
-            Connection conexion=DriverManager.getConnection("jdbc:mysql://10.0.2.2/demo","root" ,"");
+            Connection conexion=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+db,user ,pss);
             Statement command=conexion.createStatement();
             ResultSet types = command.executeQuery("select * from tipocomida");
             while (types.next()) {
@@ -98,7 +103,7 @@ public class DatabaseConnection {
         String horaries [] = new String[50];
         int numberHours = 0;
         try {
-            Connection conexion=DriverManager.getConnection("jdbc:mysql://10.0.2.2/demo","root" ,"");
+            Connection conexion=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+db,user ,pss);
             Statement command=conexion.createStatement();
             ResultSet hours = command.executeQuery("select * from horarios");
             while (hours.next()) {
@@ -117,7 +122,7 @@ public class DatabaseConnection {
         int columnNumber = 0;
         int rowsNumber = 0;
         try {
-            Connection conexion=DriverManager.getConnection("jdbc:mysql://10.0.2.2/demo","root" ,"");
+            Connection conexion=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+db,user ,pss);
             Statement command=conexion.createStatement();
             ResultSet hours = command.executeQuery("select * from tipocomida");
             while (hours.next()) {
@@ -137,7 +142,7 @@ public class DatabaseConnection {
     public String getDayClosedRestaurant(String idRestaurant, String day){
         String IDDay = "";
         try {
-            Connection conexion=DriverManager.getConnection("jdbc:mysql://10.0.2.2/demo","root" ,"");
+            Connection conexion=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+db,user ,pss);
             Statement command=conexion.createStatement();
             String queries = "select IDDia" + day + " from horario_restaurante where IDRestaurante = " + idRestaurant;
             ResultSet hours = command.executeQuery(queries);
@@ -157,7 +162,7 @@ public class DatabaseConnection {
         schedule[1] = "";
         int rowsNumber = 0;
         try {
-            Connection conexion=DriverManager.getConnection("jdbc:mysql://10.0.2.2/demo","root" ,"");
+            Connection conexion=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+db,user ,pss);
             Statement command=conexion.createStatement();
             String queries = "select IDHorario1Dia" + day + ", IDHorario2Dia" + day + " from horario_restaurante where IDRestaurante = " + idRestaurant + " and IDDia" + day + " = " + day;
             ResultSet hours = command.executeQuery(queries);
@@ -179,7 +184,7 @@ public class DatabaseConnection {
         int columnNumber = 0;
         int rowsNumber = 0;
         try {
-            Connection conexion=DriverManager.getConnection("jdbc:mysql://10.0.2.2/demo","root" ,"");
+            Connection conexion=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+db,user ,pss);
             Statement command=conexion.createStatement();
             ResultSet hours = command.executeQuery("select * from tiporestur");
             while (hours.next()) {
@@ -202,7 +207,7 @@ public class DatabaseConnection {
     public String getIDRestaurant(String IDTipoRe){
         String idRestaurant = "";
         try {
-            Connection conexion=DriverManager.getConnection("jdbc:mysql://10.0.2.2/demo","root" ,"");
+            Connection conexion=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+db,user ,pss);
             Statement command=conexion.createStatement();
             ResultSet hours = command.executeQuery("select IDRestaurante from tiporestur where IDTipoRe = " + IDTipoRe);
             while (hours.next()) {
@@ -219,7 +224,7 @@ public class DatabaseConnection {
     public String getSchedule(String scheduleReceived){
         String scheduleToSend = "";
         try {
-            Connection conexion=DriverManager.getConnection("jdbc:mysql://10.0.2.2/demo","root" ,"");
+            Connection conexion=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+db,user ,pss);
             Statement command=conexion.createStatement();
             ResultSet hours = command.executeQuery("select Horario from horarios where IDHorario = " + scheduleReceived);
             while (hours.next()) {

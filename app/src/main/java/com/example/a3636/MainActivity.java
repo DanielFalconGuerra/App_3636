@@ -1,313 +1,254 @@
 package com.example.a3636;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
+import android.animation.Animator;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.location.LocationProvider;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.a3636.database.DatabaseConnection;
 import com.example.a3636.restaurantdata.RestaurantInformation;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class MainActivity extends AppCompatActivity {
     TextView tv1;
-    DatabaseConnection connection = new DatabaseConnection();
-
+    TextView latitud,longitud;
+    TextView direccion;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        TypesOfFoodAndSchedules typesOfFoodAndSchedules = new TypesOfFoodAndSchedules();
-        AtomicInteger identificadorDeRestaurante = new AtomicInteger();
+        LottieAnimationView imageAnimationLocation = findViewById(R.id.imageAnimationLocation);
+        imageAnimationLocation.addAnimatorListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                Log.e("Animation:","start");
+                imageAnimationLocation.setVisibility(View.VISIBLE);
+            }
 
-        //Spinner para Tipo de Comida
-        Spinner spinnerTipoComida = findViewById(R.id.menu_tipoComida);
-        String foodType[];
-        //Obtener tipos de comida de base de datos
-        connection.CONN();
-        //foodType = connection.getTypesOfFood();
-        foodType = typesOfFoodAndSchedules.getTypesOfFood();
-        //ArrayAdapter<CharSequence>adapter=ArrayAdapter.createFromResource(this,R.array.TipodeComida, android.R.layout.simple_spinner_item);
-        ArrayAdapter <CharSequence>adapter= new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, foodType);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-        spinnerTipoComida.setAdapter(adapter);
-        //Spinner para Horario
-        Spinner spinnerHorario = findViewById(R.id.menu_Horario);
-        //Obtener tipos de comida de base de datos
-        String hours[];
-        connection.CONN();
-        //Obtener horarios de restaurantes
-        //hours = connection.getHoraries();
-        hours = typesOfFoodAndSchedules.getItemsToArraySchedules();
-        //ArrayAdapter<CharSequence>adapter=ArrayAdapter.createFromResource(this,R.array.TipodeComida, android.R.layout.simple_spinner_item);
-        ArrayAdapter <CharSequence>adapterHour= new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, hours);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-        spinnerHorario.setAdapter(adapterHour);
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                Log.e("Animation:","end");
+                imageAnimationLocation.setVisibility(View.GONE);
+                LinearLayout layoutLocation = findViewById(R.id.layoutLocation);
+                layoutLocation.setVisibility(View.VISIBLE);
+                latitud = (TextView) findViewById(R.id.txtLatitud);
+                longitud = (TextView) findViewById(R.id.txtLongitud);
+                direccion = (TextView) findViewById(R.id.txtDireccion);
 
-        Button btnSearchRestaurant = findViewById(R.id.btnSearchRestaurant);
-        btnSearchRestaurant.setOnClickListener(view -> {
-            String typeFood = spinnerTipoComida.getSelectedItem().toString();
-            String hour = spinnerHorario.getSelectedItem().toString();
-            Intent showRestaurantFound = new Intent(this, ShowRestaurantsFound.class);
-            showRestaurantFound.putExtra("typeFood", typeFood);
-            showRestaurantFound.putExtra("hour", hour);
-            startActivity(showRestaurantFound);
-        });
+                if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,}, 1000);
+                } else {
+                    locationStart();
+                    Button btnSearch = findViewById(R.id.btnSearch);
+                    Button btnTest = findViewById(R.id.btnTest);
+                    TextView addressFound = findViewById(R.id.addressFound);
+                    btnSearch.setOnClickListener(view -> {
+                        String dir = (String) direccion.getText();
+                        if(dir.equals("")){
+                            direccion.setText("La ubicacion no ha podido ser obtenida");
+                            btnSearch.setVisibility(View.GONE);
+                            addressFound.setText("Dirección encontrada");
+                            direccion.setGravity(Gravity.CENTER);
+                            elementsError();
+                        }else{
+                            String ciudad = "";
+                            String[] textElements = dir.split(",");
+                            int index = textElements[2].indexOf(" ", 1);
+                            ciudad = textElements[2].substring(index);
+                            if(ciudad.equals("Irapuato")){
 
-        //Codigo para Buscar Por Categoría
-        Button btnRestaurant = findViewById(R.id.btnRestaurant);
-        Button btnCoffee = findViewById(R.id.btnCoffee);
-        Button btnBar = findViewById(R.id.btnBar);
+                            }else
+                            if(ciudad.equals("Guanajuato")){
 
-        //Cambiar de Restaurante
-        Button previos_restaurant = findViewById(R.id.previos_restaurant);
-        Button next_restaurant = findViewById(R.id.next_restaurant);
-        Button somethingyoumightlikebutton = findViewById(R.id.somethingyoumightlikebutton);
+                            }else
+                            if(ciudad.equals("León")){
 
-        ImageView logoRestaurant = findViewById(R.id.logoRestaurant);
-        TextView addressText = findViewById(R.id.addressText);
-        TextView availabilityText = findViewById(R.id.availabilityText);
-        TextView typesOfFoodText = findViewById(R.id.typesOfFoodText);
-        TextView phoneText = findViewById(R.id.phoneText);
+                            }else
+                            if(ciudad.equals("Celaya")){
 
-        RestaurantInformation Arena88 = new RestaurantInformation();
-        RestaurantInformation LaGenareria = new RestaurantInformation();
-        RestaurantInformation CostillaWinebarlechon = new RestaurantInformation();
+                            }else
+                            if(ciudad.equals("Chihuahua")){
 
-        Arena88.setAddressText("Dirección: Irapuato, Guanajuato. Plaza 3636 Gómez Morín");
-        Arena88.setTypesOfFoodText("Tipos de Comida: Bar, Restaurante - Bar, Mariscos");
-        Arena88.setPhoneText("Teléfono: 462 688 3664");
-        Arena88.setAvailabilityText("Disponibilidad el día de hoy: 12:00 a 23:00");
-        Arena88.setLogoRestaurant("@mipmap/arena88.jpg");
+                            }else
+                            if(ciudad.equals("Juarez")) {
 
-        LaGenareria.setAddressText("Dirección: Irapuato, Guanajuato. Plaza 3636 Gómez Morín");
-        LaGenareria.setTypesOfFoodText("Tipos de Comida: Americana, Restaurante - Bar, Bar");
-        LaGenareria.setPhoneText("Teléfono: 462 200 4863");
-        LaGenareria.setAvailabilityText("Disponibilidad el día de hoy: 14:00 a 23:00");
-        LaGenareria.setLogoRestaurant("@mipmap/lagenareria.png");
-
-        CostillaWinebarlechon.setAddressText("Dirección: Irapuato, Guanajuato. Plaza 3636 Gómez Morín");
-        CostillaWinebarlechon.setTypesOfFoodText("Tipos de Comida: Bar, Restaurante - Bar, Café");
-        CostillaWinebarlechon.setPhoneText("Teléfono: 462 607 9612");
-        CostillaWinebarlechon.setAvailabilityText("Disponibilidad el día de hoy: 10:00 a 22:00");
-        CostillaWinebarlechon.setLogoRestaurant("@mipmap/costilla.png");
-
-        AtomicReference<Boolean> restaurantSelected = new AtomicReference<>(true);
-        AtomicReference<Boolean> coffeeSelected = new AtomicReference<>(true);
-        AtomicReference<Boolean> barSelected = new AtomicReference<>(true);
-
-        addressText.setGravity(Gravity.CENTER);
-        typesOfFoodText.setGravity(Gravity.CENTER);
-        phoneText.setGravity(Gravity.CENTER);
-        availabilityText.setGravity(Gravity.CENTER);
-
-        btnRestaurant.setOnClickListener(view -> {
-            restaurantSelected.set(true);
-            coffeeSelected.set(false);
-            barSelected.set(false);
-
-            identificadorDeRestaurante.set(0);
-
-            addressText.setText(Arena88.getAddressText());
-            typesOfFoodText.setText(Arena88.getTypesOfFoodText());
-            phoneText.setText(Arena88.getPhoneText());
-            availabilityText.setText(Arena88.getAvailabilityText());
-            logoRestaurant.setImageResource(R.mipmap.arena88);
-        });
-        btnCoffee.setOnClickListener(view -> {
-            restaurantSelected.set(false);
-            coffeeSelected.set(true);
-            barSelected.set(false);
-            identificadorDeRestaurante.set(1);
-            addressText.setText(CostillaWinebarlechon.getAddressText());
-            typesOfFoodText.setText(CostillaWinebarlechon.getTypesOfFoodText());
-            phoneText.setText(CostillaWinebarlechon.getPhoneText());
-            availabilityText.setText(CostillaWinebarlechon.getAvailabilityText());
-            logoRestaurant.setImageResource(R.mipmap.costilla);
-        });
-        btnBar.setOnClickListener(view -> {
-            restaurantSelected.set(false);
-            coffeeSelected.set(false);
-            barSelected.set(true);
-            identificadorDeRestaurante.set(0);
-            addressText.setText(CostillaWinebarlechon.getAddressText());
-            typesOfFoodText.setText(CostillaWinebarlechon.getTypesOfFoodText());
-            phoneText.setText(CostillaWinebarlechon.getPhoneText());
-            availabilityText.setText(CostillaWinebarlechon.getAvailabilityText());
-            logoRestaurant.setImageResource(R.mipmap.costilla);
-
-        });
-        previos_restaurant.setOnClickListener(view -> {
-            if(restaurantSelected.get()){
-                switch (identificadorDeRestaurante.get()){
-                    case 0:
-                        identificadorDeRestaurante.set(2);
-                        addressText.setText(CostillaWinebarlechon.getAddressText());
-                        typesOfFoodText.setText(CostillaWinebarlechon.getTypesOfFoodText());
-                        phoneText.setText(CostillaWinebarlechon.getPhoneText());
-                        availabilityText.setText(CostillaWinebarlechon.getAvailabilityText());
-                        logoRestaurant.setImageResource(R.mipmap.costilla);
-                        break;
-                    case 1:
-                        identificadorDeRestaurante.set(0);
-                        addressText.setText(Arena88.getAddressText());
-                        typesOfFoodText.setText(Arena88.getTypesOfFoodText());
-                        phoneText.setText(Arena88.getPhoneText());
-                        availabilityText.setText(Arena88.getAvailabilityText());
-                        logoRestaurant.setImageResource(R.mipmap.arena88);
-                        break;
-                    case 2:
-                        identificadorDeRestaurante.set(1);
-                        addressText.setText(LaGenareria.getAddressText());
-                        typesOfFoodText.setText(LaGenareria.getTypesOfFoodText());
-                        phoneText.setText(LaGenareria.getPhoneText());
-                        availabilityText.setText(LaGenareria.getAvailabilityText());
-                        logoRestaurant.setImageResource(R.mipmap.lagenareria);break;
-                }
-            }else
-            if(coffeeSelected.get()){
-                addressText.setText(CostillaWinebarlechon.getAddressText());
-                typesOfFoodText.setText(CostillaWinebarlechon.getTypesOfFoodText());
-                phoneText.setText(CostillaWinebarlechon.getPhoneText());
-                availabilityText.setText(CostillaWinebarlechon.getAvailabilityText());
-                logoRestaurant.setImageResource(R.mipmap.costilla);
-            }else
-            if(barSelected.get()){
-                switch (identificadorDeRestaurante.get()){
-                    case 0:
-                        identificadorDeRestaurante.set(2);
-                        addressText.setText(LaGenareria.getAddressText());
-                        typesOfFoodText.setText(LaGenareria.getTypesOfFoodText());
-                        phoneText.setText(LaGenareria.getPhoneText());
-                        availabilityText.setText(LaGenareria.getAvailabilityText());
-                        logoRestaurant.setImageResource(R.mipmap.lagenareria);
-                        break;
-                    case 1:
-                        identificadorDeRestaurante.set(0);
-                        addressText.setText(CostillaWinebarlechon.getAddressText());
-                        typesOfFoodText.setText(CostillaWinebarlechon.getTypesOfFoodText());
-                        phoneText.setText(CostillaWinebarlechon.getPhoneText());
-                        availabilityText.setText(CostillaWinebarlechon.getAvailabilityText());
-                        logoRestaurant.setImageResource(R.mipmap.costilla);
-                        break;
-                    case 2:
-                        identificadorDeRestaurante.set(1);
-                        addressText.setText(Arena88.getAddressText());
-                        typesOfFoodText.setText(Arena88.getTypesOfFoodText());
-                        phoneText.setText(Arena88.getPhoneText());
-                        availabilityText.setText(Arena88.getAvailabilityText());
-                        logoRestaurant.setImageResource(R.mipmap.arena88);
-                        break;
+                            }else {
+                                elementsError();
+                                btnSearch.setVisibility(View.GONE);
+                            }
+                        }
+                    });
+                    btnTest.setOnClickListener(view -> {
+                        DatabaseConnection connection = new DatabaseConnection();
+                        connection.CONN();
+                        String inf = connection.getDayClosedRestaurant("1","1");
+                        Toast.makeText(MainActivity.this,inf,Toast.LENGTH_SHORT).show();
+                        Log.d("inf",inf);
+                    });
                 }
             }
-        });
-        next_restaurant.setOnClickListener(view -> {
-            if(restaurantSelected.get()){
-                switch (identificadorDeRestaurante.get()){
-                    case 0:
-                        identificadorDeRestaurante.set(1);
-                        addressText.setText(LaGenareria.getAddressText());
-                        typesOfFoodText.setText(LaGenareria.getTypesOfFoodText());
-                        phoneText.setText(LaGenareria.getPhoneText());
-                        availabilityText.setText(LaGenareria.getAvailabilityText());
-                        logoRestaurant.setImageResource(R.mipmap.lagenareria);
-                        break;
-                    case 1:
-                        identificadorDeRestaurante.set(2);
-                        addressText.setText(CostillaWinebarlechon.getAddressText());
-                        typesOfFoodText.setText(CostillaWinebarlechon.getTypesOfFoodText());
-                        phoneText.setText(CostillaWinebarlechon.getPhoneText());
-                        availabilityText.setText(CostillaWinebarlechon.getAvailabilityText());
-                        logoRestaurant.setImageResource(R.mipmap.costilla);
-                        break;
-                    case 2:
-                        identificadorDeRestaurante.set(0);
-                        addressText.setText(Arena88.getAddressText());
-                        typesOfFoodText.setText(Arena88.getTypesOfFoodText());
-                        phoneText.setText(Arena88.getPhoneText());
-                        availabilityText.setText(Arena88.getAvailabilityText());
-                        logoRestaurant.setImageResource(R.mipmap.arena88);
-                        break;
-                }
-            }else
-            if(coffeeSelected.get()){
-                addressText.setText(CostillaWinebarlechon.getAddressText());
-                typesOfFoodText.setText(CostillaWinebarlechon.getTypesOfFoodText());
-                phoneText.setText(CostillaWinebarlechon.getPhoneText());
-                availabilityText.setText(CostillaWinebarlechon.getAvailabilityText());
-                logoRestaurant.setImageResource(R.mipmap.costilla);
-            }else
-            if(barSelected.get()){
-                switch (identificadorDeRestaurante.get()){
-                    case 0:
-                        identificadorDeRestaurante.set(1);
-                        addressText.setText(LaGenareria.getAddressText());
-                        typesOfFoodText.setText(LaGenareria.getTypesOfFoodText());
-                        phoneText.setText(LaGenareria.getPhoneText());
-                        availabilityText.setText(LaGenareria.getAvailabilityText());
-                        logoRestaurant.setImageResource(R.mipmap.lagenareria);
-                        break;
-                    case 1:
-                        identificadorDeRestaurante.set(2);
-                        addressText.setText(Arena88.getAddressText());
-                        typesOfFoodText.setText(Arena88.getTypesOfFoodText());
-                        phoneText.setText(Arena88.getPhoneText());
-                        availabilityText.setText(Arena88.getAvailabilityText());
-                        logoRestaurant.setImageResource(R.mipmap.arena88);
-                        break;
-                    case 2:
-                        identificadorDeRestaurante.set(0);
-                        addressText.setText(CostillaWinebarlechon.getAddressText());
-                        typesOfFoodText.setText(CostillaWinebarlechon.getTypesOfFoodText());
-                        phoneText.setText(CostillaWinebarlechon.getPhoneText());
-                        availabilityText.setText(CostillaWinebarlechon.getAvailabilityText());
-                        logoRestaurant.setImageResource(R.mipmap.costilla);
-                        break;
-                }
+            @Override
+            public void onAnimationCancel(Animator animation) {
+                Log.e("Animation:","cancel");
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+                Log.e("Animation:","repeat");
             }
         });
-        somethingyoumightlikebutton.setOnClickListener(view -> {
-            Intent switchInterface = new Intent(this, SomethingYouMightLike.class);
-            startActivity(switchInterface);
-        });
-        Button btnMore = findViewById(R.id.btnMore);
-        btnMore.setOnClickListener(view -> {
-            Intent moreInterface = new Intent(this, More.class);
-            startActivity(moreInterface);
-        });
-        //Mostrar informacion de restaurantes
-        //LinearLayout datosRestaurantes = (LinearLayout) findViewById(R.id.datosRestaurantes);
-        //datosRestaurantes.addView(layout);
+
     }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        return true;
+    private void elementsError(){
+        TextView tvSuggestions = new TextView(this);
+        Button btnCitySelected = new Button(this);
+        LinearLayout layout = findViewById(R.id.layoutError);
+        TextView tvError = new TextView(this);
+        Spinner spinnerCiudad = findViewById(R.id.spinnerCiudad);
+        LinearLayout layoutButton = new LinearLayout(this);
+        String cities[] = {"Irapuato", "Guanajuato", "León", "Celaya", "Chihuahua", "Juarez"};
+        ArrayAdapter<CharSequence> adapter= new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, cities);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        spinnerCiudad.setAdapter(adapter);
+        spinnerCiudad.setVisibility(View.VISIBLE);
+        tvError.setText("Tu ciudad no cuenta con restaurantes registrados en estos momentos");
+        tvSuggestions.setText("O bien, seleccione la ciudad donde desea buscar");
+        btnCitySelected.setText("Buscar por ciudad");
+        tvError.setGravity(Gravity.CENTER);
+        tvSuggestions.setGravity(Gravity.CENTER);
+        tvError.setPadding(0,30,0,20);
+        tvSuggestions.setPadding(0,10,0,20);
+        layout.addView(tvError);
+        layout.addView(tvSuggestions);
+        layoutButton.setGravity(Gravity.CENTER);
+        layoutButton.addView(btnCitySelected);
+        layout.addView(layoutButton);
+        btnCitySelected.setOnClickListener(view1 -> {
+            String city = spinnerCiudad.getSelectedItem().toString();
+            if(city.equals("Irapuato")){
+                Intent showCityRestaurants = new Intent(this, Interface3636.class);
+                startActivity(showCityRestaurants);
+            }
+        });
     }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        switch (item.getItemId()){
-            case R.id.item1:
-                Toast.makeText(this,"Inicio", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.item2:
-                Toast.makeText(this,"Contacto", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.item3:
-                Toast.makeText(this,"Login", Toast.LENGTH_SHORT).show();
-                break;
+    private void locationStart() {
+        LocationManager mlocManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        Localizacion Local = new Localizacion();
+        Local.setMainActivity(this);
+        final boolean gpsEnabled = mlocManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        if (!gpsEnabled) {
+            Intent settingsIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+            startActivity(settingsIntent);
         }
-        return super.onOptionsItemSelected(item);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,}, 1000);
+            return;
+        }
+        mlocManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, (LocationListener) Local);
+        mlocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, (LocationListener) Local);
+        latitud.setText("Localización agregada");
+        direccion.setText("");
+    }
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 1000) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                locationStart();
+                return;
+            }
+        }
+    }
+    public void setLocation(Location loc) {
+        //Obtener la direccion de la calle a partir de la latitud y la longitud
+        if (loc.getLatitude() != 0.0 && loc.getLongitude() != 0.0) {
+            try {
+                Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+                List<Address> list = geocoder.getFromLocation(
+                        loc.getLatitude(), loc.getLongitude(), 1);
+                if (!list.isEmpty()) {
+                    Address DirCalle = list.get(0);
+                    direccion.setText(DirCalle.getAddressLine(0));
+                    Log.d("direccion", DirCalle.getAddressLine(0));
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    /* Aqui empieza la Clase Localizacion */
+    public class Localizacion implements LocationListener {
+        MainActivity mainActivity;
+        public MainActivity getMainActivity() {
+            return mainActivity;
+        }
+        public void setMainActivity(MainActivity mainActivity) {
+            this.mainActivity = mainActivity;
+        }
+        @Override
+        public void onLocationChanged(Location loc) {
+            // Este metodo se ejecuta cada vez que el GPS recibe nuevas coordenadas
+            // debido a la deteccion de un cambio de ubicacion
+            loc.getLatitude();
+            loc.getLongitude();
+            String sLatitud = String.valueOf(loc.getLatitude());
+            String sLongitud = String.valueOf(loc.getLongitude());
+            latitud.setText(sLatitud);
+            longitud.setText(sLongitud);
+            this.mainActivity.setLocation(loc);
+        }
+        @Override
+        public void onProviderDisabled(String provider) {
+            // Este metodo se ejecuta cuando el GPS es desactivado
+            latitud.setText("GPS Desactivado");
+        }
+        @Override
+        public void onProviderEnabled(String provider) {
+            // Este metodo se ejecuta cuando el GPS es activado
+            latitud.setText("GPS Activado");
+        }
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+            switch (status) {
+                case LocationProvider.AVAILABLE:
+                    Log.d("debug", "LocationProvider.AVAILABLE");
+                    break;
+                case LocationProvider.OUT_OF_SERVICE:
+                    Log.d("debug", "LocationProvider.OUT_OF_SERVICE");
+                    break;
+                case LocationProvider.TEMPORARILY_UNAVAILABLE:
+                    Log.d("debug", "LocationProvider.TEMPORARILY_UNAVAILABLE");
+                    break;
+            }
+        }
     }
 }
