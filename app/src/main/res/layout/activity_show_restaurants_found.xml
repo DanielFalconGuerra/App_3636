@@ -9,7 +9,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/white"
         tools:context=".ShowRestaurantsFound">
         <LinearLayout
@@ -39,37 +39,38 @@
 
         </LinearLayout>
         <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:id="@+id/relativeLayoutShowRestaurantsFound"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_marginVertical="30dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="invisible"
             >
 
             <ScrollView
-                android:id="@+id/layoutRestaurantsFound"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:layout_centerHorizontal="true"
-                android:visibility="invisible">
+                android:layout_height="match_parent"
+                android:background="@color/white">
 
                 <LinearLayout
-                    android:id="@+id/ShowRestaurantFound"
+                    android:id="@+id/layoutRestaurantsFound"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    android:layout_gravity="center"
                     android:gravity="center"
                     android:orientation="vertical">
 
-                </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="30sp"
+                        android:gravity="center"
+                        android:text="Hola Mundo"
+                        android:textColor="@color/grey"
+                        android:textSize="30sp"
+                        android:visibility="gone" />
 
+
+                </LinearLayout>
             </ScrollView>
         </RelativeLayout>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

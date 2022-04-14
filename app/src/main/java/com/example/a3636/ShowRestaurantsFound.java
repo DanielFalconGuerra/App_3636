@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,12 +32,6 @@ public class ShowRestaurantsFound extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_restaurants_found);
-        DatabaseConnection dbConnect = new DatabaseConnection();
-        final int[] countRestaurantFound = {0};
-        //Datos recibidos de restaurantes
-        String typeFood = getIntent().getStringExtra("typeFood");
-        String hour = getIntent().getStringExtra("hour");
-        //Iniciar y terminar animacion
         LottieAnimationView imageAnimation = findViewById(R.id.imageAnimation);
         ImageView logoSoft = findViewById(R.id.logoSoft);
         imageAnimation.addAnimatorListener(new Animator.AnimatorListener() {
@@ -45,16 +40,22 @@ public class ShowRestaurantsFound extends AppCompatActivity {
                 Log.e("Animation:","start");
                 imageAnimation.setVisibility(View.VISIBLE);
             }
-
             @Override
             public void onAnimationEnd(Animator animation) {
-                Log.e("Animation:","end");
+                Log.e("Animation:", "end");
                 imageAnimation.setVisibility(View.GONE);
                 logoSoft.setVisibility(View.INVISIBLE);
                 LinearLayout layoutAnimation = findViewById(R.id.layoutAnimation);
                 layoutAnimation.setVisibility(View.GONE);
-                ScrollView layoutRestaurantsFound = findViewById(R.id.layoutRestaurantsFound);
-                layoutRestaurantsFound.setVisibility(View.VISIBLE);
+                RelativeLayout relativeLayoutShowRestaurantsFound = findViewById(R.id.relativeLayoutShowRestaurantsFound);
+                relativeLayoutShowRestaurantsFound.setVisibility(View.VISIBLE);
+                DatabaseConnection dbConnect = new DatabaseConnection();
+                final int[] countRestaurantFound = {0};
+                LinearLayout layoutRestaurantsFound = findViewById(R.id.layoutRestaurantsFound);
+                //Datos recibidos de restaurantes
+                String typeFood = getIntent().getStringExtra("typeFood");
+                String hour = getIntent().getStringExtra("hour");
+
                 String fecha = new SimpleDateFormat("yyyy/MM/dd").format(Calendar.getInstance().getTime());
                 String year = "", month = "", day = "";
                 year = fecha.substring(0,4);
@@ -136,12 +137,14 @@ public class ShowRestaurantsFound extends AppCompatActivity {
                                             }
                                             if(timeToReview.after(startTime) && timeToReview.before(finalTime)){
                                                 //Obtener datos del restaurante
-                                                LinearLayout layout = findViewById(R.id.ShowRestaurantFound);
+                                                LinearLayout layout = new LinearLayout(ShowRestaurantsFound.this);
                                                 layout.addView(showRestaurantsFound(IDRestaurantFound[i]));
+                                                layoutRestaurantsFound.addView(layout);
                                             }else{
                                                 if(countRestaurantFound[0] == 0){
-                                                    LinearLayout layout = findViewById(R.id.ShowRestaurantFound);
+                                                    LinearLayout layout = new LinearLayout(ShowRestaurantsFound.this);
                                                     layout.addView(errorRestaurantsNotFound());
+                                                    layoutRestaurantsFound.addView(layout);
                                                     countRestaurantFound[0] += 1;
                                                 }
                                             }
@@ -149,8 +152,9 @@ public class ShowRestaurantsFound extends AppCompatActivity {
                                     }
                                 }else{
                                     if(countRestaurantFound[0] == 0){
-                                        LinearLayout layout = findViewById(R.id.ShowRestaurantFound);
+                                        LinearLayout layout = new LinearLayout(ShowRestaurantsFound.this);
                                         layout.addView(errorRestaurantsNotFound());
+                                        layoutRestaurantsFound.addView(layout);
                                         countRestaurantFound[0] += 1;
                                     }
                                 }
@@ -159,13 +163,13 @@ public class ShowRestaurantsFound extends AppCompatActivity {
                     }
                 }else{
                     if(countRestaurantFound[0] == 0){
-                        LinearLayout layout = findViewById(R.id.ShowRestaurantFound);
+                        LinearLayout layout = new LinearLayout(ShowRestaurantsFound.this);
                         layout.addView(errorRestaurantsNotFound());
+                        layoutRestaurantsFound.addView(layout);
                         countRestaurantFound[0] += 1;
                     }
                 }
             }
-
             @Override
             public void onAnimationCancel(Animator animation) {
                 Log.e("Animation:","cancel");
@@ -176,7 +180,6 @@ public class ShowRestaurantsFound extends AppCompatActivity {
                 Log.e("Animation:","repeat");
             }
         });
-
 
     }
     public int getDayToDatabase(String day){
@@ -209,10 +212,12 @@ public class ShowRestaurantsFound extends AppCompatActivity {
     }
     public LinearLayout errorRestaurantsNotFound(){
         Toast.makeText(ShowRestaurantsFound.this,"Error",Toast.LENGTH_SHORT).show();
-        LottieAnimationView imageAnimation = findViewById(R.id.imageAnimation);
+        LottieAnimationView imageAnimation = new LottieAnimationView(ShowRestaurantsFound.this);
         TextView RestaurantNotFound = new TextView(ShowRestaurantsFound.this);
         TextView actionsToPerform = new TextView(ShowRestaurantsFound.this);
         LinearLayout layout = new LinearLayout(ShowRestaurantsFound.this);
+        layout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        //layout.setPadding(0,30,0,0);
         layout.setOrientation(LinearLayout.VERTICAL);
         RestaurantNotFound.setText("Restaurantes no encontrados");
         actionsToPerform.setText("Pruebe con un horario y/o tipo de comida distinto");
@@ -220,17 +225,22 @@ public class ShowRestaurantsFound extends AppCompatActivity {
         actionsToPerform.setTextSize(TypedValue.COMPLEX_UNIT_SP,18);
         RestaurantNotFound.setGravity(Gravity.CENTER);
         actionsToPerform.setGravity(Gravity.CENTER);
+        RestaurantNotFound.setTextColor(Color.GRAY);
+        actionsToPerform.setTextColor(Color.GRAY);
         imageAnimation.setAnimation(R.raw.tomatoerror);
         imageAnimation.playAnimation();
         imageAnimation.setVisibility(View.VISIBLE);
         imageAnimation.setRepeatCount(10);
         layout.addView(RestaurantNotFound);
         layout.addView(actionsToPerform);
+        layout.addView(imageAnimation);
         return layout;
     }
     public LinearLayout showRestaurantsFound(String idRestaurant){
         LinearLayout layout = new LinearLayout(ShowRestaurantsFound.this);
-        //layout.setOrientation(LinearLayout.VERTICAL);
+        layout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        layout.setPadding(0,30,0,0);
+        layout.setOrientation(LinearLayout.VERTICAL);
         TextView nameBusiness = new TextView(ShowRestaurantsFound.this);
         TextView addressBusiness = new TextView(ShowRestaurantsFound.this);
         TextView typeOfFoodBusiness = new TextView(ShowRestaurantsFound.this);
@@ -283,7 +293,7 @@ public class ShowRestaurantsFound extends AppCompatActivity {
             logoBusiness.setImageResource(R.mipmap.costilla);
         }else
             nameBusiness.setText("Error");
-        nameBusiness.setTextSize(20);
+        //nameBusiness.setTextSize(20);
         nameBusiness.setTextColor(Color.GRAY);
         addressBusiness.setTextColor(Color.GRAY);
         typeOfFoodBusiness.setTextColor(Color.GRAY);
