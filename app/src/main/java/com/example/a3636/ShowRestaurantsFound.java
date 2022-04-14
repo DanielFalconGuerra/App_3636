@@ -230,8 +230,6 @@ public class ShowRestaurantsFound extends AppCompatActivity {
         LinearLayout layoutAnimationError = new LinearLayout(ShowRestaurantsFound.this);
         layoutAnimationError.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 1000));
         layoutAnimationError.setGravity(Gravity.CENTER);
-        //layoutAnimationError.setVerticalGravity(Gravity.CENTER);
-        //layoutAnimationError.setHorizontalGravity(Gravity.LEFT);
         layoutAnimationError.addView(imageAnimation);
 
         RestaurantNotFound.setTextColor(Color.GRAY);
