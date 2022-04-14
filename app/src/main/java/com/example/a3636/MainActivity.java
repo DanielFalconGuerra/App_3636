@@ -1,5 +1,7 @@
 package com.example.a3636;
 
+import static android.graphics.Color.GRAY;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -148,12 +150,13 @@ public class MainActivity extends AppCompatActivity {
         tvError.setText("Tu ciudad no cuenta con restaurantes registrados en estos momentos");
         tvSuggestions.setText("O bien, seleccione la ciudad donde desea buscar");
         btnCitySelected.setText("Buscar por ciudad");
+        btnCitySelected.setBackgroundColor(Color.YELLOW);
         tvError.setGravity(Gravity.CENTER);
         tvSuggestions.setGravity(Gravity.CENTER);
         tvError.setPadding(0,30,0,20);
         tvSuggestions.setPadding(0,10,0,20);
-        tvError.setTextColor(Color.GRAY);
-        tvSuggestions.setTextColor(Color.GRAY);
+        tvError.setTextColor(GRAY);
+        tvSuggestions.setTextColor(GRAY);
         layout.addView(tvError);
         layout.addView(tvSuggestions);
         layoutButton.setGravity(Gravity.CENTER);

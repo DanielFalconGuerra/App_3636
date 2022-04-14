@@ -2,6 +2,7 @@ package com.example.a3636;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Layout;
 import android.util.Log;
@@ -191,6 +192,9 @@ public class SomethingYouMightLike extends AppCompatActivity {
 
         nameBusiness.setGravity(Gravity.CENTER);
         descriptionBusiness.setGravity(Gravity.CENTER);
+
+        nameBusiness.setTextColor(Color.BLACK);
+        descriptionBusiness.setTextColor(Color.BLACK);
 
         LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(300, 300);
         layoutParams.gravity=Gravity.CENTER;
