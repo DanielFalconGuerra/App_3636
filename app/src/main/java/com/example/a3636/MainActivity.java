@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
         TextView tvSelectSpinner = new TextView(this);
         Spinner spinnerCiudad = findViewById(R.id.spinnerCiudad);
         LinearLayout layoutButton = new LinearLayout(this);
-        String cities[] = {"Irapuato", "Guanajuato", "León", "Celaya", "Chihuahua", "Juarez"};
+        String cities[] = {"Seleccione la ciudad", "Irapuato", "Guanajuato", "León", "Celaya", "Chihuahua", "Juarez"};
         ArrayAdapter<CharSequence> adapter= new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, cities);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         spinnerCiudad.setAdapter(adapter);
@@ -173,9 +173,13 @@ public class MainActivity extends AppCompatActivity {
         layout.addView(layoutButton);
         btnCitySelected.setOnClickListener(view1 -> {
             String city = spinnerCiudad.getSelectedItem().toString();
-            if(city.equals("Irapuato")){
-                Intent showCityRestaurants = new Intent(this, Interface3636.class);
-                startActivity(showCityRestaurants);
+            if(city.equals("Seleccione la ciudad")){
+                Toast.makeText(this,"Debe seleccionar una ciudad antes de continuar", Toast.LENGTH_LONG).show();
+            }else{
+                if(city.equals("Irapuato")){
+                    Intent showCityRestaurants = new Intent(this, Interface3636.class);
+                    startActivity(showCityRestaurants);
+                }
             }
         });
     }

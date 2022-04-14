@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -225,6 +226,14 @@ public class ShowRestaurantsFound extends AppCompatActivity {
         actionsToPerform.setTextSize(TypedValue.COMPLEX_UNIT_SP,18);
         RestaurantNotFound.setGravity(Gravity.CENTER);
         actionsToPerform.setGravity(Gravity.CENTER);
+
+        LinearLayout layoutAnimationError = new LinearLayout(ShowRestaurantsFound.this);
+        layoutAnimationError.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 1000));
+        layoutAnimationError.setGravity(Gravity.CENTER);
+        //layoutAnimationError.setVerticalGravity(Gravity.CENTER);
+        //layoutAnimationError.setHorizontalGravity(Gravity.LEFT);
+        layoutAnimationError.addView(imageAnimation);
+
         RestaurantNotFound.setTextColor(Color.GRAY);
         actionsToPerform.setTextColor(Color.GRAY);
         imageAnimation.setAnimation(R.raw.tomatoerror);
@@ -233,7 +242,7 @@ public class ShowRestaurantsFound extends AppCompatActivity {
         imageAnimation.setRepeatCount(10);
         layout.addView(RestaurantNotFound);
         layout.addView(actionsToPerform);
-        layout.addView(imageAnimation);
+        layout.addView(layoutAnimationError);
         return layout;
     }
     public LinearLayout showRestaurantsFound(String idRestaurant){
