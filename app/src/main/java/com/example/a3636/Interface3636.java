@@ -3,6 +3,7 @@ package com.example.a3636;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.Menu;
@@ -54,24 +55,33 @@ public class Interface3636 extends AppCompatActivity {
         spinnerHorario.setAdapter(adapterHour);
 
         Button btnSearchRestaurant = findViewById(R.id.btnSearchRestaurant);
+        btnSearchRestaurant.setBackgroundColor(Color.rgb(255, 128, 0));
         btnSearchRestaurant.setOnClickListener(view -> {
             String typeFood = spinnerTipoComida.getSelectedItem().toString();
             String hour = spinnerHorario.getSelectedItem().toString();
-            Intent showRestaurantFound = new Intent(this, ShowRestaurantsFound.class);
-            showRestaurantFound.putExtra("typeFood", typeFood);
-            showRestaurantFound.putExtra("hour", hour);
-            startActivity(showRestaurantFound);
+            if(!(typeFood.equals("Seleccione el tipo de comida")||(hour.equals("Selecciona la hora")))){
+                Intent showRestaurantFound = new Intent(this, ShowRestaurantsFound.class);
+                showRestaurantFound.putExtra("typeFood", typeFood);
+                showRestaurantFound.putExtra("hour", hour);
+                startActivity(showRestaurantFound);
+            }
         });
 
         //Codigo para Buscar Por Categoría
         Button btnRestaurant = findViewById(R.id.btnRestaurant);
+        btnRestaurant.setBackgroundColor(Color.rgb(255, 128, 0));
         Button btnCoffee = findViewById(R.id.btnCoffee);
+        btnCoffee.setBackgroundColor(Color.rgb(255, 128, 0));
         Button btnBar = findViewById(R.id.btnBar);
+        btnBar.setBackgroundColor(Color.rgb(255, 128, 0));
 
         //Cambiar de Restaurante
         Button previos_restaurant = findViewById(R.id.previos_restaurant);
+        previos_restaurant.setBackgroundTintList(this.getResources().getColorStateList(R.color.orange));
         Button next_restaurant = findViewById(R.id.next_restaurant);
+        next_restaurant.setBackgroundTintList(this.getResources().getColorStateList(R.color.orange));
         Button somethingyoumightlikebutton = findViewById(R.id.somethingyoumightlikebutton);
+        somethingyoumightlikebutton.setBackgroundColor(Color.rgb(255, 128, 0));
 
         ImageView logoRestaurant = findViewById(R.id.logoRestaurant);
         TextView nameText = findViewById(R.id.nameText);
@@ -301,6 +311,7 @@ public class Interface3636 extends AppCompatActivity {
             startActivity(switchInterface);
         });
         Button btnMore = findViewById(R.id.btnMore);
+        btnMore.setBackgroundColor(Color.rgb(255, 128, 0));
         btnMore.setOnClickListener(view -> {
             Intent moreInterface = new Intent(this, More.class);
             startActivity(moreInterface);

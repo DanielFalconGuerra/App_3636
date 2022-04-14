@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,6 +51,10 @@ public class ShowRestaurantsFound extends AppCompatActivity {
                 Log.e("Animation:","end");
                 imageAnimation.setVisibility(View.GONE);
                 logoSoft.setVisibility(View.INVISIBLE);
+                LinearLayout layoutAnimation = findViewById(R.id.layoutAnimation);
+                layoutAnimation.setVisibility(View.GONE);
+                ScrollView layoutRestaurantsFound = findViewById(R.id.layoutRestaurantsFound);
+                layoutRestaurantsFound.setVisibility(View.VISIBLE);
                 String fecha = new SimpleDateFormat("yyyy/MM/dd").format(Calendar.getInstance().getTime());
                 String year = "", month = "", day = "";
                 year = fecha.substring(0,4);
@@ -225,7 +230,7 @@ public class ShowRestaurantsFound extends AppCompatActivity {
     }
     public LinearLayout showRestaurantsFound(String idRestaurant){
         LinearLayout layout = new LinearLayout(ShowRestaurantsFound.this);
-        layout.setOrientation(LinearLayout.VERTICAL);
+        //layout.setOrientation(LinearLayout.VERTICAL);
         TextView nameBusiness = new TextView(ShowRestaurantsFound.this);
         TextView addressBusiness = new TextView(ShowRestaurantsFound.this);
         TextView typeOfFoodBusiness = new TextView(ShowRestaurantsFound.this);
@@ -241,7 +246,8 @@ public class ShowRestaurantsFound extends AppCompatActivity {
         phoneBusiness.setGravity(Gravity.CENTER);
         availabilityBusiness.setGravity(Gravity.CENTER);
         availabilityBusiness.setPadding(0,0,0,50);
-        btnShowMenu.setText("Menu"); btnShowMenu.setText("Menu");
+        btnShowMenu.setText("Menu");
+        btnShowMenu.setBackgroundColor(Color.rgb(255, 128, 0));
 
         if(idRestaurant.equals("1")){
             nameBusiness.setText("La Genarería");
@@ -277,6 +283,12 @@ public class ShowRestaurantsFound extends AppCompatActivity {
             logoBusiness.setImageResource(R.mipmap.costilla);
         }else
             nameBusiness.setText("Error");
+        nameBusiness.setTextSize(20);
+        nameBusiness.setTextColor(Color.GRAY);
+        addressBusiness.setTextColor(Color.GRAY);
+        typeOfFoodBusiness.setTextColor(Color.GRAY);
+        phoneBusiness.setTextColor(Color.GRAY);
+        availabilityBusiness.setTextColor(Color.GRAY);
 
         layout.addView(logoBusiness);
         layout.addView(nameBusiness);

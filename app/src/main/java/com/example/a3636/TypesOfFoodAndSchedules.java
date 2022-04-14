@@ -1,7 +1,10 @@
 package com.example.a3636;
 
+import android.util.Log;
+
 public class TypesOfFoodAndSchedules {
     private String typesOfFood[] = new String[]{
+            "Seleccione el tipo de comida",
             "Japonesa",
             "China",
             "Italiana",
@@ -35,12 +38,14 @@ public class TypesOfFoodAndSchedules {
     }
 
     public String[] getItemsToArraySchedules(){
-        String schedules[] = new String[48];
+        String schedules[] = new String[50];
         int hour = 0;
-        for(int i = 0; i < 48; i++){
+        schedules[0] = "Selecciona la hora";
+        schedules[1] = "00:00";
+        for(int i = 2; i < 50; i++){
             String timeFormed = "";
-            if(hour < 10){
-                if(i % 2 == 0){
+            if(hour < 9){
+                if((i % 2 == 0)){
                     timeFormed += "0" + String.valueOf(hour) + ":00";
                 }else{
                     timeFormed += "0" + String.valueOf(hour) + ":30";
@@ -55,6 +60,7 @@ public class TypesOfFoodAndSchedules {
                 }
             }
             schedules[i] = timeFormed;
+            Log.d("schedules", String.valueOf(schedules));
         }
         return schedules;
     }

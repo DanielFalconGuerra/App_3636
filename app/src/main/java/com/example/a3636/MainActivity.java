@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -78,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
                     locationStart();
                     Button btnSearch = findViewById(R.id.btnSearch);
                     Button btnTest = findViewById(R.id.btnTest);
+                    btnSearch.setBackgroundColor(Color.rgb(255, 128, 0));
                     btnSearch.setOnClickListener(view -> {
                         String dir = (String) direccion.getText();
                         if(dir.equals("")){
@@ -140,6 +142,7 @@ public class MainActivity extends AppCompatActivity {
         Button btnCitySelected = new Button(this);
         LinearLayout layout = findViewById(R.id.layoutError);
         TextView tvError = new TextView(this);
+        TextView tvSelectSpinner = new TextView(this);
         Spinner spinnerCiudad = findViewById(R.id.spinnerCiudad);
         LinearLayout layoutButton = new LinearLayout(this);
         String cities[] = {"Irapuato", "Guanajuato", "León", "Celaya", "Chihuahua", "Juarez"};
@@ -150,17 +153,23 @@ public class MainActivity extends AppCompatActivity {
         tvError.setText("Tu ciudad no cuenta con restaurantes registrados en estos momentos");
         tvSuggestions.setText("O bien, seleccione la ciudad donde desea buscar");
         btnCitySelected.setText("Buscar por ciudad");
-        btnCitySelected.setBackgroundColor(Color.YELLOW);
+        tvSelectSpinner.setText("Seleccione la ciudad en la que desea realizar su búsqueda");
+        btnCitySelected.setBackgroundColor(Color.rgb(255, 128, 0));
         tvError.setGravity(Gravity.CENTER);
         tvSuggestions.setGravity(Gravity.CENTER);
+        tvSelectSpinner.setGravity(Gravity.CENTER);
         tvError.setPadding(0,30,0,20);
         tvSuggestions.setPadding(0,10,0,20);
+        tvSelectSpinner.setPadding(0,10,0,20);
         tvError.setTextColor(GRAY);
         tvSuggestions.setTextColor(GRAY);
+        tvSelectSpinner.setTextColor(GRAY);
         layout.addView(tvError);
         layout.addView(tvSuggestions);
         layoutButton.setGravity(Gravity.CENTER);
+        layoutButton.setOrientation(LinearLayout.VERTICAL);
         layoutButton.addView(btnCitySelected);
+        layoutButton.addView(tvSelectSpinner);
         layout.addView(layoutButton);
         btnCitySelected.setOnClickListener(view1 -> {
             String city = spinnerCiudad.getSelectedItem().toString();

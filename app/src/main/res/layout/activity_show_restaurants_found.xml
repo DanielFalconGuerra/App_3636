@@ -10,6 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         tools:context=".ShowRestaurantsFound">
         <LinearLayout
             android:id="@+id/layoutAnimation"
@@ -49,15 +50,17 @@
             >
 
             <ScrollView
+                android:id="@+id/layoutRestaurantsFound"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/grey"
-                android:layout_centerHorizontal="true">
+                android:background="@color/white"
+                android:layout_centerHorizontal="true"
+                android:visibility="invisible">
 
                 <LinearLayout
                     android:id="@+id/ShowRestaurantFound"
                     android:layout_width="match_parent"
-                    android:layout_height="400dp"
+                    android:layout_height="wrap_content"
                     android:background="@color/white"
                     android:layout_gravity="center"
                     android:gravity="center"
