@@ -2,12 +2,20 @@ package com.example.a3636;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,6 +25,7 @@ public class More extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_more);
+        ImageView interpclocation = findViewById(R.id.interpclocation);
         Button btnJoin = (Button) findViewById(R.id.btnJoin);
         Button btnSubscribe = findViewById(R.id.btnSubscribe);
         EditText txtRestaurantName = findViewById(R.id.txtRestaurantName);
@@ -43,6 +52,10 @@ public class More extends AppCompatActivity {
             sendMessage(mailToSubscribe, message, "Suscripcion a sitio web Softappetit");
         });
 
+        interpclocation.setOnClickListener(view -> {
+               Intent mapTest = new Intent(getApplicationContext(), InterPCLocation.class);
+               startActivity(mapTest);
+        });
     }
     private void sendMessage(String mail, String message, String subject){
         String[] TO = {mainMail};

@@ -122,6 +122,8 @@ public class MainActivity extends AppCompatActivity {
                         String inf = connection.getDayClosedRestaurant("1","1");
                         Toast.makeText(MainActivity.this,inf,Toast.LENGTH_SHORT).show();
                         Log.d("inf",inf);
+                        /*Intent mapTest = new Intent(getApplicationContext(), InterPCLocation.class);
+                        startActivity(mapTest);*/
                     });
                 }
             }
