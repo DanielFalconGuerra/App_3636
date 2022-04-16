@@ -277,4 +277,25 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case R.id.item1:
+                Toast.makeText(this,"Inicio", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.item2:
+                Toast.makeText(this,"Contacto", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.item3:
+                Intent login = new Intent(this, Login.class);
+                startActivity(login);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

@@ -4,8 +4,12 @@ import android.os.StrictMode;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.a3636.Login;
+
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -235,5 +239,26 @@ public class DatabaseConnection {
             return ex.toString();
         }
         return scheduleToSend;
+    }
+
+    public String loginCheck(String userToTest, String password){
+        String result = "";
+        try {
+            Connection conexion=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+db,user ,pss);
+            PreparedStatement ps = conexion.prepareStatement("select Correo from usuarios where Usuario=? and Password=?");
+            ps.setString(1, userToTest);
+            ps.setString(2, password);
+            ResultSet sr = ps.executeQuery();
+            if(sr.next()){
+                result = sr.getString(1);
+                if(!result.equals("")){
+                    result = "OK";
+                }
+            }
+            conexion.close();
+        } catch(SQLException ex){
+            return ex.toString();
+        }
+        return result;
     }
 }

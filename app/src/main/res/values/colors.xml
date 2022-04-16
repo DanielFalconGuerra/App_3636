@@ -12,4 +12,5 @@
     <color name="grey">#404143</color>
     <color name="yellowBackground">#e5ce29</color>
     <color name="orange">#FF8000</color>
+    <color name="yellowEditText">#F9F0AD</color>
 </resources>
