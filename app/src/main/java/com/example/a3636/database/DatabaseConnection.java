@@ -268,4 +268,63 @@ public class DatabaseConnection {
         return userData;
     }
     //Regitrar usuario: INSERT INTO usuarios (IDUsuario, Password, Usuario, Correo, Nombre, IDTipo) VALUES ('7', '$2a$10$tcvz8N8906cbkUWxTsw/wu/FYHeVR7sjduLAxWkmj0U1vZ8l2aoj6', 'Daniel', 'daniel@gmail.com', 'Daniel Falcon', '1');
+
+    public boolean checkIfTheUserAlreadyExists(String userToTest){
+        boolean existingUser = false;
+        try {
+            Connection conexion=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+db,user ,pss);
+            PreparedStatement ps = conexion.prepareStatement("select Usuario from usuarios where Usuario=?");
+            ps.setString(1, userToTest);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                String receivedUser = rs.getString(1);
+                if(!receivedUser.equals("")){
+                    existingUser = true;
+                    return existingUser;
+                }
+            }
+            conexion.close();
+        } catch(SQLException ex){
+            return existingUser;
+        }
+        return existingUser;
+    }
+
+    public String getLastIDUser(){
+        String lastIDUser = "";
+        try {
+            Connection conexion=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+db,user ,pss);
+            PreparedStatement ps = conexion.prepareStatement("select max(IDUsuario) from usuarios");
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                lastIDUser = rs.getString(1);
+                if(!lastIDUser.equals("")){
+                    return lastIDUser;
+                }
+            }
+            conexion.close();
+        } catch(SQLException ex){
+            lastIDUser = ex.getMessage();
+            return lastIDUser;
+        }
+        return lastIDUser;
+    }
+
+    public String createNewUser(String IDUsuario, String Password, String Usuario, String Correo, String Nombre, String IDTipo){
+        try {
+            Connection conexion=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+db,user ,pss);
+            PreparedStatement ps = conexion.prepareStatement("INSERT INTO usuarios (IDUsuario, Password, Usuario, Correo, Nombre, IDTipo) VALUES (?,?,?,?,?,?)");
+            ps.setString(1, IDUsuario);
+            ps.setString(2, Password);
+            ps.setString(3, Usuario);
+            ps.setString(4, Correo);
+            ps.setString(5, Nombre);
+            ps.setString(6, IDTipo);
+            ps.execute();
+            conexion.close();
+            return "Usuario creado con éxito";
+        } catch(SQLException ex){
+            return ex.getMessage();
+        }
+    }
 }
