@@ -3,6 +3,7 @@ package com.example.a3636;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.animation.Animator;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -276,6 +277,9 @@ public class ShowRestaurantsFound extends AppCompatActivity {
             layoutParams.gravity= Gravity.CENTER;
             logoBusiness.setLayoutParams(layoutParams);
             logoBusiness.setImageResource(R.mipmap.lagenareria);
+            btnShowMenu.setOnClickListener(view -> {
+                Toast.makeText(this,"La Genarería", Toast.LENGTH_SHORT).show();
+            });
         }else
         if(idRestaurant.equals("2")){
             nameBusiness.setText("Arena 88");
@@ -287,6 +291,14 @@ public class ShowRestaurantsFound extends AppCompatActivity {
             layoutParams.gravity= Gravity.CENTER;
             logoBusiness.setLayoutParams(layoutParams);
             logoBusiness.setImageResource(R.mipmap.arena88);
+            btnShowMenu.setOnClickListener(view -> {
+                String urlMenu = "http://app.softappetit.mx:50293/apps/coA98wi/arena88/MenuDigital.php";
+                Bundle url = new Bundle();
+                url.putString("url", urlMenu);
+                Intent showDigitalMenu = new Intent(this, ShowDigitalMenu.class);
+                showDigitalMenu.putExtras(url);
+                startActivity(showDigitalMenu);
+            });
         }else
         if(idRestaurant.equals("16")){
             nameBusiness.setText("Costilla Winebarlechon");
@@ -298,6 +310,9 @@ public class ShowRestaurantsFound extends AppCompatActivity {
             layoutParams.gravity= Gravity.CENTER;
             logoBusiness.setLayoutParams(layoutParams);
             logoBusiness.setImageResource(R.mipmap.costilla);
+            btnShowMenu.setOnClickListener(view -> {
+                Toast.makeText(this,"Costilla W", Toast.LENGTH_SHORT).show();
+            });
         }else
             nameBusiness.setText("Error");
         //nameBusiness.setTextSize(20);
@@ -314,9 +329,6 @@ public class ShowRestaurantsFound extends AppCompatActivity {
         layout.addView(phoneBusiness);
         layout.addView(availabilityBusiness);
         layout.addView(btnShowMenu);
-        btnShowMenu.setOnClickListener(view -> {
-            Toast.makeText(this,"Menu selected", Toast.LENGTH_SHORT).show();
-        });
         return layout;
     }
 }
