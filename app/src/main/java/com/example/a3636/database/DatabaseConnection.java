@@ -241,24 +241,31 @@ public class DatabaseConnection {
         return scheduleToSend;
     }
 
-    public String loginCheck(String userToTest, String password){
-        String result = "";
+    public String[] loginCheck(String userToTest){
+        String hash = "";
+        String IDType = "";
+        String[] userData = new String[2];
         try {
             Connection conexion=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+db,user ,pss);
-            PreparedStatement ps = conexion.prepareStatement("select Correo from usuarios where Usuario=? and Password=?");
+            PreparedStatement ps = conexion.prepareStatement("select Password, IDTipo from usuarios where Usuario=?");
             ps.setString(1, userToTest);
-            ps.setString(2, password);
-            ResultSet sr = ps.executeQuery();
-            if(sr.next()){
-                result = sr.getString(1);
-                if(!result.equals("")){
-                    result = "OK";
+            //ps.setString(2, password);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                hash = rs.getString(1);
+                IDType = rs.getString(2);
+                if(!hash.equals("")){
+                    userData[0] = hash;
+                    userData[1] = IDType;
+                    return userData;
                 }
             }
             conexion.close();
         } catch(SQLException ex){
-            return ex.toString();
+            userData[0] = ex.toString();
+            return userData;
         }
-        return result;
+        return userData;
     }
+    //Regitrar usuario: INSERT INTO usuarios (IDUsuario, Password, Usuario, Correo, Nombre, IDTipo) VALUES ('7', '$2a$10$tcvz8N8906cbkUWxTsw/wu/FYHeVR7sjduLAxWkmj0U1vZ8l2aoj6', 'Daniel', 'daniel@gmail.com', 'Daniel Falcon', '1');
 }

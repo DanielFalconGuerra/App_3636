@@ -2,6 +2,7 @@ package com.example.a3636;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,28 +22,44 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         DatabaseConnection dbConnect = new DatabaseConnection();
         Button BtnLogin = findViewById(R.id.BtnLogin);
+        Button BtnRegister = findViewById(R.id.BtnRegister);
         BtnLogin.setBackgroundColor(Color.rgb(255, 128, 0));
+        BtnRegister.setBackgroundColor(Color.rgb(255, 128, 0));
         EditText userEditText = findViewById(R.id.userEditText);
         EditText passwordEditText = findViewById(R.id.passwordEditText);
-
-        userEditText.setText("CeLiu");
-        passwordEditText.setText("$2y$10$8zfh/gzWl0JHtbp88nLeKukFSWc3Pr0Aty7i7lEaxJa2Y7cSvQVYu");
 
         BtnLogin.setOnClickListener(view -> {
             user = userEditText.getText().toString();
             password = passwordEditText.getText().toString();
-            String hash = BCrypt.hashpw(user, BCrypt.gensalt());
-
-            boolean s = BCrypt.checkpw(user, hash);
-            //Toast.makeText(this, String.valueOf(s), Toast.LENGTH_SHORT).show();
+            //String hash = BCrypt.hashpw(password, BCrypt.gensalt(8));
             dbConnect.CONN();
-            String res = dbConnect.loginCheck(user, password);
-            if(res.equals("OK")){
-                Toast.makeText(this, res, Toast.LENGTH_SHORT).show();
+            String[] userData = new String[2];
+            userData = dbConnect.loginCheck(user);
+            String hash = userData[0];
+            String IDType = userData[1];
+            boolean passwordOK = BCrypt.checkpw(password, hash);
+
+            if(passwordOK){
+                Toast.makeText(this, "OK", Toast.LENGTH_SHORT).show();
+                int IDTypeUser = Integer.valueOf(IDType);
+                switch (IDTypeUser){
+                    case 1:
+                        Toast.makeText(this, "Usuario detectado", Toast.LENGTH_SHORT).show();
+                        break;
+                    case 2:
+                        Toast.makeText(this, "Administrador detectado", Toast.LENGTH_SHORT).show();
+                        break;
+                    case 3:
+                        Toast.makeText(this, "Empresa detectada", Toast.LENGTH_SHORT).show();
+                        break;
+                }
             }else{
                 Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
             }
         });
-
+        BtnRegister.setOnClickListener(view -> {
+            Intent registerUser = new Intent(this, RegisterUser.class);
+            startActivity(registerUser);
+        });
     }
 }
