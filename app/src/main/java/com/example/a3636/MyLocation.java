@@ -30,7 +30,7 @@ public class MyLocation extends Application {
     public String leer(Context context)throws IOException {
         try {
 
-            InputStream archivo = context.getResources().openRawResource(R.raw.locationsave);
+            InputStream archivo = context.getResources().openRawResource(R.raw.jumpingsquares);
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(archivo));
             StringBuilder stringBuilder = new StringBuilder();
 
