@@ -1,27 +1,25 @@
 package com.example.a3636.database;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.StrictMode;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.example.a3636.Login;
-
-import java.io.InputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 
 public class DatabaseConnection {
     final String ip = "192.168.0.34";
     final String user = "daniel";
     final String pss = "1234";
-    final String db = "demo";
+    final String db = "demo2";
     public Connection CONN()
     {
         //10.0.2.2
@@ -310,21 +308,62 @@ public class DatabaseConnection {
         return lastIDUser;
     }
 
-    public String createNewUser(String IDUsuario, String Password, String Usuario, String Correo, String Nombre, String IDTipo){
+    public String getIDUser(String userName){
+        String IDUser = "";
         try {
             Connection conexion=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+db,user ,pss);
-            PreparedStatement ps = conexion.prepareStatement("INSERT INTO usuarios (IDUsuario, Password, Usuario, Correo, Nombre, IDTipo) VALUES (?,?,?,?,?,?)");
+            PreparedStatement ps = conexion.prepareStatement("select IDUsuario from usuarios where Usuario=?");
+            ps.setString(1, userName);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                IDUser = rs.getString(1);
+                if(!IDUser.equals("")){
+                    return IDUser;
+                }
+            }
+            conexion.close();
+        } catch(SQLException ex){
+            IDUser = ex.getMessage();
+            return IDUser;
+        }
+        return IDUser;
+    }
+
+    public String createNewUser(String IDUsuario, String Password, String Usuario, String Correo, String Nombre, String IDTipo, byte[] image){
+        try {
+            Connection conexion=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+db,user ,pss);
+            PreparedStatement ps = conexion.prepareStatement("INSERT INTO usuarios (IDUsuario, Password, Usuario, Correo, Nombre, IDTipo, Image) VALUES (?,?,?,?,?,?,?)");
             ps.setString(1, IDUsuario);
             ps.setString(2, Password);
             ps.setString(3, Usuario);
             ps.setString(4, Correo);
             ps.setString(5, Nombre);
             ps.setString(6, IDTipo);
+            ps.setBytes(7, image);
             ps.execute();
             conexion.close();
             return "Usuario creado con éxito";
         } catch(SQLException ex){
             return ex.getMessage();
         }
+    }
+    public byte[] getImage(String ID) {
+        String bytesImages = "";
+        ResultSet rs = null;
+        byte[] input = null;
+        try {
+            Connection conexion=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+db,user ,pss);
+            PreparedStatement ps = conexion.prepareStatement("select Image from usuarios where IDUsuario=?");
+            ps.setString(1, ID);
+            rs = ps.executeQuery();
+            if (rs.next()){
+                input = rs.getBytes(1);
+                //Bitmap bitmap = BitmapFactory.decodeByteArray(input, 0, input.length);
+                return input;
+                }
+            } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
     }
 }

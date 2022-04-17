@@ -3,6 +3,8 @@ package com.example.a3636;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -27,6 +29,46 @@ public class Interface3636 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_interface3636);
+
+        TextView nameUserSession = findViewById(R.id.nameUserSession);
+        ImageView imageUser = (ImageView) findViewById(R.id.imageUserSession);
+        TextView logIn = findViewById(R.id.logIn);
+
+        ImageView settingsIM = findViewById(R.id.settingsIM);
+
+        //Recuper ubicacion
+        String location = ((MyLocation)getApplication()).getLocation();
+        Toast.makeText(this,location,Toast.LENGTH_SHORT).show();
+
+        String userName = getIntent().getStringExtra("userName");
+        if(!userName.equals("not logged in")){
+            nameUserSession.setText(userName);
+            //Obtener ID del Usuario
+            connection.CONN();
+            String ID = connection.getIDUser(userName);
+            Toast.makeText(this,ID,Toast.LENGTH_SHORT).show();
+            //Obtener imagen de usuario
+            byte[] imageReceived = connection.getImage(ID);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(imageReceived, 0, imageReceived.length);
+            imageUser.setImageBitmap(bitmap);
+            logIn.setText("Cambiar de usuario");
+            logIn.setOnClickListener(view -> {
+                Intent login = new Intent(this, Login.class);
+                startActivity(login);
+            });
+        }else{
+            nameUserSession.setText("");
+            logIn.setText("Iniciar sesión");
+            logIn.setOnClickListener(view -> {
+                Intent login = new Intent(this, Login.class);
+                startActivity(login);
+            });
+        }
+        //----------------------------------------Pendiente------------------------------------
+        settingsIM.setOnClickListener(view -> {
+
+        });
+
         TypesOfFoodAndSchedules typesOfFoodAndSchedules = new TypesOfFoodAndSchedules();
         AtomicInteger identificadorDeRestaurante = new AtomicInteger();
 

@@ -13,4 +13,5 @@
     <color name="yellowBackground">#e5ce29</color>
     <color name="orange">#FF8000</color>
     <color name="yellowEditText">#F9F0AD</color>
+    <color name="links">#1A4BE5</color>
 </resources>

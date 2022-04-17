@@ -6,12 +6,22 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.a3636.database.DatabaseConnection;
 import com.example.a3636.encryption.BCrypt;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class Login extends AppCompatActivity {
     String user = "";
@@ -27,6 +37,10 @@ public class Login extends AppCompatActivity {
         BtnRegister.setBackgroundColor(Color.rgb(255, 128, 0));
         EditText userEditText = findViewById(R.id.userEditText);
         EditText passwordEditText = findViewById(R.id.passwordEditText);
+
+        //Ubicacion
+        String location = ((MyLocation)getApplication()).getLocation();
+        Toast.makeText(this,location,Toast.LENGTH_SHORT).show();
 
         BtnLogin.setOnClickListener(view -> {
             user = userEditText.getText().toString();
@@ -45,6 +59,9 @@ public class Login extends AppCompatActivity {
                 switch (IDTypeUser){
                     case 1:
                         Toast.makeText(this, "Usuario detectado", Toast.LENGTH_SHORT).show();
+                        Intent Interfaz_3636 = new Intent(this, Interface3636.class);
+                        Interfaz_3636.putExtra("userName",user);
+                        startActivity(Interfaz_3636);
                         break;
                     case 2:
                         Toast.makeText(this, "Administrador detectado", Toast.LENGTH_SHORT).show();

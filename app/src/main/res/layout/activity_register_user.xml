@@ -84,6 +84,21 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:text="Selecciona una imagen para tu cuenta"
+                        android:textSize="30sp"
+                        android:gravity="center"
+                        android:textColor="@color/yellow"
+                        android:layout_marginVertical="10dp"
+                        />
+                    <Button
+                        android:id="@+id/btnSelectImage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Seleccionar imagen"
+                        android:layout_gravity="center"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:text="Contraseña"
                         android:textSize="30sp"
                         android:gravity="center"

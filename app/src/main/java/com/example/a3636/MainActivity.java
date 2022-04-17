@@ -10,7 +10,10 @@ import android.animation.Animator;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.location.Address;
 import android.location.Geocoder;
@@ -37,9 +40,17 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.example.a3636.database.DatabaseConnection;
 import com.example.a3636.restaurantdata.RestaurantInformation;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectOutputStream;
 import java.util.List;
 import java.util.Locale;
+import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -47,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
     TextView tv1;
     TextView latitud,longitud;
     TextView direccion;
-
+    String ciudad = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         TextView addressFound = findViewById(R.id.addressFound);
@@ -79,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
                     locationStart();
                     Button btnSearch = findViewById(R.id.btnSearch);
                     Button btnTest = findViewById(R.id.btnTest);
+                    Button btnLoginMain = findViewById(R.id.btnLoginMain);
                     btnSearch.setBackgroundColor(Color.rgb(255, 128, 0));
                     btnSearch.setOnClickListener(view -> {
                         String dir = (String) direccion.getText();
@@ -88,32 +100,38 @@ public class MainActivity extends AppCompatActivity {
                             direccion.setGravity(Gravity.CENTER);
                             elementsError();
                         }else{
-                            String ciudad = "";
                             String[] textElements = dir.split(",");
                             int index = textElements[2].indexOf(" ", 1);
                             ciudad = textElements[2].substring(index);
-                            if(ciudad.equals("Irapuato")){
 
+                            if(ciudad.equals("Irapuato")){
+                                ((MyLocation)getApplication()).setLocation("Irapuato");
                             }else
                             if(ciudad.equals("Guanajuato")){
-
+                                ((MyLocation)getApplication()).setLocation("Guanajuato");
                             }else
                             if(ciudad.equals("León")){
-
+                                ((MyLocation)getApplication()).setLocation("León");
                             }else
                             if(ciudad.equals("Celaya")){
-
+                                ((MyLocation)getApplication()).setLocation("Celaya");
                             }else
                             if(ciudad.equals("Chihuahua")){
-
+                                ((MyLocation)getApplication()).setLocation("Chihuahua");
                             }else
                             if(ciudad.equals("Juarez")) {
-
+                                ((MyLocation)getApplication()).setLocation("Juarez");
                             }else {
                                 elementsError();
                                 btnSearch.setVisibility(View.GONE);
                             }
                         }
+                    });
+                    btnLoginMain.setBackgroundColor(Color.rgb(255, 128, 0));
+                    btnLoginMain.setOnClickListener(view -> {
+                        ((MyLocation)getApplication()).setLocation(ciudad);
+                        Intent Login = new Intent(MainActivity.this, Login.class);
+                        startActivity(Login);
                     });
                     btnTest.setVisibility(View.GONE);
                     btnTest.setOnClickListener(view -> {
@@ -121,7 +139,27 @@ public class MainActivity extends AppCompatActivity {
                         connection.CONN();
                         String inf = connection.getDayClosedRestaurant("1","1");
                         Toast.makeText(MainActivity.this,inf,Toast.LENGTH_SHORT).show();
-                        Log.d("inf",inf);
+
+                        /*LinearLayout layoutUsuario = new LinearLayout(MainActivity.this);
+                        LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(50,50);
+                        layoutUsuario.setBackgroundColor(GRAY);
+                        layoutParams.gravity= Gravity.CENTER;
+                        layoutUsuario.setLayoutParams(layoutParams);
+                        ImageView image = new ImageView(MainActivity.this);
+                        LinearLayout.LayoutParams layoutParamsImage=new LinearLayout.LayoutParams(40, 40);
+                        layoutParamsImage.gravity= Gravity.CENTER;
+                        image.setLayoutParams(layoutParamsImage);
+                        DatabaseConnection dbConnect = new DatabaseConnection();
+                        //obtener imagen de base de datos
+                        //dbConnect.CONN();
+                        //dbConnect.getImage();
+                        /*byte[] imageReceived = dbConnect.getImage();
+                        Bitmap bitmap = BitmapFactory.decodeByteArray(imageReceived, 0, imageReceived.length);
+                        Toast.makeText(MainActivity.this,String.valueOf(imageReceived.length),Toast.LENGTH_SHORT).show();
+                        ImageView imageView = findViewById(R.id.imageView);
+                        imageView.setImageBitmap(bitmap);*/
+
+                            //System.out.println(obj.nextLine());
                         /*Intent mapTest = new Intent(getApplicationContext(), InterPCLocation.class);
                         startActivity(mapTest);*/
                     });
@@ -139,6 +177,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
     private void elementsError(){
         TextView tvSuggestions = new TextView(this);
         Button btnCitySelected = new Button(this);
@@ -179,7 +218,9 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this,"Debe seleccionar una ciudad antes de continuar", Toast.LENGTH_LONG).show();
             }else{
                 if(city.equals("Irapuato")){
+                    ((MyLocation)getApplication()).setLocation("Irapuato");
                     Intent showCityRestaurants = new Intent(this, Interface3636.class);
+                    showCityRestaurants.putExtra("userName","not logged in");
                     startActivity(showCityRestaurants);
                 }
             }
