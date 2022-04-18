@@ -38,7 +38,7 @@ public class Interface3636 extends AppCompatActivity {
 
         //Recuper ubicacion
         String location = ((MyLocation)getApplication()).getLocation();
-        Toast.makeText(this,location,Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,"Ubicacion: " + location,Toast.LENGTH_SHORT).show();
 
         String userName = getIntent().getStringExtra("userName");
         if(!userName.equals("not logged in")){
@@ -64,9 +64,17 @@ public class Interface3636 extends AppCompatActivity {
                 startActivity(login);
             });
         }
-        //----------------------------------------Pendiente------------------------------------
-        settingsIM.setOnClickListener(view -> {
 
+        settingsIM.setOnClickListener(view -> {
+            String userConnected = nameUserSession.getText().toString();
+            Toast.makeText(this,userConnected, Toast.LENGTH_LONG).show();
+            if(userConnected.equals("")){
+                Toast.makeText(this,"Debes iniciar sesión para usar esta opción", Toast.LENGTH_LONG).show();
+            }else{
+                Intent settings = new Intent(this, UserSettings.class);
+                settings.putExtra("userName",userConnected);
+                startActivity(settings);
+            }
         });
 
         TypesOfFoodAndSchedules typesOfFoodAndSchedules = new TypesOfFoodAndSchedules();

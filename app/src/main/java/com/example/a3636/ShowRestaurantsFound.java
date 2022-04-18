@@ -44,6 +44,10 @@ public class ShowRestaurantsFound extends AppCompatActivity {
             }
             @Override
             public void onAnimationEnd(Animator animation) {
+
+                String location = ((MyLocation)getApplication()).getLocation();
+                Toast.makeText(ShowRestaurantsFound.this,"Ubicacion: " + location,Toast.LENGTH_LONG).show();
+
                 Log.e("Animation:", "end");
                 imageAnimation.setVisibility(View.GONE);
                 logoSoft.setVisibility(View.INVISIBLE);

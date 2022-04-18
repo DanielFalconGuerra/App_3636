@@ -366,4 +366,26 @@ public class DatabaseConnection {
         }
         return null;
     }
+
+    public String[] getDataUser(String ID){
+        String dataUser[] = new String[3];
+        try {
+            Connection conexion=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+db,user ,pss);
+            PreparedStatement ps = conexion.prepareStatement("select Password, Correo, Nombre from usuarios where IDUsuario=?");
+            ps.setString(1, ID);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                dataUser[0] = rs.getString(1);
+                dataUser[1] = rs.getString(2);
+                dataUser[2] = rs.getString(3);
+                return dataUser;
+            }
+            conexion.close();
+        } catch(SQLException ex){
+            dataUser[0] = ex.getMessage();
+            return dataUser;
+        }
+        return dataUser;
+    }
+
 }

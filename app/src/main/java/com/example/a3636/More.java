@@ -34,6 +34,10 @@ public class More extends AppCompatActivity {
         EditText txtAddress = findViewById(R.id.txtAddress);
         EditText txtPhone = findViewById(R.id.txtPhone);
         EditText txtAddEmail = findViewById(R.id.txtAddEmail);
+
+        String location = ((MyLocation)getApplication()).getLocation();
+        Toast.makeText(this,"Ubicacion: " + location,Toast.LENGTH_SHORT).show();
+
         btnJoin.setOnClickListener(view -> {
             //Redaccion de correo
             String message = "Buen día.\nDeseo que mi restaurante sea agregado a su sistema Softappetit.\nMis datos son los siguientes: \n"+

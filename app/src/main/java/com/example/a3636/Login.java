@@ -7,10 +7,14 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.a3636.database.DatabaseConnection;
@@ -38,9 +42,8 @@ public class Login extends AppCompatActivity {
         EditText userEditText = findViewById(R.id.userEditText);
         EditText passwordEditText = findViewById(R.id.passwordEditText);
 
-        //Ubicacion
         String location = ((MyLocation)getApplication()).getLocation();
-        Toast.makeText(this,location,Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,"Ubicacion: " + location,Toast.LENGTH_SHORT).show();
 
         BtnLogin.setOnClickListener(view -> {
             user = userEditText.getText().toString();
@@ -59,9 +62,75 @@ public class Login extends AppCompatActivity {
                 switch (IDTypeUser){
                     case 1:
                         Toast.makeText(this, "Usuario detectado", Toast.LENGTH_SHORT).show();
-                        Intent Interfaz_3636 = new Intent(this, Interface3636.class);
-                        Interfaz_3636.putExtra("userName",user);
-                        startActivity(Interfaz_3636);
+
+                        if(location.equals("Irapuato")){
+                            ((MyLocation)getApplication()).setLocation("Irapuato");
+                            Intent Interfaz_3636 = new Intent(this, Interface3636.class);
+                            Interfaz_3636.putExtra("userName",user);
+                            startActivity(Interfaz_3636);
+                        }else
+                        if(location.equals("Guanajuato")){
+                            ((MyLocation)getApplication()).setLocation("Guanajuato");
+                        }else
+                        if(location.equals("León")){
+                            ((MyLocation)getApplication()).setLocation("León");
+                        }else
+                        if(location.equals("Celaya")){
+                            ((MyLocation)getApplication()).setLocation("Celaya");
+                        }else
+                        if(location.equals("Chihuahua")){
+                            ((MyLocation)getApplication()).setLocation("Chihuahua");
+                        }else
+                        if(location.equals("Juarez")) {
+                            ((MyLocation)getApplication()).setLocation("Juarez");
+                        }else {
+                            LinearLayout layoutLogin = findViewById(R.id.layoutLoginComplete);
+                            layoutLogin.setVisibility(View.GONE);
+                            LinearLayout layoutError = new LinearLayout(this);
+                            layoutError.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                            layoutError.setOrientation(LinearLayout.VERTICAL);
+                            TextView tvError = new TextView(this);
+                            TextView tvSelectSpinner = new TextView(this);
+                            Button btnCitySelected = new Button(this);
+                            tvError.setText("Error, tu ciudad no cuenta con restaurantes registrados en estos momentos.");
+                            tvError.setTextColor(Color.RED);
+                            tvSelectSpinner.setTextColor(Color.RED);
+
+                            tvError.setGravity(Gravity.CENTER);
+                            tvSelectSpinner.setGravity(Gravity.CENTER);
+
+                            btnCitySelected.setText("Buscar por ciudad");
+                            btnCitySelected.setBackgroundColor(Color.rgb(255, 128, 0));
+                            tvSelectSpinner.setText("Seleccione la ciudad en la que desea realizar su búsqueda");
+                            Spinner spinnerCiudad = new Spinner(this);
+                            String cities[] = {"Seleccione la ciudad", "Irapuato", "Guanajuato", "León", "Celaya", "Chihuahua", "Juarez"};
+                            ArrayAdapter<CharSequence> adapter= new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, cities);
+                            adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+                            spinnerCiudad.setAdapter(adapter);
+                            //spinnerCiudad.setBackgroundColor(Color.rgb(249,240,173));
+                            spinnerCiudad.setBackgroundColor(Color.BLACK);
+                            LinearLayout layoutLoginComplete = findViewById(R.id.layoutLogin);
+                            layoutError.addView(tvError);
+                            layoutError.addView(tvSelectSpinner);
+                            layoutError.addView(spinnerCiudad);
+                            layoutError.addView(btnCitySelected);
+                            layoutLoginComplete.addView(layoutError);
+                            btnCitySelected.setOnClickListener(view2 -> {
+                                String city = spinnerCiudad.getSelectedItem().toString();
+                                if(city.equals("Seleccione la ciudad")){
+                                    Toast.makeText(this,"Debe seleccionar una ciudad antes de continuar", Toast.LENGTH_LONG).show();
+                                }else{
+                                    if(city.equals("Irapuato")){
+                                        ((MyLocation)getApplication()).setLocation("Irapuato");
+                                            Intent Interfaz_3636 = new Intent(this, Interface3636.class);
+                                            Interfaz_3636.putExtra("userName",user);
+                                            startActivity(Interfaz_3636);
+                                    }
+                                }
+                            });
+                        }
+
+
                         break;
                     case 2:
                         Toast.makeText(this, "Administrador detectado", Toast.LENGTH_SHORT).show();

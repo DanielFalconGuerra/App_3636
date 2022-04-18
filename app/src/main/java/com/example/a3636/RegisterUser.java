@@ -31,6 +31,10 @@ public class RegisterUser extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_user);
+
+        String location = ((MyLocation)getApplication()).getLocation();
+        Toast.makeText(this,"Ubicacion: " + location,Toast.LENGTH_SHORT).show();
+
         DatabaseConnection dbConnection = new DatabaseConnection();
         btnSelectImage = findViewById(R.id.btnSelectImage);
         btnSelectImage.setBackgroundColor(Color.rgb(255, 128, 0));

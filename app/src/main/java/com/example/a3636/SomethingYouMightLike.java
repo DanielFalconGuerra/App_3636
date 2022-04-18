@@ -25,6 +25,10 @@ public class SomethingYouMightLike extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_something_you_might_like);
 
+        String location = ((MyLocation)getApplication()).getLocation();
+        Toast.makeText(this,"Ubicacion: " + location,Toast.LENGTH_SHORT).show();
+
+
         LinearLayout dataBusinessLayout = (LinearLayout) findViewById(R.id.dataBusinessLayout);
         LinearLayout layoutFunction = new LinearLayout(this);
 

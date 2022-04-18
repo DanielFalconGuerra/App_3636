@@ -129,6 +129,11 @@ public class MainActivity extends AppCompatActivity {
                     });
                     btnLoginMain.setBackgroundColor(Color.rgb(255, 128, 0));
                     btnLoginMain.setOnClickListener(view -> {
+                        String dir = (String) direccion.getText();
+                        String[] textElements = dir.split(",");
+                        int index = textElements[2].indexOf(" ", 1);
+                        ciudad = textElements[2].substring(index);
+
                         ((MyLocation)getApplication()).setLocation(ciudad);
                         Intent Login = new Intent(MainActivity.this, Login.class);
                         startActivity(Login);
