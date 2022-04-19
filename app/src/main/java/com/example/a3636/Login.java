@@ -51,11 +51,15 @@ public class Login extends AppCompatActivity {
             //String hash = BCrypt.hashpw(password, BCrypt.gensalt(8));
             dbConnect.CONN();
             String[] userData = new String[2];
-            userData = dbConnect.loginCheck(user);
-            String hash = userData[0];
-            String IDType = userData[1];
-            boolean passwordOK = BCrypt.checkpw(password, hash);
-
+            boolean passwordOK = false;
+            String hash = "";
+            String IDType = "";
+            if(!user.equals("") || !password.equals("")) {
+                userData = dbConnect.loginCheck(user);
+                hash = userData[0];
+                IDType = userData[1];
+                passwordOK = BCrypt.checkpw(password, hash);
+            }
             if(passwordOK){
                 Toast.makeText(this, "OK", Toast.LENGTH_SHORT).show();
                 int IDTypeUser = Integer.valueOf(IDType);

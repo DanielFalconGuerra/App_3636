@@ -345,7 +345,8 @@ public class DatabaseConnection {
             conexion.close();
             return "Usuario creado con éxito";
         } catch(SQLException ex){
-            return ex.getMessage();
+            return "Error, intentelo más tarde o seleccione una imagen diferente";
+            //return ex.getMessage();
         }
     }
 
@@ -461,7 +462,8 @@ public class DatabaseConnection {
             ps.executeUpdate();
             conexion.close();
         } catch(SQLException ex){
-            return ex.getMessage();
+            //return ex.getMessage();
+            return "Error, intentelo más tarde o seleccione una imagen diferente";
         }
         return null;
     }

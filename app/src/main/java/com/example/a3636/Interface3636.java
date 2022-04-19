@@ -91,11 +91,16 @@ public class Interface3636 extends AppCompatActivity {
         }
 
         notificationsIM.setOnClickListener(view -> {
-            notificationsIM.setImageResource(R.drawable.ic_baseline_notifications_24);
-            Intent showNotifications = new Intent(this, NotificationsReceived.class);
-            showNotifications.putExtra("numberNotifications",numberNotificationReceived);
-            showNotifications.putExtra("date",date);
-            startActivity(showNotifications);
+            String userConnected = nameUserSession.getText().toString();
+            if(userConnected.equals("")){
+                Toast.makeText(this,"Debes iniciar sesión para usar esta opción", Toast.LENGTH_LONG).show();
+            }else{
+                notificationsIM.setImageResource(R.drawable.ic_baseline_notifications_24);
+                Intent showNotifications = new Intent(this, NotificationsReceived.class);
+                showNotifications.putExtra("numberNotifications",numberNotificationReceived);
+                showNotifications.putExtra("date",date);
+                startActivity(showNotifications);
+            }
         });
 
         TypesOfFoodAndSchedules typesOfFoodAndSchedules = new TypesOfFoodAndSchedules();
