@@ -20,11 +20,15 @@ import android.widget.Toast;
 import com.example.a3636.database.DatabaseConnection;
 import com.example.a3636.restaurantdata.RestaurantInformation;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class Interface3636 extends AppCompatActivity {
     DatabaseConnection connection = new DatabaseConnection();
+    String numberNotificationReceived = "";
+    String date = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,8 +82,20 @@ public class Interface3636 extends AppCompatActivity {
             }
         });
 
-        notificationsIM.setOnClickListener(view -> {
+        date = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
+        connection.CONN();
+        numberNotificationReceived = connection.getNumberNotifications(date);
+        Toast.makeText(this,numberNotificationReceived, Toast.LENGTH_LONG).show();
+        if(!numberNotificationReceived.equals("")){
+            notificationsIM.setImageResource(R.drawable.iconsnotification);
+        }
 
+        notificationsIM.setOnClickListener(view -> {
+            notificationsIM.setImageResource(R.drawable.ic_baseline_notifications_24);
+            Intent showNotifications = new Intent(this, NotificationsReceived.class);
+            showNotifications.putExtra("numberNotifications",numberNotificationReceived);
+            showNotifications.putExtra("date",date);
+            startActivity(showNotifications);
         });
 
         TypesOfFoodAndSchedules typesOfFoodAndSchedules = new TypesOfFoodAndSchedules();

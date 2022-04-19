@@ -15,6 +15,9 @@
         android:theme="@style/Theme.3636"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".NotificationsReceived"
+            android:exported="false" />
+        <activity
             android:name=".UserSettings"
             android:exported="false" />
         <activity

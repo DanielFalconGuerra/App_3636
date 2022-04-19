@@ -8,6 +8,7 @@ import android.util.Log;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.Array;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -388,8 +389,7 @@ public class DatabaseConnection {
         }
         return dataUser;
     }
-    //UPDATE alumnos SET curso='secundaria' WHERE curso='primaria'
-    //"update usuarios set PasswordUser=?, set Correo=?, set Nombre=?, setImage=? where Usuario=?"
+
     public String updateUserWithPassword(String Password, String Usuario, String Correo, String Nombre, byte[] image){
         try {
             Connection conexion=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+db,user ,pss);
@@ -465,21 +465,99 @@ public class DatabaseConnection {
         }
         return null;
     }
-
-    public String updateUser(String Usuario, String Correo, String Nombre, byte[] image){
+//select fecha_inicial, fecha_final, informacion, IDRes from notificacionesres where fecha_inicial BETWEEN '2022/04/18' and '2022/04/18';
+//select fecha_inicial, fecha_final, informacion, IDRes from notificacionesres where fecha_inicial >= '2022/04/18' and fecha_final <= '2022/04/30';
+//select fecha_inicial, fecha_final, informacion, IDRes from notificacionesres where fecha_inicial >= '2022/04/16'
+//select count(fecha_inicial) as cantidad_notificaciones, fecha_inicial, fecha_final, informacion, IDRes from notificacionesres where fecha_inicial >= '2022/04/16'
+//select count(fecha_inicial) as cantidad_notificaciones from notificacionesres where fecha_inicial >= date_add('2022-04-19', INTERVAL -7 DAY) and fecha_final <= date_add('2022-04-19', INTERVAL 7 DAY)
+    public String getNumberNotifications(String date){
+        String numberNotifications = "";
         try {
             Connection conexion=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+db,user ,pss);
-            PreparedStatement ps = conexion.prepareStatement("update usuarios set Correo=?, set Nombre=?, setImage=? where Usuario=?");
-            ps.setString(1, Correo);
-            ps.setString(2, Nombre);
-            ps.setBytes(3, image);
-            ps.setString(4, Usuario);
-            ps.execute();
+            PreparedStatement ps = conexion.prepareStatement("select count(fecha_inicial) as cantidad_notificaciones from notificacionesres where fecha_inicial >=date_add(?, INTERVAL -7 DAY) and fecha_final <= date_add(?, INTERVAL 7 DAY)");
+            ps.setString(1, date);
+            ps.setString(2, date);
+            ResultSet rs = ps.executeQuery();
+
+            if(rs.next()){
+                numberNotifications = rs.getString(1);
+                return numberNotifications;
+            }
             conexion.close();
-            return "Usuario actualizado con éxito";
         } catch(SQLException ex){
-            return ex.getMessage();
+            numberNotifications = ex.getMessage();
+            return numberNotifications;
+        }
+        return numberNotifications;
+    }
+
+    public String[] getIDNotifications(String date){
+        String[] idsRetorned = new String[32];
+        Object[] type;
+        int count = 0;
+        try {
+            Connection conexion=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+db,user ,pss);
+            PreparedStatement ps = conexion.prepareStatement("select IDNotificacion from notificacionesres where fecha_inicial >= date_add(?, INTERVAL -7 DAY) and fecha_final <= date_add(?, INTERVAL 7 DAY)");
+            ps.setString(1, date);
+            ps.setString(2, date);
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()) {
+                /*Array idsNotifications = rs.getArray("IDNotificacion");
+                String[] ids = (String[]) idsNotifications.getArray();
+                type = (Object[]) idsNotifications.getArray();
+                return ids;*/
+                idsRetorned[count] = rs.getString("IDNotificacion");
+                count++;
+            }
+            conexion.close();
+            return idsRetorned;
+
+        } catch(SQLException ex){
+            idsRetorned[0] = ex.getMessage();
+            return idsRetorned;
         }
     }
 
+    public String[] getNotifications(String IDNotification){
+        String dataNotifications[] = new String[4];
+        try {
+            Connection conexion=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+db,user ,pss);
+            PreparedStatement ps = conexion.prepareStatement("select fecha_inicial, fecha_final, informacion, IDRes from notificacionesres where IDNotificacion=?");
+            ps.setString(1, IDNotification);
+            ResultSet rs = ps.executeQuery();
+
+            if(rs.next()){
+                dataNotifications[0] = rs.getString(1);
+                dataNotifications[1] = rs.getString(2);
+                dataNotifications[2] = rs.getString(3);
+                dataNotifications[3] = rs.getString(4);
+                return dataNotifications;
+            }
+            conexion.close();
+        } catch(SQLException ex){
+            dataNotifications[0] = ex.getMessage();
+            return dataNotifications;
+        }
+        return dataNotifications;
+    }
+
+    public String getRestaurant(String ID){
+        String nameRestaurant = "";
+        try {
+            Connection conexion=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+db,user ,pss);
+            PreparedStatement ps = conexion.prepareStatement("select Restaurante from restaurante where IDRestaurante=?");
+            ps.setString(1, ID);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                nameRestaurant = rs.getString(1);
+                return nameRestaurant;
+            }
+            conexion.close();
+        } catch(SQLException ex){
+            nameRestaurant = ex.getMessage();
+            return nameRestaurant;
+        }
+        return nameRestaurant;
+    }
 }
