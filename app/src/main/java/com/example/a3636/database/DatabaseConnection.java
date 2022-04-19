@@ -245,7 +245,7 @@ public class DatabaseConnection {
         String[] userData = new String[2];
         try {
             Connection conexion=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+db,user ,pss);
-            PreparedStatement ps = conexion.prepareStatement("select Password, IDTipo from usuarios where Usuario=?");
+            PreparedStatement ps = conexion.prepareStatement("select PasswordUser, IDTipo from usuarios where Usuario=?");
             ps.setString(1, userToTest);
             //ps.setString(2, password);
             ResultSet rs = ps.executeQuery();
@@ -265,7 +265,7 @@ public class DatabaseConnection {
         }
         return userData;
     }
-    //Regitrar usuario: INSERT INTO usuarios (IDUsuario, Password, Usuario, Correo, Nombre, IDTipo) VALUES ('7', '$2a$10$tcvz8N8906cbkUWxTsw/wu/FYHeVR7sjduLAxWkmj0U1vZ8l2aoj6', 'Daniel', 'daniel@gmail.com', 'Daniel Falcon', '1');
+    //Regitrar usuario: INSERT INTO usuarios (IDUsuario, PasswordUser, Usuario, Correo, Nombre, IDTipo) VALUES ('7', '$2a$10$tcvz8N8906cbkUWxTsw/wu/FYHeVR7sjduLAxWkmj0U1vZ8l2aoj6', 'Daniel', 'daniel@gmail.com', 'Daniel Falcon', '1');
 
     public boolean checkIfTheUserAlreadyExists(String userToTest){
         boolean existingUser = false;
@@ -332,7 +332,7 @@ public class DatabaseConnection {
     public String createNewUser(String IDUsuario, String Password, String Usuario, String Correo, String Nombre, String IDTipo, byte[] image){
         try {
             Connection conexion=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+db,user ,pss);
-            PreparedStatement ps = conexion.prepareStatement("INSERT INTO usuarios (IDUsuario, Password, Usuario, Correo, Nombre, IDTipo, Image) VALUES (?,?,?,?,?,?,?)");
+            PreparedStatement ps = conexion.prepareStatement("INSERT INTO usuarios (IDUsuario, PasswordUser, Usuario, Correo, Nombre, IDTipo, Image) VALUES (?,?,?,?,?,?,?)");
             ps.setString(1, IDUsuario);
             ps.setString(2, Password);
             ps.setString(3, Usuario);
@@ -347,6 +347,7 @@ public class DatabaseConnection {
             return ex.getMessage();
         }
     }
+
     public byte[] getImage(String ID) {
         String bytesImages = "";
         ResultSet rs = null;
@@ -371,7 +372,7 @@ public class DatabaseConnection {
         String dataUser[] = new String[3];
         try {
             Connection conexion=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+db,user ,pss);
-            PreparedStatement ps = conexion.prepareStatement("select Password, Correo, Nombre from usuarios where IDUsuario=?");
+            PreparedStatement ps = conexion.prepareStatement("select PasswordUser, Correo, Nombre from usuarios where IDUsuario=?");
             ps.setString(1, ID);
             ResultSet rs = ps.executeQuery();
             if(rs.next()){
@@ -386,6 +387,99 @@ public class DatabaseConnection {
             return dataUser;
         }
         return dataUser;
+    }
+    //UPDATE alumnos SET curso='secundaria' WHERE curso='primaria'
+    //"update usuarios set PasswordUser=?, set Correo=?, set Nombre=?, setImage=? where Usuario=?"
+    public String updateUserWithPassword(String Password, String Usuario, String Correo, String Nombre, byte[] image){
+        try {
+            Connection conexion=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+db,user ,pss);
+            conexion.setAutoCommit(false);
+            Statement st = conexion.createStatement();
+            String queries[] = new String[4];
+            queries[0] = "update usuarios set PasswordUser='"+Password+"' where Usuario='"+Usuario+"'";
+            queries[1] = "update usuarios set Correo='"+Correo+"' where Usuario='"+Usuario+"'";
+            queries[2] = "update usuarios set Nombre='"+Nombre+"' where Usuario'="+Usuario+"'";
+            st.addBatch(queries[0]);
+            st.addBatch(queries[1]);
+            st.addBatch(queries[2]);
+            st.executeBatch();
+            conexion.commit();
+            return "Usuario actualizado con éxito";
+        } catch(SQLException ex){
+            return ex.getMessage();
+        }
+    }
+
+    public String updateMailUser(String Correo, String Usuario){
+        try {
+            Connection conexion=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+db,user ,pss);
+            conexion.setAutoCommit(false);
+            Statement st = conexion.createStatement();
+            st.addBatch("update usuarios set Correo='"+Correo+"' where Usuario='"+Usuario+"'");
+            st.executeBatch();
+            conexion.commit();
+            return "Correo actualizado con éxito";
+        } catch(SQLException ex){
+            return ex.getMessage();
+        }
+    }
+
+    public String updateNameUser(String Nombre, String Usuario){
+        try {
+            Connection conexion=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+db,user ,pss);
+            conexion.setAutoCommit(false);
+            Statement st = conexion.createStatement();
+            st.addBatch("update usuarios set Nombre='"+Nombre+"' where Usuario='"+Usuario+"'");
+            st.executeBatch();
+            conexion.commit();
+            return "Nombre actualizado con éxito";
+        } catch(SQLException ex){
+            return ex.getMessage();
+        }
+    }
+
+    public String updatePasswordUser(String Password, String Usuario){
+        try {
+            Connection conexion=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+db,user ,pss);
+            conexion.setAutoCommit(false);
+            Statement st = conexion.createStatement();
+            st.addBatch("update usuarios set PasswordUser='"+Password+"' where Usuario='"+Usuario+"'");
+            st.executeBatch();
+            conexion.commit();
+            return "Password actualizado con éxito";
+        } catch(SQLException ex){
+            return ex.getMessage();
+        }
+    }
+
+    public String updateImageUser(byte[] image, String Usuario){
+        try {
+            Connection conexion=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+db,user ,pss);
+            PreparedStatement ps = conexion.prepareStatement("update usuarios set Image=? where Usuario=?");
+            ps.setBytes(1, image);
+            ps.setString(2, Usuario);
+            ps.executeUpdate();
+            conexion.close();
+        } catch(SQLException ex){
+            return ex.getMessage();
+        }
+        return null;
+    }
+
+    public String updateUser(String Usuario, String Correo, String Nombre, byte[] image){
+        try {
+            Connection conexion=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+db,user ,pss);
+            PreparedStatement ps = conexion.prepareStatement("update usuarios set Correo=?, set Nombre=?, setImage=? where Usuario=?");
+            ps.setString(1, Correo);
+            ps.setString(2, Nombre);
+            ps.setBytes(3, image);
+            ps.setString(4, Usuario);
+            ps.execute();
+            conexion.close();
+            return "Usuario actualizado con éxito";
+        } catch(SQLException ex){
+            return ex.getMessage();
+        }
     }
 
 }

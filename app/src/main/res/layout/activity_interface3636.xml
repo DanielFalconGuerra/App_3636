@@ -71,12 +71,21 @@
                         android:text="Iniciar sesión"
                         android:textColor="@color/links" />
                     <ImageView
+                        android:id="@+id/notificationsIM"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/ic_baseline_notifications_24"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="30dp"
+                        android:backgroundTint="@color/grey"
+                        />
+                    <ImageView
                         android:id="@+id/settingsIM"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:background="@drawable/ic_baseline_settings_24"
                         android:layout_gravity="center"
-                        android:layout_marginStart="70dp"
+                        android:layout_marginStart="10dp"
                         android:backgroundTint="@color/grey"
                         />
                 </LinearLayout>

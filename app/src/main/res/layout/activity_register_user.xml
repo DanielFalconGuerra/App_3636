@@ -84,7 +84,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Selecciona una imagen para tu cuenta"
+                        android:text="Selecciona una nueva imagen para tu cuenta"
                         android:textSize="30sp"
                         android:gravity="center"
                         android:textColor="@color/yellow"

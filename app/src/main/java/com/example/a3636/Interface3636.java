@@ -35,6 +35,7 @@ public class Interface3636 extends AppCompatActivity {
         TextView logIn = findViewById(R.id.logIn);
 
         ImageView settingsIM = findViewById(R.id.settingsIM);
+        ImageView notificationsIM = findViewById(R.id.notificationsIM);
 
         //Recuper ubicacion
         String location = ((MyLocation)getApplication()).getLocation();
@@ -75,6 +76,10 @@ public class Interface3636 extends AppCompatActivity {
                 settings.putExtra("userName",userConnected);
                 startActivity(settings);
             }
+        });
+
+        notificationsIM.setOnClickListener(view -> {
+
         });
 
         TypesOfFoodAndSchedules typesOfFoodAndSchedules = new TypesOfFoodAndSchedules();
