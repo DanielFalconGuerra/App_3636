@@ -99,6 +99,60 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:text="Seleccione el tipo de usuario"
+                        android:textSize="30sp"
+                        android:gravity="center"
+                        android:textColor="@color/yellow"
+                        android:layout_marginVertical="10dp"
+                        />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+                        <CheckBox
+                            android:id="@+id/userCB"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/yellow"
+                            android:textSize="20sp"
+                            android:text="Usuario normal" />
+                        <ImageButton
+                            android:id="@+id/userHelpIV"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/ic_baseline_help_24"
+                            android:backgroundTint="@color/yellow"
+                            android:layout_marginStart="20dp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        >
+                        <CheckBox
+                            android:id="@+id/businessCB"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:textColor="@color/yellow"
+                            android:textSize="20dp"
+                            android:text="Empresa"/>
+                        <ImageButton
+                            android:id="@+id/businessHelpIV"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/ic_baseline_help_24"
+                            android:backgroundTint="@color/yellow"
+                            android:layout_marginStart="20dp"/>
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:text="Contraseña"
                         android:textSize="30sp"
                         android:gravity="center"

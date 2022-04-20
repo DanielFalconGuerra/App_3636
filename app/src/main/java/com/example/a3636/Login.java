@@ -138,9 +138,13 @@ public class Login extends AppCompatActivity {
                         break;
                     case 2:
                         Toast.makeText(this, "Administrador detectado", Toast.LENGTH_SHORT).show();
+                        Intent admin = new Intent(this, Administrator.class);
+                        startActivity(admin);
                         break;
                     case 3:
                         Toast.makeText(this, "Empresa detectada", Toast.LENGTH_SHORT).show();
+                        Intent business = new Intent(this, Administrator.class);
+                        startActivity(business);
                         break;
                 }
             }else{

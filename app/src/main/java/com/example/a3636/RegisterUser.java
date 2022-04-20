@@ -3,14 +3,18 @@ package com.example.a3636;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -49,35 +53,98 @@ public class RegisterUser extends AppCompatActivity {
         EditText newNameET = findViewById(R.id.newNameET);
         EditText newPasswordET = findViewById(R.id.newPasswordET);
         EditText repeatPasswordET = findViewById(R.id.repeatPasswordET);
+        CheckBox userCB = findViewById(R.id.userCB);
+        CheckBox businessCB = findViewById(R.id.businessCB);
+        ImageView userHelpIV = findViewById(R.id.userHelpIV);
+        ImageView businessHelpIV = findViewById(R.id.businessHelpIV);
+
+        userCB.setOnClickListener(view -> {
+            businessCB.setChecked(false);
+        });
+
+        businessCB.setOnClickListener(view -> {
+            userCB.setChecked(false);
+        });
+
+        userHelpIV.setOnClickListener(view -> {
+            new AlertDialog.Builder(this)
+                    .setTitle("Usuario")
+                    .setMessage("El usuario normal puede ver los restaurantes y el menú de estos.")
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Log.d("alertDialog","Usuario OK");
+                        }
+                    })
+                    .show();
+        });
+
+        businessHelpIV.setOnClickListener(view -> {
+            new AlertDialog.Builder(this)
+                    .setTitle("Empresa")
+                    .setMessage("El usuario tipo empresa puede añadir restaurantes.")
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Log.d("alertDialog","business OK");
+                        }
+                    })
+                    .show();
+        });
 
         BtnRegisterUser.setOnClickListener(view -> {
             String user = newUserET.getText().toString();
-            dbConnection.CONN();
-            boolean existingUser = dbConnection.checkIfTheUserAlreadyExists(user);
-            if(existingUser){
-                Toast.makeText(this, "Error, el usuario ingresado ya existe", Toast.LENGTH_SHORT).show();
-            }else{
-                String eMail = newMailET.getText().toString();
-                String name = newNameET.getText().toString();
-                String password = newPasswordET.getText().toString();
-                String repeatPassword = repeatPasswordET.getText().toString();
-
-                if(password.equals(repeatPassword)){
-                    //Obtener el último ID de los usuarios
-                    dbConnection.CONN();
-                    String IDUser = String.valueOf(Integer.parseInt(dbConnection.getLastIDUser()) + 1);
-                    //Cifrar password
-                    String hash = BCrypt.hashpw(password, BCrypt.gensalt(8));
-                    //Crear nuevo usuario
-                    String response = dbConnection.createNewUser(IDUser, hash, user, eMail, name, "1", image);
-                    Toast.makeText(this,response, Toast.LENGTH_LONG).show();
-                    if(response.equals("Usuario creado con éxito")){
-                        Intent login = new Intent(this, Login.class);
-                        startActivity(login);
-                    }
+            if(!user.equals("")){
+                dbConnection.CONN();
+                boolean existingUser = dbConnection.checkIfTheUserAlreadyExists(user);
+                if(existingUser){
+                    Toast.makeText(this, "Error, el usuario ingresado ya existe", Toast.LENGTH_SHORT).show();
                 }else{
-                    Toast.makeText(this,"Error, las contraseñas ingresadas no son iguales", Toast.LENGTH_LONG).show();
+                    String eMail = newMailET.getText().toString();
+                    String name = newNameET.getText().toString();
+                    String password = newPasswordET.getText().toString();
+                    String repeatPassword = repeatPasswordET.getText().toString();
+
+                    if(!eMail.equals("")||!name.equals("")||!password.equals("")||!repeatPassword.equals("")){
+                        if(password.equals(repeatPassword)){
+                            //Obtener el último ID de los usuarios
+                            dbConnection.CONN();
+                            String IDUser = String.valueOf(Integer.parseInt(dbConnection.getLastIDUser()) + 1);
+
+                            //Cifrar password
+                            String hash = BCrypt.hashpw(password, BCrypt.gensalt(8));
+                            //Crear nuevo usuario
+                            if(userCB.isChecked()){
+                                String response = dbConnection.createNewUser(IDUser, hash, user, eMail, name, "1", image);
+                                Toast.makeText(this,response, Toast.LENGTH_LONG).show();
+                                if(response.equals("Usuario creado con éxito")){
+                                    Intent login = new Intent(this, Login.class);
+                                    startActivity(login);
+                                }
+                                Toast.makeText(this, "Usuario seleccionado", Toast.LENGTH_SHORT).show();
+                            }else{
+                                if(businessCB.isChecked()){
+                                    userCB.setChecked(false);
+                                    String response = dbConnection.createNewUser(IDUser, hash, user, eMail, name, "3", image);
+                                    Toast.makeText(this,response, Toast.LENGTH_LONG).show();
+                                    if(response.equals("Usuario creado con éxito")){
+                                        Intent login = new Intent(this, Login.class);
+                                        startActivity(login);
+                                    }
+                                    Toast.makeText(this, "Empresa seleccionada", Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Toast.makeText(this, "Error, debe seleccionar un tipo de usuario antes de continuar", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        }else{
+                            Toast.makeText(this,"Error, las contraseñas ingresadas no son iguales", Toast.LENGTH_LONG).show();
+                        }
+                    }else{
+                        Toast.makeText(this,"Error, debe llenar todos los campos", Toast.LENGTH_LONG).show();
+                    }
                 }
+            }else{
+                Toast.makeText(this,"Error, debe llenar todos los campos", Toast.LENGTH_LONG).show();
             }
         });
     }
