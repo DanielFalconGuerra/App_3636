@@ -1,20 +1,15 @@
 package com.example.a3636.database;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.StrictMode;
 import android.util.Log;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.sql.Array;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class DatabaseConnection {
     final String ip = "192.168.0.34";
@@ -561,5 +556,134 @@ public class DatabaseConnection {
             return nameRestaurant;
         }
         return nameRestaurant;
+    }
+
+    public ArrayList<String[]> getRestaurantInformationByUserAdmin(String IDUserAdmin){
+        ArrayList<String[]> dataAllRestaurant = new ArrayList<String[]>();
+        try {
+            Connection conexion=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+db,user ,pss);
+            PreparedStatement ps = conexion.prepareStatement("select IDRestaurante, Direccion, Restaurante, Descripcion, NumTel from restaurante where IDUsuarioAdmin=?");
+            ps.setString(1, IDUserAdmin);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                String dataRestaurant[] = new String[5];
+                dataRestaurant[0] = rs.getString(1);
+                dataRestaurant[1] = rs.getString(2);
+                dataRestaurant[2] = rs.getString(3);
+                dataRestaurant[3] = rs.getString(4);
+                dataRestaurant[4] = rs.getString(5);
+                dataAllRestaurant.add(dataRestaurant);
+            }
+            conexion.close();
+            return dataAllRestaurant;
+        } catch(SQLException ex){
+            return dataAllRestaurant;
+        }
+    }
+
+    public String[] getHorariesByID(String IDRestaurante){
+        String horaries[] = new String[21];
+        try {
+            Connection conexion=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+db,user ,pss);
+            PreparedStatement ps = conexion.prepareStatement("select * from horario_restaurante where IDRestaurante=?");
+            ps.setString(1, IDRestaurante);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                horaries[0] = rs.getString("IDDia1");
+                horaries[1] = rs.getString("IDHorario1Dia1");
+                horaries[2] = rs.getString("IDHorario2Dia1");
+                horaries[3] = rs.getString("IDDia2");
+                horaries[4] = rs.getString("IDHorario1Dia2");
+                horaries[5] = rs.getString("IDHorario2Dia2");
+                horaries[6] = rs.getString("IDDia3");
+                horaries[7] = rs.getString("IDHorario1Dia3");
+                horaries[8] = rs.getString("IDHorario2Dia3");
+                horaries[9] = rs.getString("IDDia4");
+                horaries[10] = rs.getString("IDHorario1Dia4");
+                horaries[11] = rs.getString("IDHorario2Dia4");
+                horaries[12] = rs.getString("IDDia5");
+                horaries[13] = rs.getString("IDHorario1Dia5");
+                horaries[14] = rs.getString("IDHorario2Dia5");
+                horaries[15] = rs.getString("IDDia6");
+                horaries[16] = rs.getString("IDHorario1Dia6");
+                horaries[17] = rs.getString("IDHorario2Dia6");
+                horaries[18] = rs.getString("IDDia7");
+                horaries[19] = rs.getString("IDHorario1Dia7");
+                horaries[20] = rs.getString("IDHorario2Dia7");
+            }
+            conexion.close();
+        } catch(SQLException ex){
+            horaries[0] = ex.toString();
+        }
+        return horaries;
+    }
+
+    public String updateNameRestaurant(String Name, String IDRestaurant){
+        try {
+            Connection conexion=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+db,user ,pss);
+            conexion.setAutoCommit(false);
+            Statement st = conexion.createStatement();
+            st.addBatch("update restaurante set Restaurante='"+Name+"' where IDRestaurante='"+IDRestaurant+"'");
+            st.executeBatch();
+            conexion.commit();
+            return "Campos actualizados con éxito";
+        } catch(SQLException ex){
+            return ex.getMessage();
+        }
+    }
+
+    public String updateAddressRestaurant(String Address, String IDRestaurant){
+        try {
+            Connection conexion=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+db,user ,pss);
+            conexion.setAutoCommit(false);
+            Statement st = conexion.createStatement();
+            st.addBatch("update restaurante set Direccion='"+Address+"' where IDRestaurante='"+IDRestaurant+"'");
+            st.executeBatch();
+            conexion.commit();
+            return "Campos actualizados con éxito";
+        } catch(SQLException ex){
+            return ex.getMessage();
+        }
+    }
+
+    public String updateDescriptionRestaurant(String Description, String IDRestaurant){
+        try {
+            Connection conexion=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+db,user ,pss);
+            conexion.setAutoCommit(false);
+            Statement st = conexion.createStatement();
+            st.addBatch("update restaurante set Descripcion='"+Description+"' where IDRestaurante='"+IDRestaurant+"'");
+            st.executeBatch();
+            conexion.commit();
+            return "Campos actualizados con éxito";
+        } catch(SQLException ex){
+            return ex.getMessage();
+        }
+    }
+
+    public String updatePhoneRestaurant(String Phone, String IDRestaurant){
+        try {
+            Connection conexion=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+db,user ,pss);
+            conexion.setAutoCommit(false);
+            Statement st = conexion.createStatement();
+            st.addBatch("update restaurante set NumTel='"+Phone+"' where IDRestaurante='"+IDRestaurant+"'");
+            st.executeBatch();
+            conexion.commit();
+            return "Campos actualizados con éxito";
+        } catch(SQLException ex){
+            return ex.getMessage();
+        }
+    }
+    public String updateHoraryRestaurantByID(String Field, String Hour, String IDRestaurant){
+        try {
+            Connection conexion=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+db,user ,pss);
+            conexion.setAutoCommit(false);
+            Statement st = conexion.createStatement();
+            st.addBatch("update  horario_restaurante  set "+Field+"='"+Hour+"' where IDRestaurante='"+IDRestaurant+"'");
+            st.executeBatch();
+            conexion.commit();
+            return "Campos actualizados con éxito";
+        } catch(SQLException ex){
+            return ex.getMessage();
+        }
     }
 }

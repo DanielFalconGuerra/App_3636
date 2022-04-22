@@ -139,11 +139,13 @@ public class Login extends AppCompatActivity {
                     case 2:
                         Toast.makeText(this, "Administrador detectado", Toast.LENGTH_SHORT).show();
                         Intent admin = new Intent(this, Administrator.class);
+                        admin.putExtra("userName",user);
                         startActivity(admin);
                         break;
                     case 3:
                         Toast.makeText(this, "Empresa detectada", Toast.LENGTH_SHORT).show();
-                        Intent business = new Intent(this, Administrator.class);
+                        Intent business = new Intent(this, ModifyRestaurantInformation.class);
+                        business.putExtra("userName",user);
                         startActivity(business);
                         break;
                 }

@@ -46,29 +46,21 @@ public class Interface3636 extends AppCompatActivity {
         Toast.makeText(this,"Ubicacion: " + location,Toast.LENGTH_SHORT).show();
 
         String userName = getIntent().getStringExtra("userName");
-        if(!userName.equals("not logged in")){
-            nameUserSession.setText(userName);
-            //Obtener ID del Usuario
-            connection.CONN();
-            String ID = connection.getIDUser(userName);
-            Toast.makeText(this,ID,Toast.LENGTH_SHORT).show();
-            //Obtener imagen de usuario
-            byte[] imageReceived = connection.getImage(ID);
-            Bitmap bitmap = BitmapFactory.decodeByteArray(imageReceived, 0, imageReceived.length);
-            imageUser.setImageBitmap(bitmap);
-            logIn.setText("Cambiar de usuario");
-            logIn.setOnClickListener(view -> {
-                Intent login = new Intent(this, Login.class);
-                startActivity(login);
-            });
-        }else{
-            nameUserSession.setText("");
-            logIn.setText("Iniciar sesión");
-            logIn.setOnClickListener(view -> {
-                Intent login = new Intent(this, Login.class);
-                startActivity(login);
-            });
-        }
+
+        nameUserSession.setText(userName);
+        //Obtener ID del Usuario
+        connection.CONN();
+        String ID = connection.getIDUser(userName);
+        Toast.makeText(this,ID,Toast.LENGTH_SHORT).show();
+        //Obtener imagen de usuario
+        byte[] imageReceived = connection.getImage(ID);
+        Bitmap bitmap = BitmapFactory.decodeByteArray(imageReceived, 0, imageReceived.length);
+        imageUser.setImageBitmap(bitmap);
+        logIn.setText("Cambiar de usuario");
+        logIn.setOnClickListener(view -> {
+            Intent login = new Intent(this, Login.class);
+            startActivity(login);
+        });
 
         settingsIM.setOnClickListener(view -> {
             String userConnected = nameUserSession.getText().toString();

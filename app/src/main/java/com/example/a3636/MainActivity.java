@@ -48,6 +48,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
@@ -142,8 +144,19 @@ public class MainActivity extends AppCompatActivity {
                     btnTest.setOnClickListener(view -> {
                         DatabaseConnection connection = new DatabaseConnection();
                         connection.CONN();
-                        String inf = connection.getDayClosedRestaurant("1","1");
-                        Toast.makeText(MainActivity.this,inf,Toast.LENGTH_SHORT).show();
+                        //String inf = connection.getDayClosedRestaurant("1","1");
+                        ArrayList<String[]> test = connection.getRestaurantInformationByUserAdmin("17");
+                        if(test == null || test.size()==0){
+                            Toast.makeText(MainActivity.this,"Error",Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(MainActivity.this,test.size(),Toast.LENGTH_SHORT).show();
+                        }
+                        for(int i = 0; i < test.size(); i++){
+                            String[] elementos = test.get(i);
+                            for(int j = 0; j < elementos.length; j++){
+                                Toast.makeText(MainActivity.this,elementos[j],Toast.LENGTH_SHORT).show();
+                            }
+                        }
 
                         /*LinearLayout layoutUsuario = new LinearLayout(MainActivity.this);
                         LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(50,50);
