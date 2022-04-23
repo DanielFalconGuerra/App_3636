@@ -54,8 +54,10 @@ public class Interface3636 extends AppCompatActivity {
         Toast.makeText(this,ID,Toast.LENGTH_SHORT).show();
         //Obtener imagen de usuario
         byte[] imageReceived = connection.getImage(ID);
-        Bitmap bitmap = BitmapFactory.decodeByteArray(imageReceived, 0, imageReceived.length);
-        imageUser.setImageBitmap(bitmap);
+        if(imageReceived != null){
+            Bitmap bitmap = BitmapFactory.decodeByteArray(imageReceived, 0, imageReceived.length);
+            imageUser.setImageBitmap(bitmap);
+        }
         logIn.setText("Cambiar de usuario");
         logIn.setOnClickListener(view -> {
             Intent login = new Intent(this, Login.class);

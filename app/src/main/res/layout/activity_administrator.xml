@@ -9,7 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="70dp"
@@ -70,7 +70,186 @@
                 android:backgroundTint="@color/grey"
                 />
         </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginVertical="10dp"
+                        android:gravity="center"
+                        android:text="Registrar nuevo restaurante"
+                        android:textColor="@color/orange"
+                        android:textSize="40sp"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginVertical="10dp"
+                        android:gravity="center"
+                        android:text="Nombre del restaurante"
+                        android:textColor="@color/orange"
+                        android:textSize="30sp"/>
+                    <EditText
+                        android:id="@+id/newNameRestaurantAdminET"
+                        android:layout_width="300dp"
+                        android:layout_height="35dp"
+                        android:layout_gravity="center"
+                        android:layout_marginVertical="5dp"
+                        android:layout_marginTop="50dp"
+                        android:layout_marginBottom="12dp"
+                        android:background="@color/yellowEditText"
+                        android:textColor="@color/black"/>
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginVertical="10dp"
+                        android:gravity="center"
+                        android:text="Dirección"
+                        android:textColor="@color/orange"
+                        android:textSize="30sp"/>
+                    <EditText
+                        android:id="@+id/newAddressRestaurantAdminET"
+                        android:layout_width="300dp"
+                        android:layout_height="35dp"
+                        android:layout_gravity="center"
+                        android:layout_marginVertical="5dp"
+                        android:layout_marginTop="50dp"
+                        android:layout_marginBottom="12dp"
+                        android:background="@color/yellowEditText"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginVertical="10dp"
+                        android:gravity="center"
+                        android:text="Descripción"
+                        android:textColor="@color/orange"
+                        android:textSize="30sp"/>
+                    <EditText
+                        android:id="@+id/newDescrptionRestaurantAdminET"
+                        android:layout_width="300dp"
+                        android:layout_height="35dp"
+                        android:layout_gravity="center"
+                        android:layout_marginVertical="5dp"
+                        android:layout_marginTop="50dp"
+                        android:layout_marginBottom="12dp"
+                        android:background="@color/yellowEditText"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginVertical="10dp"
+                        android:gravity="center"
+                        android:text="Teléfono"
+                        android:textColor="@color/orange"
+                        android:textSize="30sp"/>
+                    <EditText
+                        android:id="@+id/newPhoneRestaurantAdminET"
+                        android:layout_width="300dp"
+                        android:layout_height="35dp"
+                        android:layout_gravity="center"
+                        android:layout_marginVertical="5dp"
+                        android:layout_marginTop="50dp"
+                        android:layout_marginBottom="12dp"
+                        android:background="@color/yellowEditText"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginVertical="10dp"
+                        android:gravity="center"
+                        android:text="Seleccione la ciudad donde se ubica el restaurante"
+                        android:textColor="@color/orange"
+                        android:textSize="30sp"/>
+                    <CheckBox
+                        android:id="@+id/IrapuatoCB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/yellow"
+                        android:textSize="25sp"
+                        android:text="Irapuato"
+                        android:layout_gravity="center"/>
+                    <CheckBox
+                        android:id="@+id/GuanajuatoCB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/yellow"
+                        android:textSize="25sp"
+                        android:text="Guanajuato"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"/>
+                    <CheckBox
+                        android:id="@+id/LeonCB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/yellow"
+                        android:textSize="25sp"
+                        android:text="León"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"/>
+                    <CheckBox
+                        android:id="@+id/CelayaCB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/yellow"
+                        android:textSize="25sp"
+                        android:text="Celaya"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"/>
+                    <CheckBox
+                        android:id="@+id/ChihuahuaCB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/yellow"
+                        android:textSize="25sp"
+                        android:text="Chihuahua"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"/>
+                    <CheckBox
+                        android:id="@+id/JuarezCB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/yellow"
+                        android:textSize="25sp"
+                        android:text="Juarez"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginVertical="10dp"
+                        android:gravity="center"
+                        android:text="Usuario Administrador"
+                        android:textColor="@color/orange"
+                        android:textSize="30sp"/>
+                    <Spinner
+                        android:id="@+id/spinnerUserAdminRestaurantBusiness"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginVertical="15dp"
+                        android:background="@color/yellowBackground"
+                        android:spinnerMode="dropdown" />
+                    <Button
+                        android:id="@+id/btnRegisterRestaurant"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="Registrar Restaurante"
+                        android:layout_gravity="center"/>
+                </LinearLayout>
+            </ScrollView>
+        </RelativeLayout>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -33,7 +33,7 @@ public class UserSettings extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_settings);
 
-        //Recuper ubicacion
+        //Recuperar ubicacion
         String location = ((MyLocation)getApplication()).getLocation();
         Toast.makeText(this,"Ubicacion: " + location,Toast.LENGTH_SHORT).show();
 
@@ -60,8 +60,10 @@ public class UserSettings extends AppCompatActivity {
         Toast.makeText(this,ID,Toast.LENGTH_SHORT).show();
         //Obtener imagen de usuario
         imageReceived = connection.getImage(ID);
+        if(imageReceived != null){
         Bitmap bitmap = BitmapFactory.decodeByteArray(imageReceived, 0, imageReceived.length);
         imageUserSessionSettings.setImageBitmap(bitmap);
+        }
         String dataUser[] = new String[3];
         connection.CONN();
         dataUser = connection.getDataUser(ID);

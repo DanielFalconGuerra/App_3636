@@ -92,8 +92,10 @@ public class ModifyRestaurantInformation extends AppCompatActivity {
         ID = connection.getIDUser(userName);
         //Obtener imagen de usuario
         byte[] imageReceived = connection.getImage(ID);
-        Bitmap bitmap = BitmapFactory.decodeByteArray(imageReceived, 0, imageReceived.length);
-        imageBusinessSession.setImageBitmap(bitmap);
+        if(imageReceived != null) {
+            Bitmap bitmap = BitmapFactory.decodeByteArray(imageReceived, 0, imageReceived.length);
+            imageBusinessSession.setImageBitmap(bitmap);
+        }
         logInBusiness.setText("Cambiar de usuario");
         logInBusiness.setOnClickListener(view -> {
             Intent login = new Intent(this, Login.class);

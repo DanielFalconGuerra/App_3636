@@ -12,10 +12,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class DatabaseConnection {
-    final String ip = "192.168.0.34";
-    final String user = "daniel";
-    final String pss = "1234";
-    final String db = "demo2";
+    private final String ip = "192.168.0.34";
+    private final String user = "daniel";
+    private final String pss = "1234";
+    private final String db = "demo2";
     public Connection CONN()
     {
         //10.0.2.2
@@ -673,6 +673,7 @@ public class DatabaseConnection {
             return ex.getMessage();
         }
     }
+
     public String updateHoraryRestaurantByID(String Field, String Hour, String IDRestaurant){
         try {
             Connection conexion=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+db,user ,pss);
@@ -682,6 +683,44 @@ public class DatabaseConnection {
             st.executeBatch();
             conexion.commit();
             return "Campos actualizados con éxito";
+        } catch(SQLException ex){
+            return ex.getMessage();
+        }
+    }
+
+    public String[] getUserBusiness(){
+        String[] usersBusiness = new String[2];
+        int count = 0;
+        try {
+            Connection conexion=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+db,user ,pss);
+            PreparedStatement ps = conexion.prepareStatement("select Usuario from usuarios where IDTipo=3");
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                usersBusiness[count] = rs.getString(1);
+                count++;
+            }
+            conexion.close();
+        } catch(SQLException ex){
+            usersBusiness[0] = ex.getMessage();
+            return usersBusiness;
+        }
+        return usersBusiness;
+    }
+
+    public String registerRestaurant(String name, String address, String description, String phone, String city, String IDUsuarioAdmin){
+        try {
+            Connection conexion=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+db,user ,pss);
+            PreparedStatement ps = conexion.prepareStatement("insert into restaurante (Restaurante, Direccion, Descripcion, NumTel, Estatus, IDCiudad, IDUsuarioAdmin) values (?,?,?,?,?,?,?)");
+            ps.setString(1, name);
+            ps.setString(2, address);
+            ps.setString(3, description);
+            ps.setString(4, phone);
+            ps.setString(5, "Activo");
+            ps.setString(6, city);
+            ps.setString(7, IDUsuarioAdmin);
+            ps.execute();
+            conexion.close();
+            return "Restaurante Registrado con éxito";
         } catch(SQLException ex){
             return ex.getMessage();
         }
