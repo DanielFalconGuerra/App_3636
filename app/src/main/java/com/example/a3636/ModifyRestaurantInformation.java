@@ -96,12 +96,19 @@ public class ModifyRestaurantInformation extends AppCompatActivity {
             Bitmap bitmap = BitmapFactory.decodeByteArray(imageReceived, 0, imageReceived.length);
             imageBusinessSession.setImageBitmap(bitmap);
         }
+
         logInBusiness.setText("Cambiar de usuario");
         logInBusiness.setOnClickListener(view -> {
             Intent login = new Intent(this, Login.class);
             startActivity(login);
         });
 
+        settingsIMBusiness.setOnClickListener(view -> {
+            String userConnected = nameBusinessSession.getText().toString();
+            Intent settings = new Intent(this, UserSettings.class);
+            settings.putExtra("userName",userConnected);
+            startActivity(settings);
+        });
 
         Spinner spinnerRestaurant = findViewById(R.id.spinnerRestaurantBusiness);
 

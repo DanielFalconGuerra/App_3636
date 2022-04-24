@@ -61,8 +61,8 @@ public class UserSettings extends AppCompatActivity {
         //Obtener imagen de usuario
         imageReceived = connection.getImage(ID);
         if(imageReceived != null){
-        Bitmap bitmap = BitmapFactory.decodeByteArray(imageReceived, 0, imageReceived.length);
-        imageUserSessionSettings.setImageBitmap(bitmap);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(imageReceived, 0, imageReceived.length);
+            imageUserSessionSettings.setImageBitmap(bitmap);
         }
         String dataUser[] = new String[3];
         connection.CONN();
@@ -101,7 +101,9 @@ public class UserSettings extends AppCompatActivity {
                     response = connection.updateMailUser(mail, user);
                     response = connection.updateNameUser(name, user);
                     response = connection.updateImageUser(imageReceived, user);
-                    Toast.makeText(this,response, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(this,response, Toast.LENGTH_SHORT).show();
+                    Intent Login = new Intent(this,Login.class);
+                    startActivity(Login);
 
                 }
             }

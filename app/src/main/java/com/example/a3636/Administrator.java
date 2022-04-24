@@ -52,7 +52,12 @@ public class Administrator extends AppCompatActivity {
                 startActivity(login);
             });
 
-
+        settingsIMAdmin.setOnClickListener(view -> {
+            String userConnected = nameAdminSession.getText().toString();
+            Intent settings = new Intent(this, UserSettings.class);
+            settings.putExtra("userName",userConnected);
+            startActivity(settings);
+        });
         EditText newNameRestaurantAdminET = findViewById(R.id.newNameRestaurantAdminET);
         EditText newAddressRestaurantAdminET = findViewById(R.id.newAddressRestaurantAdminET);
         EditText newDescrptionRestaurantAdminET = findViewById(R.id.newDescrptionRestaurantAdminET);
