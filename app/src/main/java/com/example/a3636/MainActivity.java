@@ -3,6 +3,7 @@ package com.example.a3636;
 import static android.graphics.Color.GRAY;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
@@ -10,11 +11,7 @@ import android.animation.Animator;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -30,7 +27,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -38,23 +34,11 @@ import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.a3636.database.DatabaseConnection;
-import com.example.a3636.restaurantdata.RestaurantInformation;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import java.util.Scanner;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class MainActivity extends AppCompatActivity {
     TextView tv1;
@@ -80,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("Animation:","end");
                 imageAnimationLocation.setVisibility(View.GONE);
                 txtSearchingAddress.setVisibility(View.GONE);
-                LinearLayout layoutLocation = findViewById(R.id.layoutLocation);
+                ConstraintLayout layoutLocation = findViewById(R.id.layoutLocation);
                 layoutLocation.setVisibility(View.VISIBLE);
                 latitud = (TextView) findViewById(R.id.txtLatitud);
                 longitud = (TextView) findViewById(R.id.txtLongitud);
@@ -90,10 +74,10 @@ public class MainActivity extends AppCompatActivity {
                     ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,}, 1000);
                 } else {
                     locationStart();
-                    Button btnSearch = findViewById(R.id.btnSearch);
+                    Button btnSearch = findViewById(R.id.btnSearchBC);
                     Button btnTest = findViewById(R.id.btnTest);
                     Button btnLoginMain = findViewById(R.id.btnLoginMain);
-                    btnSearch.setBackgroundColor(Color.rgb(255, 128, 0));
+                    //btnSearch.setBackgroundColor(Color.rgb(255, 128, 0));
                     btnSearch.setOnClickListener(view -> {
                         String dir = (String) direccion.getText();
                         if(dir.equals("")){
@@ -129,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
                     });
-                    btnLoginMain.setBackgroundColor(Color.rgb(255, 128, 0));
+                    //btnLoginMain.setBackgroundColor(Color.rgb(255, 128, 0));
                     btnLoginMain.setOnClickListener(view -> {
                         String dir = (String) direccion.getText();
                         String[] textElements = dir.split(",");
@@ -197,9 +181,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void elementsError(){
+        /**
         TextView tvSuggestions = new TextView(this);
         Button btnCitySelected = new Button(this);
         LinearLayout layout = findViewById(R.id.layoutError);
+        layout.setVisibility(View.VISIBLE);
         TextView tvError = new TextView(this);
         TextView tvSelectSpinner = new TextView(this);
         Spinner spinnerCiudad = findViewById(R.id.spinnerCiudad);
@@ -230,7 +216,12 @@ public class MainActivity extends AppCompatActivity {
         layoutButton.addView(btnCitySelected);
         layoutButton.addView(tvSelectSpinner);
         layout.addView(layoutButton);
-        btnCitySelected.setOnClickListener(view1 -> {
+        /**/
+        LinearLayout layout = findViewById(R.id.layoutError);
+        layout.setVisibility(View.VISIBLE);
+        Spinner spinnerCiudad = findViewById(R.id.spinnerCiudad);
+        Button btnSearchByCity = findViewById(R.id.buttonBuscar);
+        btnSearchByCity.setOnClickListener(view1 -> {
             String city = spinnerCiudad.getSelectedItem().toString();
             if(city.equals("Seleccione la ciudad")){
                 Toast.makeText(this,"Debe seleccionar una ciudad antes de continuar", Toast.LENGTH_LONG).show();
