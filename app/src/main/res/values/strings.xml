@@ -1,4 +1,14 @@
 <resources>
     <string name="app_name">3636</string>
     <string name="title_activity_inter_pclocation">InterPCLocation</string>
+    <!--Elementos de spinner de ciudades disponibles-->
+    <string-array name="ciudades">
+        <item>Seleccione la ciudad</item>
+        <item>Irapuato</item>
+        <item>Guanajuato</item>
+        <item>León</item>
+        <item>Celaya</item>
+        <item>Chihuahua</item>
+        <item>Juarez</item>
+    </string-array>
 </resources>
