@@ -57,9 +57,9 @@
 
                     <TextView
                         android:id="@+id/nameUserSession"
-                        android:layout_width="100dp"
+                        android:layout_width="80dp"
                         android:layout_height="50dp"
-                        android:layout_marginLeft="15dp"
+                        android:layout_marginLeft="10dp"
                         android:gravity="center|left"
                         android:text="Nombre Usuario"
                         android:textColor="@color/black" />
@@ -68,7 +68,6 @@
                         android:id="@+id/logIn"
                         android:layout_width="100dp"
                         android:layout_height="50dp"
-                        android:layout_marginLeft="15dp"
                         android:gravity="center"
                         android:text="Iniciar sesión"
                         android:textColor="@color/links" />
@@ -113,6 +112,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginVertical="70dp"
+                                android:gravity="center"
                                 android:background="@color/black"
                                 android:orientation="vertical">
 
@@ -122,7 +122,6 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:background="@color/black"
-                                    android:gravity="center"
                                     android:spinnerMode="dropdown" />
 
                                 <Spinner
@@ -131,7 +130,6 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:background="@color/black"
-                                    android:gravity="center"
                                     android:spinnerMode="dropdown" />
                             </LinearLayout>
 
@@ -140,6 +138,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="80dp"
+                                android:layout_gravity="center"
+                                android:gravity="center"
                                 android:text="¡BUSCAR!" />
 
 

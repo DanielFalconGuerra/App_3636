@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+//10.0.2.2
 
 public class DatabaseConnection {
     private final String ip = "192.168.0.34";
@@ -18,7 +19,7 @@ public class DatabaseConnection {
     private final String db = "demo2";
     public Connection CONN()
     {
-        //10.0.2.2
+
         final String class_jdbc = "com.mysql.jdbc.Driver";
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                 .permitAll().build();
@@ -50,10 +51,8 @@ public class DatabaseConnection {
         try {
             Connection ConnexionMySQL = CONN();
             Statement st = ConnexionMySQL.createStatement();
-
             ResultSet rs = st.executeQuery("SELECT VERSION()");
             //ResultSet rs = st.executeQuery("SHOW VARIABLES LIKE \"%version%\"");
-
             while (rs.next()) {
                 response += rs.getString(1) + "\r\n";
             }
@@ -162,7 +161,8 @@ public class DatabaseConnection {
         try {
             Connection conexion=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+db,user ,pss);
             Statement command=conexion.createStatement();
-            String queries = "select IDHorario1Dia" + day + ", IDHorario2Dia" + day + " from horario_restaurante where IDRestaurante = " + idRestaurant + " and IDDia" + day + " = " + day;
+            String queries = "select IDHorario1Dia" + day + ", IDHorario2Dia" + day + " from horario_restaurante " +
+                    "                       where IDRestaurante = " + idRestaurant + " and IDDia" + day + " = " + day;
             ResultSet hours = command.executeQuery(queries);
             while (hours.next()) {
                 String idScheduleOne = hours.getString("IDHorario1Dia"+day);
@@ -243,7 +243,6 @@ public class DatabaseConnection {
             Connection conexion=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+db,user ,pss);
             PreparedStatement ps = conexion.prepareStatement("select PasswordUser, IDTipo from usuarios where Usuario=?");
             ps.setString(1, userToTest);
-            //ps.setString(2, password);
             ResultSet rs = ps.executeQuery();
             if(rs.next()){
                 hash = rs.getString(1);
@@ -328,7 +327,8 @@ public class DatabaseConnection {
     public String createNewUser(String IDUsuario, String Password, String Usuario, String Correo, String Nombre, String IDTipo, byte[] image){
         try {
             Connection conexion=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+db,user ,pss);
-            PreparedStatement ps = conexion.prepareStatement("INSERT INTO usuarios (IDUsuario, PasswordUser, Usuario, Correo, Nombre, IDTipo, Image) VALUES (?,?,?,?,?,?,?)");
+            PreparedStatement ps = conexion.prepareStatement("INSERT INTO usuarios (IDUsuario, PasswordUser, Usuario, Correo, Nombre, IDTipo, Image) " +
+                                                                    "VALUES (?,?,?,?,?,?,?)");
             ps.setString(1, IDUsuario);
             ps.setString(2, Password);
             ps.setString(3, Usuario);
@@ -457,11 +457,11 @@ public class DatabaseConnection {
             ps.executeUpdate();
             conexion.close();
         } catch(SQLException ex){
-            //return ex.getMessage();
             return "Error, intentelo más tarde o seleccione una imagen diferente";
         }
         return null;
     }
+
 //select fecha_inicial, fecha_final, informacion, IDRes from notificacionesres where fecha_inicial BETWEEN '2022/04/18' and '2022/04/18';
 //select fecha_inicial, fecha_final, informacion, IDRes from notificacionesres where fecha_inicial >= '2022/04/18' and fecha_final <= '2022/04/30';
 //select fecha_inicial, fecha_final, informacion, IDRes from notificacionesres where fecha_inicial >= '2022/04/16'
@@ -490,20 +490,16 @@ public class DatabaseConnection {
 
     public String[] getIDNotifications(String date){
         String[] idsRetorned = new String[32];
-        Object[] type;
         int count = 0;
         try {
             Connection conexion=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+db,user ,pss);
-            PreparedStatement ps = conexion.prepareStatement("select IDNotificacion from notificacionesres where fecha_inicial >= date_add(?, INTERVAL -7 DAY) and fecha_final <= date_add(?, INTERVAL 7 DAY)");
+            PreparedStatement ps = conexion.prepareStatement("select IDNotificacion from notificacionesres " +
+                    "where fecha_inicial >= date_add(?, INTERVAL -7 DAY) and fecha_final <= date_add(?, INTERVAL 7 DAY)");
             ps.setString(1, date);
             ps.setString(2, date);
             ResultSet rs = ps.executeQuery();
 
             while(rs.next()) {
-                /*Array idsNotifications = rs.getArray("IDNotificacion");
-                String[] ids = (String[]) idsNotifications.getArray();
-                type = (Object[]) idsNotifications.getArray();
-                return ids;*/
                 idsRetorned[count] = rs.getString("IDNotificacion");
                 count++;
             }
@@ -520,7 +516,8 @@ public class DatabaseConnection {
         String dataNotifications[] = new String[4];
         try {
             Connection conexion=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+db,user ,pss);
-            PreparedStatement ps = conexion.prepareStatement("select fecha_inicial, fecha_final, informacion, IDRes from notificacionesres where IDNotificacion=?");
+            PreparedStatement ps = conexion.prepareStatement("select fecha_inicial, fecha_final, informacion, IDRes from notificacionesres " +
+                                                                    "where IDNotificacion=?");
             ps.setString(1, IDNotification);
             ResultSet rs = ps.executeQuery();
 
@@ -562,7 +559,8 @@ public class DatabaseConnection {
         ArrayList<String[]> dataAllRestaurant = new ArrayList<String[]>();
         try {
             Connection conexion=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+db,user ,pss);
-            PreparedStatement ps = conexion.prepareStatement("select IDRestaurante, Direccion, Restaurante, Descripcion, NumTel from restaurante where IDUsuarioAdmin=?");
+            PreparedStatement ps = conexion.prepareStatement("select IDRestaurante, Direccion, Restaurante, Descripcion, NumTel from " +
+                                                                    "restaurante where IDUsuarioAdmin=?");
             ps.setString(1, IDUserAdmin);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
@@ -710,7 +708,8 @@ public class DatabaseConnection {
     public String registerRestaurant(String name, String address, String description, String phone, String city, String IDUsuarioAdmin){
         try {
             Connection conexion=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+db,user ,pss);
-            PreparedStatement ps = conexion.prepareStatement("insert into restaurante (Restaurante, Direccion, Descripcion, NumTel, Estatus, IDCiudad, IDUsuarioAdmin) values (?,?,?,?,?,?,?)");
+            PreparedStatement ps = conexion.prepareStatement("insert into restaurante (Restaurante, Direccion, Descripcion, NumTel, Estatus, IDCiudad, " +
+                    "IDUsuarioAdmin) values (?,?,?,?,?,?,?)");
             ps.setString(1, name);
             ps.setString(2, address);
             ps.setString(3, description);
