@@ -94,7 +94,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginVertical="80dp"
+                    android:layout_marginTop="80dp"
 
                     android:background="@mipmap/popularbg">
 
@@ -102,48 +102,62 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-                        <LinearLayout
+                        <androidx.constraintlayout.widget.ConstraintLayout
                             android:id="@+id/Layout_Buscar"
                             android:layout_width="match_parent"
                             android:layout_height="250dp"
                             android:gravity="center">
 
                             <LinearLayout
+                                android:id="@+id/contentSpinner"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginVertical="70dp"
-                                android:gravity="center"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginTop="16dp"
+                                android:layout_marginEnd="16dp"
                                 android:background="@color/black"
-                                android:orientation="vertical">
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:ignore="MissingConstraints">
 
                                 <Spinner
                                     android:id="@+id/menu_tipoComida"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
-                                    android:background="@color/black"
-                                    android:spinnerMode="dropdown" />
+                                    android:background="@color/white"
+                                    android:spinnerMode="dialog" />
 
                                 <Spinner
                                     android:id="@+id/menu_Horario"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
-                                    android:background="@color/black"
-                                    android:spinnerMode="dropdown" />
+                                    android:background="@color/white"
+                                    android:spinnerMode="dialog" />
                             </LinearLayout>
 
                             <Button
                                 android:id="@+id/btnSearchRestaurant"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="80dp"
                                 android:layout_gravity="center"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginTop="24dp"
+                                android:layout_marginEnd="16dp"
                                 android:gravity="center"
-                                android:text="¡BUSCAR!" />
+                                android:text="¡BUSCAR!"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/contentSpinner"
+                                tools:ignore="MissingConstraints" />
 
 
-                        </LinearLayout>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"

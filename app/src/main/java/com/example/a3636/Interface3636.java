@@ -108,8 +108,8 @@ public class Interface3636 extends AppCompatActivity {
         //foodType = connection.getTypesOfFood();
         foodType = typesOfFoodAndSchedules.getTypesOfFood();
         //ArrayAdapter<CharSequence>adapter=ArrayAdapter.createFromResource(this,R.array.TipodeComida, android.R.layout.simple_spinner_item);
-        ArrayAdapter<CharSequence> adapter= new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, foodType);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter= new ArrayAdapter<>(this, R.layout.spinner_text_style, foodType);
+        //adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         spinnerTipoComida.setAdapter(adapter);
         //Spinner para Horario
         Spinner spinnerHorario = findViewById(R.id.menu_Horario);
@@ -120,8 +120,8 @@ public class Interface3636 extends AppCompatActivity {
         //hours = connection.getHoraries();
         hours = typesOfFoodAndSchedules.getItemsToArraySchedules();
         //ArrayAdapter<CharSequence>adapter=ArrayAdapter.createFromResource(this,R.array.TipodeComida, android.R.layout.simple_spinner_item);
-        ArrayAdapter <CharSequence>adapterHour= new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, hours);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        ArrayAdapter <CharSequence>adapterHour= new ArrayAdapter<>(this, R.layout.spinner_text_style, hours);
+        //adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         spinnerHorario.setAdapter(adapterHour);
 
         Button btnSearchRestaurant = findViewById(R.id.btnSearchRestaurant);
