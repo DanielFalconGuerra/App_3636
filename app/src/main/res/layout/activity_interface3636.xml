@@ -130,15 +130,17 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:background="@color/white"
-                                    android:spinnerMode="dialog" />
+                                    android:spinnerMode="dropdown"
+                                    android:theme="@style/Spinner"/>
 
                                 <Spinner
                                     android:id="@+id/menu_Horario"
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:background="@color/white"
-                                    android:spinnerMode="dialog" />
+                                    android:spinnerMode="dropdown"
+                                    android:theme="@style/Spinner" />
                             </LinearLayout>
 
                             <Button

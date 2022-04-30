@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">3636</string>
+    <string name="app_name">Softappetit</string>
     <string name="title_activity_inter_pclocation">InterPCLocation</string>
     <!--Elementos de spinner de ciudades disponibles-->
     <string-array name="ciudades">
