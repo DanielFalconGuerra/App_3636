@@ -227,7 +227,7 @@
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@+id/textView4"
-                                tools:ignore="MissingConstraints" />
+                                tools:ignore="MissingConstraints"/>
 
                             <Button
                                 android:id="@+id/buttonBuscar"
@@ -260,7 +260,7 @@
                                 android:layout_gravity="center"
                                 android:layout_marginStart="10dp"
                                 android:background="@color/yellowBackground"
-                                android:spinnerMode="dropdown" />
+                                android:spinnerMode="dropdown"/>
                         </LinearLayout>
                     </LinearLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>

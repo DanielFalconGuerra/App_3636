@@ -220,9 +220,9 @@ public class MainActivity extends AppCompatActivity {
         LinearLayout layout = findViewById(R.id.layoutError);
         layout.setVisibility(View.VISIBLE);
         Spinner spinnerCiudad = findViewById(R.id.spinnerCiudad);
-        //String cities[] = {"Seleccione la ciudad", "Irapuato", "Guanajuato", "León", "Celaya", "Chihuahua", "Juarez"};
-        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_text_style,cities );
-        //spinnerCiudad.setAdapter(adapter);
+        String cities[] = {"Seleccione la ciudad", "Irapuato", "Guanajuato", "León", "Celaya", "Chihuahua", "Juarez"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_text_style,cities );
+        spinnerCiudad.setAdapter(adapter);
         Button btnSearchByCity = findViewById(R.id.buttonBuscar);
         btnSearchByCity.setOnClickListener(view1 -> {
             String city = spinnerCiudad.getSelectedItem().toString();
