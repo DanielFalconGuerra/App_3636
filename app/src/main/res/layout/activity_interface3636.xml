@@ -96,7 +96,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="80dp"
 
-                    android:background="@mipmap/popularbg">
+                    android:background="@drawable/popularbg_format">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -131,7 +131,7 @@
                                     android:layout_gravity="center"
                                     android:background="@color/white"
                                     android:spinnerMode="dropdown"
-                                    android:theme="@style/Spinner"/>
+                                    android:theme="@style/Spinner" />
 
                                 <Spinner
                                     android:id="@+id/menu_Horario"
@@ -190,147 +190,196 @@
                                 android:backgroundTint="@color/grey"
                                 android:orientation="horizontal" />
 
-                            <LinearLayout
+                            <androidx.constraintlayout.widget.ConstraintLayout
                                 android:id="@+id/layout_botonesRCB"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/imageFood"
                                 android:layout_centerHorizontal="true">
 
-                                <Button
+                                <androidx.appcompat.widget.AppCompatButton
                                     android:id="@+id/btnRestaurant"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="15dp"
-                                    android:layout_marginEnd="15dp"
-                                    android:text="RESTAURANTE" />
+                                    android:layout_height="100dp"
+                                    android:layout_marginStart="16dp"
+                                    android:background="@drawable/custom_button"
+                                    android:drawableTop="@drawable/ic_baseline_restaurant_menu_24"
+                                    android:padding="20dp"
+                                    android:text="RESTAURANTE"
+                                    android:textSize="11sp"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    tools:ignore="MissingConstraints"
+                                    tools:layout_editor_absoluteY="0dp" />
 
-                                <Button
+                                <androidx.appcompat.widget.AppCompatButton
                                     android:id="@+id/btnCoffee"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginEnd="15dp"
-                                    android:text="CAFÉ" />
+                                    android:layout_height="100dp"
+                                    android:layout_marginStart="16dp"
+                                    android:layout_marginEnd="16dp"
+                                    android:background="@drawable/custom_button"
+                                    android:drawableTop="@drawable/ic_baseline_local_cafe_24"
+                                    android:padding="20dp"
+                                    android:text="CAFÉ"
+                                    android:textSize="11sp"
+                                    app:layout_constraintEnd_toStartOf="@+id/btnBar"
+                                    app:layout_constraintStart_toEndOf="@+id/btnRestaurant"
+                                    tools:ignore="MissingConstraints"
+                                    tools:layout_editor_absoluteY="0dp" />
 
-                                <Button
+                                <androidx.appcompat.widget.AppCompatButton
                                     android:id="@+id/btnBar"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginEnd="15dp"
-                                    android:text="BAR" />
+                                    android:layout_height="100dp"
+                                    android:layout_marginEnd="16dp"
+                                    android:background="@drawable/custom_button"
+                                    android:drawableTop="@drawable/ic_baseline_local_bar_24"
+                                    android:padding="20dp"
+                                    android:text="BAR"
+                                    android:textSize="11sp"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    tools:ignore="MissingConstraints"
+                                    tools:layout_editor_absoluteY="0dp" />
 
-                            </LinearLayout>
+                            </androidx.constraintlayout.widget.ConstraintLayout>
 
-                            <LinearLayout
+                            <androidx.constraintlayout.widget.ConstraintLayout
                                 android:id="@+id/BuscarPorCategoriaLayout"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_below="@id/layout_botonesRCB"
-                                android:layout_centerHorizontal="true"
+                                android:layout_marginHorizontal="16dp"
                                 android:layout_marginVertical="30dp"
-                                android:background="@color/white">
+                                android:background="@drawable/bg_main_1"
+                                android:paddingVertical="20dp">
 
-                                <Button
-                                    android:id="@+id/previos_restaurant"
-                                    android:layout_width="wrap_content"
+                                <androidx.constraintlayout.widget.ConstraintLayout
+                                    android:id="@+id/contenet_image"
+                                    android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-                                    android:background="@drawable/ic_baseline_keyboard_arrow_left_24" />
+                                    android:layout_marginStart="16dp"
+                                    android:layout_marginEnd="16dp"
+                                    android:orientation="horizontal"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    tools:ignore="MissingConstraints">
 
-                                <LinearLayout
-                                    android:layout_width="200dp"
-                                    android:layout_height="wrap_content"
-                                    android:background="@color/white"
-                                    android:orientation="vertical">
+                                    <Button
+                                        android:id="@+id/previos_restaurant"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:background="@drawable/ic_baseline_keyboard_arrow_left_24"
+                                        app:layout_constraintBottom_toBottomOf="parent"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent"
+                                        tools:ignore="MissingConstraints" />
 
                                     <ImageView
                                         android:id="@+id/logoRestaurant"
-                                        android:layout_width="80dp"
-                                        android:layout_height="80dp"
+                                        android:layout_width="130dp"
+                                        android:layout_height="130dp"
                                         android:layout_gravity="center"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        tools:layout_editor_absoluteY="0dp"
                                         tools:src="@mipmap/lagenareria" />
 
-                                    <TextView
-                                        android:id="@+id/nameText"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="center"
-                                        android:gravity="center"
-                                        android:textColor="@color/grey"
-                                        android:textSize="20sp"
-                                        tools:text="Nombre" />
-
-                                    <TextView
-                                        android:id="@+id/addressText"
+                                    <Button
+                                        android:id="@+id/next_restaurant"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_gravity="center"
-                                        android:textColor="@color/grey"
-                                        tools:text="Direccion" />
+                                        android:background="@drawable/ic_baseline_keyboard_arrow_right_24"
+                                        app:iconSize="200dp"
+                                        app:layout_constraintBottom_toBottomOf="parent"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent"
+                                        tools:ignore="MissingConstraints" />
 
-                                    <TextView
-                                        android:id="@+id/availabilityText"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="center"
-                                        android:textColor="@color/grey"
-                                        tools:text="Disponibilidad" />
+                                </androidx.constraintlayout.widget.ConstraintLayout>
 
-                                    <TextView
-                                        android:id="@+id/typesOfFoodText"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="center"
-                                        android:textColor="@color/grey"
-                                        tools:text="Tipo de comida" />
-
-                                    <TextView
-                                        android:id="@+id/phoneText"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="center"
-                                        android:textColor="@color/grey"
-                                        tools:text="Telefono" />
-                                </LinearLayout>
-
-                                <Button
-                                    android:id="@+id/next_restaurant"
-                                    android:layout_width="wrap_content"
+                                <TextView
+                                    android:id="@+id/nameText"
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:background="@drawable/ic_baseline_keyboard_arrow_right_24" />
-                            </LinearLayout>
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:paddingVertical="5dp"
+                                    android:textColor="@color/grey"
+                                    android:textSize="20sp"
+                                    android:textStyle="bold"
+                                    app:layout_constraintTop_toBottomOf="@+id/contenet_image"
+                                    tools:layout_editor_absoluteX="98dp"
+                                    tools:text="Nombre" />
 
-                            <LinearLayout
-                                android:id="@+id/algoquetepglayout"
+                                <TextView
+                                    android:id="@+id/addressText"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginStart="32dp"
+                                    android:layout_marginEnd="32dp"
+                                    android:textColor="@color/grey"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/nameText"
+                                    tools:text="Direccion" />
+
+                                <TextView
+                                    android:id="@+id/availabilityText"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginStart="32dp"
+                                    android:layout_marginEnd="32dp"
+                                    android:textColor="@color/grey"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/addressText"
+                                    tools:text="Disponibilidad" />
+
+                                <TextView
+                                    android:id="@+id/typesOfFoodText"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginStart="32dp"
+                                    android:layout_marginEnd="32dp"
+                                    android:textColor="@color/grey"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/availabilityText"
+                                    tools:text="Tipo de comida" />
+
+                                <TextView
+                                    android:id="@+id/phoneText"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginStart="32dp"
+                                    android:layout_marginEnd="32dp"
+                                    android:textColor="@color/grey"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/typesOfFoodText"
+                                    tools:text="Telefono" />
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                            <Button
+                                android:id="@+id/somethingyoumightlikebutton"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:layout_below="@+id/BuscarPorCategoriaLayout"
-                                android:background="@color/white">
+                                android:layout_marginHorizontal="16dp"
+                                android:layout_marginBottom="10dp"
+                                android:text="ALGO QUE TE PODRÍA GUSTAR" />
 
-                                <Button
-                                    android:id="@+id/somethingyoumightlikebutton"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:text="ALGO QUE TE PODRÍA GUSTAR" />
-                            </LinearLayout>
-
-                            <LinearLayout
+                            <Button
+                                android:id="@+id/btnMore"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:layout_below="@+id/algoquetepglayout"
-                                android:background="@color/white"
-                                android:orientation="vertical">
-
-                                <Button
-                                    android:id="@+id/btnMore"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:text="MÁS" />
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="20sp"
-                                    android:background="@color/white" />
-                            </LinearLayout>
+                                android:layout_marginHorizontal="16dp"
+                                android:layout_marginBottom="10dp"
+                                android:text="MÁS" />
 
                         </LinearLayout>
 

@@ -139,11 +139,11 @@ public class Interface3636 extends AppCompatActivity {
 
         //Codigo para Buscar Por Categoría
         Button btnRestaurant = findViewById(R.id.btnRestaurant);
-        btnRestaurant.setBackgroundColor(Color.rgb(255, 128, 0));
+        //btnRestaurant.setBackgroundColor(Color.rgb(255, 128, 0));
         Button btnCoffee = findViewById(R.id.btnCoffee);
-        btnCoffee.setBackgroundColor(Color.rgb(255, 128, 0));
+        //btnCoffee.setBackgroundColor(Color.rgb(255, 128, 0));
         Button btnBar = findViewById(R.id.btnBar);
-        btnBar.setBackgroundColor(Color.rgb(255, 128, 0));
+        //btnBar.setBackgroundColor(Color.rgb(255, 128, 0));
 
         //Cambiar de Restaurante
         Button previos_restaurant = findViewById(R.id.previos_restaurant);
