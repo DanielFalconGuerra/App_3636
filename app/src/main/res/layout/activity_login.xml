@@ -46,7 +46,7 @@
                 android:layout_gravity="center"
                 android:background="@color/yellowEditText"
                 android:textColor="@color/black"
-                android:text="Mario1"/>
+                android:text="Alexis"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

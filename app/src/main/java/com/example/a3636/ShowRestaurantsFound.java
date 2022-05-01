@@ -82,98 +82,102 @@ public class ShowRestaurantsFound extends AppCompatActivity {
 
                 //Obtener tipos de comida y IDs
                 String getIDsAndTypesFood[][] = new String[2][14];
-                getIDsAndTypesFood = dbConnect.getTypesFoodAndIDs();
-                int idTypeFood = 0;
-                for(int i = 0; i < 14; i++){
-                    if(typeFood.equals(getIDsAndTypesFood[i][1])){
-                        idTypeFood = Integer.parseInt(getIDsAndTypesFood[i][0]);
-                        break;
-                    }
-                }
-
-                //Obtener tipos de comida de cada restaurante
-                String IDsRestaurantes[][] = new String[3][3];
-                String IDRestaurantFound[] = new String[17];
-
-                IDsRestaurantes = dbConnect.getTypesFoodEachRestaurant();
-                int cont = 0;
-                for(int i = 0; i < 3; i++){
-                    for(int j = 0; j < 3; j++){
-                        if(idTypeFood == Integer.parseInt(IDsRestaurantes[i][j])){
-                            //Consultar ID de Restaurante
-                            IDRestaurantFound[cont] = dbConnect.getIDRestaurant(String.valueOf(i + 1));
-                            cont++;
+                try {
+                    getIDsAndTypesFood = dbConnect.getTypesFoodAndIDs();
+                    int idTypeFood = 0;
+                    for(int i = 0; i < 14; i++){
+                        if(typeFood.equals(getIDsAndTypesFood[i][1])){
+                            idTypeFood = Integer.parseInt(getIDsAndTypesFood[i][0]);
+                            break;
                         }
                     }
-                }
-                //if para verificar que se encontró al menos un restaurante
-                if(IDRestaurantFound[0]!=null){
+
+                    //Obtener tipos de comida de cada restaurante
+                    String IDsRestaurantes[][] = new String[3][3];
+                    String IDRestaurantFound[] = new String[17];
+
+                    IDsRestaurantes = dbConnect.getTypesFoodEachRestaurant();
+                    int cont = 0;
                     for(int i = 0; i < 3; i++){
-                        if(IDRestaurantFound[i] != null){
-                            //Obtener los dias que los restuarantes no estan cerrados
-                            String IDDIa = dbConnect.getDayClosedRestaurant(IDRestaurantFound[i],String.valueOf(dayWeek));
-                            Log.d("IDDia",IDDIa);
-                            if(!IDDIa.equals("8")){
-                                //Obtener el horario de los restaurantes
-                                String schedule[] = dbConnect.getScheduleOfRestaurant(IDRestaurantFound[i],String.valueOf(dayWeek));
-                                Log.d("prueba", IDRestaurantFound[i]);
-                                Log.d("prueba_horario", schedule[0]);
-                                String openingTime = schedule[0];
-                                String closingTime = schedule[1];
-                                Log.d("prueba", openingTime);
-                                if(!(openingTime.equals("") && closingTime.equals(""))){
-                                    //Obtener los horarios reales a partir de los IDs
-                                    String schedulesReceivedOne = dbConnect.getSchedule(openingTime);
-                                    String schedulesReceivedTwo = dbConnect.getSchedule(closingTime);
-                                    //Comparar horarios para revisar que el restaurante se encuentre abierto
-                                    if(schedulesReceivedOne.equals(hour)){
-                                    }else{
-                                        if(schedulesReceivedTwo.equals(hour)){
-                                            Toast.makeText(ShowRestaurantsFound.this,"Error",Toast.LENGTH_SHORT).show();
+                        for(int j = 0; j < 3; j++){
+                            if(idTypeFood == Integer.parseInt(IDsRestaurantes[i][j])){
+                                //Consultar ID de Restaurante
+                                IDRestaurantFound[cont] = dbConnect.getIDRestaurant(String.valueOf(i + 1));
+                                cont++;
+                            }
+                        }
+                    }
+                    //if para verificar que se encontró al menos un restaurante
+                    if(IDRestaurantFound[0]!=null){
+                        for(int i = 0; i < 3; i++){
+                            if(IDRestaurantFound[i] != null){
+                                //Obtener los dias que los restuarantes no estan cerrados
+                                String IDDIa = dbConnect.getDayClosedRestaurant(IDRestaurantFound[i],String.valueOf(dayWeek));
+                                Log.d("IDDia",IDDIa);
+                                if(!IDDIa.equals("8")){
+                                    //Obtener el horario de los restaurantes
+                                    String schedule[] = dbConnect.getScheduleOfRestaurant(IDRestaurantFound[i],String.valueOf(dayWeek));
+                                    Log.d("prueba", IDRestaurantFound[i]);
+                                    Log.d("prueba_horario", schedule[0]);
+                                    String openingTime = schedule[0];
+                                    String closingTime = schedule[1];
+                                    Log.d("prueba", openingTime);
+                                    if(!(openingTime.equals("") && closingTime.equals(""))){
+                                        //Obtener los horarios reales a partir de los IDs
+                                        String schedulesReceivedOne = dbConnect.getSchedule(openingTime);
+                                        String schedulesReceivedTwo = dbConnect.getSchedule(closingTime);
+                                        //Comparar horarios para revisar que el restaurante se encuentre abierto
+                                        if(schedulesReceivedOne.equals(hour)){
                                         }else{
-                                            Date timeToReview = null;
-                                            Date startTime = null;
-                                            Date finalTime = null;
-                                            try {
-                                                timeToReview = new SimpleDateFormat("HH:mm").parse(hour.trim());
-                                                startTime = new SimpleDateFormat("HH:mm").parse(schedulesReceivedOne.trim());
-                                                finalTime = new SimpleDateFormat("HH:mm").parse(schedulesReceivedTwo.trim());
-                                            } catch (ParseException e) {
-                                                e.printStackTrace();
-                                            }
-                                            if(timeToReview.after(startTime) && timeToReview.before(finalTime)){
-                                                //Obtener datos del restaurante
-                                                LinearLayout layout = new LinearLayout(ShowRestaurantsFound.this);
-                                                layout.addView(showRestaurantsFound(IDRestaurantFound[i]));
-                                                layoutRestaurantsFound.addView(layout);
+                                            if(schedulesReceivedTwo.equals(hour)){
+                                                Toast.makeText(ShowRestaurantsFound.this,"Error",Toast.LENGTH_SHORT).show();
                                             }else{
-                                                if(countRestaurantFound[0] == 0){
+                                                Date timeToReview = null;
+                                                Date startTime = null;
+                                                Date finalTime = null;
+                                                try {
+                                                    timeToReview = new SimpleDateFormat("HH:mm").parse(hour.trim());
+                                                    startTime = new SimpleDateFormat("HH:mm").parse(schedulesReceivedOne.trim());
+                                                    finalTime = new SimpleDateFormat("HH:mm").parse(schedulesReceivedTwo.trim());
+                                                } catch (ParseException e) {
+                                                    e.printStackTrace();
+                                                }
+                                                if(timeToReview.after(startTime) && timeToReview.before(finalTime)){
+                                                    //Obtener datos del restaurante
                                                     LinearLayout layout = new LinearLayout(ShowRestaurantsFound.this);
-                                                    layout.addView(errorRestaurantsNotFound());
+                                                    layout.addView(showRestaurantsFound(IDRestaurantFound[i]));
                                                     layoutRestaurantsFound.addView(layout);
-                                                    countRestaurantFound[0] += 1;
+                                                }else{
+                                                    if(countRestaurantFound[0] == 0){
+                                                        LinearLayout layout = new LinearLayout(ShowRestaurantsFound.this);
+                                                        layout.addView(errorRestaurantsNotFound());
+                                                        layoutRestaurantsFound.addView(layout);
+                                                        countRestaurantFound[0] += 1;
+                                                    }
                                                 }
                                             }
                                         }
-                                    }
-                                }else{
-                                    if(countRestaurantFound[0] == 0){
-                                        LinearLayout layout = new LinearLayout(ShowRestaurantsFound.this);
-                                        layout.addView(errorRestaurantsNotFound());
-                                        layoutRestaurantsFound.addView(layout);
-                                        countRestaurantFound[0] += 1;
+                                    }else{
+                                        if(countRestaurantFound[0] == 0){
+                                            LinearLayout layout = new LinearLayout(ShowRestaurantsFound.this);
+                                            layout.addView(errorRestaurantsNotFound());
+                                            layoutRestaurantsFound.addView(layout);
+                                            countRestaurantFound[0] += 1;
+                                        }
                                     }
                                 }
                             }
                         }
+                    }else{
+                        if(countRestaurantFound[0] == 0){
+                            LinearLayout layout = new LinearLayout(ShowRestaurantsFound.this);
+                            layout.addView(errorRestaurantsNotFound());
+                            layoutRestaurantsFound.addView(layout);
+                            countRestaurantFound[0] += 1;
+                        }
                     }
-                }else{
-                    if(countRestaurantFound[0] == 0){
-                        LinearLayout layout = new LinearLayout(ShowRestaurantsFound.this);
-                        layout.addView(errorRestaurantsNotFound());
-                        layoutRestaurantsFound.addView(layout);
-                        countRestaurantFound[0] += 1;
-                    }
+                }catch (Exception e){
+                    Toast.makeText(ShowRestaurantsFound.this,"Ha ocurrido un error, intentelo más tarde", Toast.LENGTH_LONG).show();
                 }
             }
             @Override

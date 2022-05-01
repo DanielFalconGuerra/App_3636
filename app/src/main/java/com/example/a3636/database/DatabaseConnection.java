@@ -724,4 +724,20 @@ public class DatabaseConnection {
             return ex.getMessage();
         }
     }
+
+    public String createPromotion(String IDRestaurant, String startDate, String finalDate, String information){
+        try {
+            Connection conexion=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+db,user ,pss);
+            PreparedStatement ps = conexion.prepareStatement("insert into  notificacionesres  (fecha_inicial, fecha_final, informacion, IDRes) values (?,?,?,?)");
+            ps.setString(1, startDate);
+            ps.setString(2, finalDate);
+            ps.setString(3, information);
+            ps.setString(4, IDRestaurant);
+            ps.execute();
+            conexion.close();
+            return "Promoción Registrada con éxito";
+        } catch(SQLException ex){
+            return ex.getMessage();
+        }
+    }
 }

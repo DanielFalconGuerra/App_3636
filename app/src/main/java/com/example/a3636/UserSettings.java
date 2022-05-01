@@ -54,60 +54,64 @@ public class UserSettings extends AppCompatActivity {
         String userName = getIntent().getStringExtra("userName");
 
         newUserSettings.setText(userName);
-        //Obtener ID del Usuario
-        connection.CONN();
-        String ID = connection.getIDUser(userName);
-        Toast.makeText(this,ID,Toast.LENGTH_SHORT).show();
-        //Obtener imagen de usuario
-        imageReceived = connection.getImage(ID);
-        if(imageReceived != null){
-            Bitmap bitmap = BitmapFactory.decodeByteArray(imageReceived, 0, imageReceived.length);
-            imageUserSessionSettings.setImageBitmap(bitmap);
-        }
-        String dataUser[] = new String[3];
-        connection.CONN();
-        dataUser = connection.getDataUser(ID);
-        passwordReceived = dataUser[0];
-        newMailSettings.setText(dataUser[1]);
-        newNameSettings.setText(dataUser[2]);
-        //Codigo para verificar que la contraseña sea correcta
-        BtnUpdateUserInformation.setOnClickListener(view -> {
-            String user = newUserSettings.getText().toString();
-            String mail = newMailSettings.getText().toString();
-            String name = newNameSettings.getText().toString();
-            String password = newPasswordSettings.getText().toString();
-            String newPassword = newPasswordSettingsToUpdate.getText().toString();
+        try{
+            //Obtener ID del Usuario
+            connection.CONN();
+            String ID = connection.getIDUser(userName);
+            Toast.makeText(this,ID,Toast.LENGTH_SHORT).show();
+            //Obtener imagen de usuario
+            imageReceived = connection.getImage(ID);
+            if(imageReceived != null){
+                Bitmap bitmap = BitmapFactory.decodeByteArray(imageReceived, 0, imageReceived.length);
+                imageUserSessionSettings.setImageBitmap(bitmap);
+            }
+            String dataUser[] = new String[3];
+            connection.CONN();
+            dataUser = connection.getDataUser(ID);
+            passwordReceived = dataUser[0];
+            newMailSettings.setText(dataUser[1]);
+            newNameSettings.setText(dataUser[2]);
+            //Codigo para verificar que la contraseña sea correcta
+            BtnUpdateUserInformation.setOnClickListener(view -> {
+                String user = newUserSettings.getText().toString();
+                String mail = newMailSettings.getText().toString();
+                String name = newNameSettings.getText().toString();
+                String password = newPasswordSettings.getText().toString();
+                String newPassword = newPasswordSettingsToUpdate.getText().toString();
 
-            String hash = "";
-            String response = "";
-            if(user.equals("")||mail.equals("")||name.equals("")){
-                Toast.makeText(this,"Los campos Usuario, Correo y Nombre no deben estar vaciós para continuar", Toast.LENGTH_LONG).show();
-            }else{
-                if(!password.equals("")){
-                    boolean passwordOK = BCrypt.checkpw(password, passwordReceived);
-                    if(passwordOK){
+                String hash = "";
+                String response = "";
+                if(user.equals("")||mail.equals("")||name.equals("")){
+                    Toast.makeText(this,"Los campos Usuario, Correo y Nombre no deben estar vaciós para continuar", Toast.LENGTH_LONG).show();
+                }else{
+                    if(!password.equals("")){
+                        boolean passwordOK = BCrypt.checkpw(password, passwordReceived);
+                        if(passwordOK){
+                            response = connection.updateMailUser(mail, user);
+                            response = connection.updateNameUser(name, user);
+                            hash = BCrypt.hashpw(newPassword, BCrypt.gensalt(8));
+                            response = connection.updatePasswordUser(hash, user);
+                            response = connection.updateImageUser(imageReceived, user);
+                            Toast.makeText(this,response, Toast.LENGTH_SHORT).show();
+                            Intent Login = new Intent(this,Login.class);
+                            startActivity(Login);
+                        }else{
+                            Toast.makeText(this,"La contraseña ingresada es incorrecta", Toast.LENGTH_SHORT).show();
+                        }
+                    }else{
                         response = connection.updateMailUser(mail, user);
                         response = connection.updateNameUser(name, user);
-                        hash = BCrypt.hashpw(newPassword, BCrypt.gensalt(8));
-                        response = connection.updatePasswordUser(hash, user);
                         response = connection.updateImageUser(imageReceived, user);
-                        Toast.makeText(this,response, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(this,response, Toast.LENGTH_SHORT).show();
                         Intent Login = new Intent(this,Login.class);
                         startActivity(Login);
-                    }else{
-                        Toast.makeText(this,"La contraseña ingresada es incorrecta", Toast.LENGTH_SHORT).show();
-                    }
-                }else{
-                    response = connection.updateMailUser(mail, user);
-                    response = connection.updateNameUser(name, user);
-                    response = connection.updateImageUser(imageReceived, user);
-                    //Toast.makeText(this,response, Toast.LENGTH_SHORT).show();
-                    Intent Login = new Intent(this,Login.class);
-                    startActivity(Login);
 
+                    }
                 }
-            }
-        });
+            });
+        }catch (Exception e){
+            Toast.makeText(this,"Ha ocurrido un error, intentelo más tarde", Toast.LENGTH_LONG).show();
+        }
         btnSelectImageSettings.setOnClickListener(view -> {
             abrirGaleria(btnSelectImageSettings);
         });

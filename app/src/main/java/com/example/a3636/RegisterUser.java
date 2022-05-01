@@ -95,53 +95,57 @@ public class RegisterUser extends AppCompatActivity {
         BtnRegisterUser.setOnClickListener(view -> {
             String user = newUserET.getText().toString();
             if(!user.equals("")){
-                dbConnection.CONN();
-                boolean existingUser = dbConnection.checkIfTheUserAlreadyExists(user);
-                if(existingUser){
-                    Toast.makeText(this, "Error, el usuario ingresado ya existe", Toast.LENGTH_SHORT).show();
-                }else{
-                    String eMail = newMailET.getText().toString();
-                    String name = newNameET.getText().toString();
-                    String password = newPasswordET.getText().toString();
-                    String repeatPassword = repeatPasswordET.getText().toString();
+                try{
+                    dbConnection.CONN();
+                    boolean existingUser = dbConnection.checkIfTheUserAlreadyExists(user);
+                    if(existingUser){
+                        Toast.makeText(this, "Error, el usuario ingresado ya existe", Toast.LENGTH_SHORT).show();
+                    }else{
+                        String eMail = newMailET.getText().toString();
+                        String name = newNameET.getText().toString();
+                        String password = newPasswordET.getText().toString();
+                        String repeatPassword = repeatPasswordET.getText().toString();
 
-                    if(!eMail.equals("")||!name.equals("")||!password.equals("")||!repeatPassword.equals("")){
-                        if(password.equals(repeatPassword)){
-                            //Obtener el último ID de los usuarios
-                            dbConnection.CONN();
-                            String IDUser = String.valueOf(Integer.parseInt(dbConnection.getLastIDUser()) + 1);
+                        if(!eMail.equals("")||!name.equals("")||!password.equals("")||!repeatPassword.equals("")){
+                            if(password.equals(repeatPassword)){
+                                //Obtener el último ID de los usuarios
+                                dbConnection.CONN();
+                                String IDUser = String.valueOf(Integer.parseInt(dbConnection.getLastIDUser()) + 1);
 
-                            //Cifrar password
-                            String hash = BCrypt.hashpw(password, BCrypt.gensalt(8));
-                            //Crear nuevo usuario
-                            if(userCB.isChecked()){
-                                String response = dbConnection.createNewUser(IDUser, hash, user, eMail, name, "1", image);
-                                Toast.makeText(this,response, Toast.LENGTH_LONG).show();
-                                if(response.equals("Usuario creado con éxito")){
-                                    Intent login = new Intent(this, Login.class);
-                                    startActivity(login);
-                                }
-                                Toast.makeText(this, "Usuario seleccionado", Toast.LENGTH_SHORT).show();
-                            }else{
-                                if(businessCB.isChecked()){
-                                    userCB.setChecked(false);
-                                    String response = dbConnection.createNewUser(IDUser, hash, user, eMail, name, "3", image);
+                                //Cifrar password
+                                String hash = BCrypt.hashpw(password, BCrypt.gensalt(8));
+                                //Crear nuevo usuario
+                                if(userCB.isChecked()){
+                                    String response = dbConnection.createNewUser(IDUser, hash, user, eMail, name, "1", image);
                                     Toast.makeText(this,response, Toast.LENGTH_LONG).show();
                                     if(response.equals("Usuario creado con éxito")){
                                         Intent login = new Intent(this, Login.class);
                                         startActivity(login);
                                     }
-                                    Toast.makeText(this, "Empresa seleccionada", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(this, "Usuario seleccionado", Toast.LENGTH_SHORT).show();
                                 }else{
-                                    Toast.makeText(this, "Error, debe seleccionar un tipo de usuario antes de continuar", Toast.LENGTH_SHORT).show();
+                                    if(businessCB.isChecked()){
+                                        userCB.setChecked(false);
+                                        String response = dbConnection.createNewUser(IDUser, hash, user, eMail, name, "3", image);
+                                        Toast.makeText(this,response, Toast.LENGTH_LONG).show();
+                                        if(response.equals("Usuario creado con éxito")){
+                                            Intent login = new Intent(this, Login.class);
+                                            startActivity(login);
+                                        }
+                                        Toast.makeText(this, "Empresa seleccionada", Toast.LENGTH_SHORT).show();
+                                    }else{
+                                        Toast.makeText(this, "Error, debe seleccionar un tipo de usuario antes de continuar", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
+                            }else{
+                                Toast.makeText(this,"Error, las contraseñas ingresadas no son iguales", Toast.LENGTH_LONG).show();
                             }
                         }else{
-                            Toast.makeText(this,"Error, las contraseñas ingresadas no son iguales", Toast.LENGTH_LONG).show();
+                            Toast.makeText(this,"Error, debe llenar todos los campos", Toast.LENGTH_LONG).show();
                         }
-                    }else{
-                        Toast.makeText(this,"Error, debe llenar todos los campos", Toast.LENGTH_LONG).show();
                     }
+                }catch (Exception e){
+                    Toast.makeText(this,"Ha ocurrido un error, intentelo más tarde", Toast.LENGTH_LONG).show();
                 }
             }else{
                 Toast.makeText(this,"Error, debe llenar todos los campos", Toast.LENGTH_LONG).show();

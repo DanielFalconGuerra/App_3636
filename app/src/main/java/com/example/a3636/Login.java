@@ -48,18 +48,24 @@ public class Login extends AppCompatActivity {
         BtnLogin.setOnClickListener(view -> {
             user = userEditText.getText().toString();
             password = passwordEditText.getText().toString();
-            //String hash = BCrypt.hashpw(password, BCrypt.gensalt(8));
-            dbConnect.CONN();
+
             String[] userData = new String[2];
             boolean passwordOK = false;
             String hash = "";
             String IDType = "";
-            if(!user.equals("") || !password.equals("")) {
-                userData = dbConnect.loginCheck(user);
-                hash = userData[0];
-                IDType = userData[1];
-                passwordOK = BCrypt.checkpw(password, hash);
+
+            try {
+                dbConnect.CONN();
+                if(!user.equals("") || !password.equals("")) {
+                    userData = dbConnect.loginCheck(user);
+                    hash = userData[0];
+                    IDType = userData[1];
+                    passwordOK = BCrypt.checkpw(password, hash);
+                }
+            }catch (Exception e){
+                Toast.makeText(this,"Error", Toast.LENGTH_LONG).show();
             }
+
             if(passwordOK){
                 Toast.makeText(this, "OK", Toast.LENGTH_SHORT).show();
                 int IDTypeUser = Integer.valueOf(IDType);

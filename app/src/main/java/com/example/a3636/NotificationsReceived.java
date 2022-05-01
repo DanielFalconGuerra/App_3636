@@ -63,79 +63,83 @@ public class NotificationsReceived extends AppCompatActivity {
                 logoRestaurantNot.setLayoutParams(layoutParams);
                 restaurantNameNot.setTextSize(25);
 
-                connection.CONN();
-                String dataNotifications[] = new String[4];
-                dataNotifications = connection.getNotifications(idsNotifications[i]);
+                try {
+                    connection.CONN();
+                    String dataNotifications[] = new String[4];
+                    dataNotifications = connection.getNotifications(idsNotifications[i]);
 
-                if(dataNotifications[3].equals("1")){
-                    logoRestaurantNot.setImageResource(R.mipmap.lagenareria);
-                }else
-                if(dataNotifications[3].equals("2")){
-                    logoRestaurantNot.setImageResource(R.mipmap.arena88);
-                }else
-                if(dataNotifications[3].equals("3")){
-                    logoRestaurantNot.setImageResource(R.mipmap.manhattanbar);
-                }else
-                if(dataNotifications[3].equals("4")){
-                    logoRestaurantNot.setImageResource(R.mipmap.indigobar);
-                }else
-                if(dataNotifications[3].equals("5")){
-                    logoRestaurantNot.setImageResource(R.mipmap.elcurandero);
-                }else
-                if(dataNotifications[3].equals("6")){
-                    logoRestaurantNot.setImageResource(R.mipmap.cuevalobo);
-                }else
-                if(dataNotifications[3].equals("7")){
-                    logoRestaurantNot.setImageResource(R.mipmap.granchamorro);
-                }else
-                if(dataNotifications[3].equals("8")){
-                    logoRestaurantNot.setImageResource(R.mipmap.raices);
-                }else
-                if(dataNotifications[3].equals("9")){
-                    logoRestaurantNot.setImageResource(R.mipmap.negritocafe);
-                }else
-                if(dataNotifications[3].equals("10")){
-                    logoRestaurantNot.setImageResource(R.mipmap.monchster);
-                }else
-                if(dataNotifications[3].equals("11")){
-                    logoRestaurantNot.setImageResource(R.mipmap.buenavida);
-                }else
-                if(dataNotifications[3].equals("12")){
-                    logoRestaurantNot.setImageResource(R.mipmap.marinba);
-                }else
-                if(dataNotifications[3].equals("13")){
-                    logoRestaurantNot.setImageResource(R.mipmap.happybox);
-                }else
-                if(dataNotifications[3].equals("14")){
-                    logoRestaurantNot.setImageResource(R.mipmap.mirrey);
-                }else
-                if(dataNotifications[3].equals("15")){
-                    logoRestaurantNot.setImageResource(R.mipmap.laescotilla);
-                }else
-                if(dataNotifications[3].equals("16")){
-                    logoRestaurantNot.setImageResource(R.mipmap.costilla);
-                }else
-                if(dataNotifications[3].equals("17")){
-                    logoRestaurantNot.setImageResource(R.mipmap.posdata);
+                    if(dataNotifications[3].equals("1")){
+                        logoRestaurantNot.setImageResource(R.mipmap.lagenareria);
+                    }else
+                    if(dataNotifications[3].equals("2")){
+                        logoRestaurantNot.setImageResource(R.mipmap.arena88);
+                    }else
+                    if(dataNotifications[3].equals("3")){
+                        logoRestaurantNot.setImageResource(R.mipmap.manhattanbar);
+                    }else
+                    if(dataNotifications[3].equals("4")){
+                        logoRestaurantNot.setImageResource(R.mipmap.indigobar);
+                    }else
+                    if(dataNotifications[3].equals("5")){
+                        logoRestaurantNot.setImageResource(R.mipmap.elcurandero);
+                    }else
+                    if(dataNotifications[3].equals("6")){
+                        logoRestaurantNot.setImageResource(R.mipmap.cuevalobo);
+                    }else
+                    if(dataNotifications[3].equals("7")){
+                        logoRestaurantNot.setImageResource(R.mipmap.granchamorro);
+                    }else
+                    if(dataNotifications[3].equals("8")){
+                        logoRestaurantNot.setImageResource(R.mipmap.raices);
+                    }else
+                    if(dataNotifications[3].equals("9")){
+                        logoRestaurantNot.setImageResource(R.mipmap.negritocafe);
+                    }else
+                    if(dataNotifications[3].equals("10")){
+                        logoRestaurantNot.setImageResource(R.mipmap.monchster);
+                    }else
+                    if(dataNotifications[3].equals("11")){
+                        logoRestaurantNot.setImageResource(R.mipmap.buenavida);
+                    }else
+                    if(dataNotifications[3].equals("12")){
+                        logoRestaurantNot.setImageResource(R.mipmap.marinba);
+                    }else
+                    if(dataNotifications[3].equals("13")){
+                        logoRestaurantNot.setImageResource(R.mipmap.happybox);
+                    }else
+                    if(dataNotifications[3].equals("14")){
+                        logoRestaurantNot.setImageResource(R.mipmap.mirrey);
+                    }else
+                    if(dataNotifications[3].equals("15")){
+                        logoRestaurantNot.setImageResource(R.mipmap.laescotilla);
+                    }else
+                    if(dataNotifications[3].equals("16")){
+                        logoRestaurantNot.setImageResource(R.mipmap.costilla);
+                    }else
+                    if(dataNotifications[3].equals("17")){
+                        logoRestaurantNot.setImageResource(R.mipmap.posdata);
+                    }
+
+                    connection.CONN();
+                    String nameRestaurant = connection.getRestaurant(dataNotifications[3]);
+
+                    restaurantNameNot.setText(nameRestaurant);
+                    informationNot.setText(dataNotifications[2]);
+                    String informationStartDate = "Aprovecha del " + dataNotifications[0];
+                    startDateNot.setText(informationStartDate);
+                    String informationFinalDate = "Termina el " + dataNotifications[1];
+                    finalDateNot.setText(informationFinalDate);
+
+                    layoutNotificationsReceived.addView(logoRestaurantNot);
+                    layoutNotificationsReceived.addView(restaurantNameNot);
+                    layoutNotificationsReceived.addView(informationNot);
+                    layoutNotificationsReceived.addView(startDateNot);
+                    layoutNotificationsReceived.addView(finalDateNot);
+
+                    layoutNotifications.addView(layoutNotificationsReceived);
+                }catch (Exception e){
+                    Toast.makeText(this,"Ha ocurrido un error, intentelo más tarde", Toast.LENGTH_LONG).show();
                 }
-
-                connection.CONN();
-                String nameRestaurant = connection.getRestaurant(dataNotifications[3]);
-
-                restaurantNameNot.setText(nameRestaurant);
-                informationNot.setText(dataNotifications[2]);
-                String informationStartDate = "Aprovecha del " + dataNotifications[0];
-                startDateNot.setText(informationStartDate);
-                String informationFinalDate = "Termina el " + dataNotifications[1];
-                finalDateNot.setText(informationFinalDate);
-
-                layoutNotificationsReceived.addView(logoRestaurantNot);
-                layoutNotificationsReceived.addView(restaurantNameNot);
-                layoutNotificationsReceived.addView(informationNot);
-                layoutNotificationsReceived.addView(startDateNot);
-                layoutNotificationsReceived.addView(finalDateNot);
-
-                layoutNotifications.addView(layoutNotificationsReceived);
             }
         }else{
             LinearLayout layoutNotifications = findViewById(R.id.layoutNotifications);

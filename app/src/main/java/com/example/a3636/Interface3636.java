@@ -48,15 +48,21 @@ public class Interface3636 extends AppCompatActivity {
         String userName = getIntent().getStringExtra("userName");
 
         nameUserSession.setText(userName);
-        //Obtener ID del Usuario
-        connection.CONN();
-        String ID = connection.getIDUser(userName);
-        Toast.makeText(this,ID,Toast.LENGTH_SHORT).show();
-        //Obtener imagen de usuario
-        byte[] imageReceived = connection.getImage(ID);
-        if(imageReceived != null){
-            Bitmap bitmap = BitmapFactory.decodeByteArray(imageReceived, 0, imageReceived.length);
-            imageUser.setImageBitmap(bitmap);
+        try {
+            //Obtener ID del Usuario
+            connection.CONN();
+            String ID = connection.getIDUser(userName);
+            Toast.makeText(this,ID,Toast.LENGTH_SHORT).show();
+            //Obtener imagen de usuario
+            byte[] imageReceived = connection.getImage(ID);
+            if(imageReceived != null){
+                Bitmap bitmap = BitmapFactory.decodeByteArray(imageReceived, 0, imageReceived.length);
+                imageUser.setImageBitmap(bitmap);
+            }
+        }catch (Exception e){
+            Toast.makeText(this,"Ha ocurrido un error, intentelo más tarde", Toast.LENGTH_LONG).show();
+            Intent login = new Intent(this, Login.class);
+            startActivity(login);
         }
         logIn.setText("Cambiar de usuario");
         logIn.setOnClickListener(view -> {
@@ -77,11 +83,15 @@ public class Interface3636 extends AppCompatActivity {
         });
 
         date = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
-        connection.CONN();
-        numberNotificationReceived = connection.getNumberNotifications(date);
-        Toast.makeText(this,numberNotificationReceived, Toast.LENGTH_LONG).show();
-        if(!numberNotificationReceived.equals("")){
-            notificationsIM.setImageResource(R.drawable.iconsnotification);
+        try {
+            connection.CONN();
+            numberNotificationReceived = connection.getNumberNotifications(date);
+            Toast.makeText(this,numberNotificationReceived, Toast.LENGTH_LONG).show();
+            if(!numberNotificationReceived.equals("")){
+                notificationsIM.setImageResource(R.drawable.iconsnotification);
+            }
+        }catch (Exception e){
+            Toast.makeText(this,"Ha ocurrido un error obteniendo las notificaciones", Toast.LENGTH_LONG).show();
         }
 
         notificationsIM.setOnClickListener(view -> {
@@ -103,39 +113,44 @@ public class Interface3636 extends AppCompatActivity {
         //Spinner para Tipo de Comida
         Spinner spinnerTipoComida = findViewById(R.id.menu_tipoComida);
         String foodType[];
-        //Obtener tipos de comida de base de datos
-        connection.CONN();
-        //foodType = connection.getTypesOfFood();
-        foodType = typesOfFoodAndSchedules.getTypesOfFood();
-        //ArrayAdapter<CharSequence>adapter=ArrayAdapter.createFromResource(this,R.array.TipodeComida, android.R.layout.simple_spinner_item);
-        ArrayAdapter<CharSequence> adapter= new ArrayAdapter<>(this, R.layout.spinner_text_style, foodType);
-        //adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-        spinnerTipoComida.setAdapter(adapter);
-        //Spinner para Horario
-        Spinner spinnerHorario = findViewById(R.id.menu_Horario);
-        //Obtener tipos de comida de base de datos
-        String hours[];
-        connection.CONN();
-        //Obtener horarios de restaurantes
-        //hours = connection.getHoraries();
-        hours = typesOfFoodAndSchedules.getItemsToArraySchedules();
-        //ArrayAdapter<CharSequence>adapter=ArrayAdapter.createFromResource(this,R.array.TipodeComida, android.R.layout.simple_spinner_item);
-        ArrayAdapter <CharSequence>adapterHour= new ArrayAdapter<>(this, R.layout.spinner_text_style, hours);
-        //adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-        spinnerHorario.setAdapter(adapterHour);
+        try {
+            //Obtener tipos de comida de base de datos
+            connection.CONN();
+            //foodType = connection.getTypesOfFood();
+            foodType = typesOfFoodAndSchedules.getTypesOfFood();
+            //ArrayAdapter<CharSequence>adapter=ArrayAdapter.createFromResource(this,R.array.TipodeComida, android.R.layout.simple_spinner_item);
+            ArrayAdapter<CharSequence> adapter= new ArrayAdapter<>(this, R.layout.spinner_text_style, foodType);
+            //adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+            spinnerTipoComida.setAdapter(adapter);
+            //Spinner para Horario
+            Spinner spinnerHorario = findViewById(R.id.menu_Horario);
+            //Obtener tipos de comida de base de datos
+            String hours[];
+            connection.CONN();
+            //Obtener horarios de restaurantes
+            //hours = connection.getHoraries();
+            hours = typesOfFoodAndSchedules.getItemsToArraySchedules();
+            //ArrayAdapter<CharSequence>adapter=ArrayAdapter.createFromResource(this,R.array.TipodeComida, android.R.layout.simple_spinner_item);
+            ArrayAdapter <CharSequence>adapterHour= new ArrayAdapter<>(this, R.layout.spinner_text_style, hours);
+            //adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+            spinnerHorario.setAdapter(adapterHour);
 
-        Button btnSearchRestaurant = findViewById(R.id.btnSearchRestaurant);
-        btnSearchRestaurant.setBackgroundColor(Color.rgb(255, 128, 0));
-        btnSearchRestaurant.setOnClickListener(view -> {
-            String typeFood = spinnerTipoComida.getSelectedItem().toString();
-            String hour = spinnerHorario.getSelectedItem().toString();
-            if(!(typeFood.equals("Seleccione el tipo de comida")||(hour.equals("Selecciona la hora")))){
-                Intent showRestaurantFound = new Intent(this, ShowRestaurantsFound.class);
-                showRestaurantFound.putExtra("typeFood", typeFood);
-                showRestaurantFound.putExtra("hour", hour);
-                startActivity(showRestaurantFound);
-            }
-        });
+            Button btnSearchRestaurant = findViewById(R.id.btnSearchRestaurant);
+            btnSearchRestaurant.setBackgroundColor(Color.rgb(255, 128, 0));
+            btnSearchRestaurant.setOnClickListener(view -> {
+                String typeFood = spinnerTipoComida.getSelectedItem().toString();
+                String hour = spinnerHorario.getSelectedItem().toString();
+                if(!(typeFood.equals("Seleccione el tipo de comida")||(hour.equals("Selecciona la hora")))){
+                    Intent showRestaurantFound = new Intent(this, ShowRestaurantsFound.class);
+                    showRestaurantFound.putExtra("typeFood", typeFood);
+                    showRestaurantFound.putExtra("hour", hour);
+                    startActivity(showRestaurantFound);
+                }
+            });
+        }catch (Exception e){
+            Toast.makeText(this,"Ha ocurrido un error, intentelo más tarde", Toast.LENGTH_LONG).show();
+        }
+
 
         //Codigo para Buscar Por Categoría
         Button btnRestaurant = findViewById(R.id.btnRestaurant);
