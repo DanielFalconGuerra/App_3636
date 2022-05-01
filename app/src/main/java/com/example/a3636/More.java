@@ -36,7 +36,6 @@ public class More extends AppCompatActivity {
         EditText txtAddEmail = findViewById(R.id.txtAddEmail);
 
         String location = ((MyLocation)getApplication()).getLocation();
-        Toast.makeText(this,"Ubicacion: " + location,Toast.LENGTH_SHORT).show();
 
         btnJoin.setOnClickListener(view -> {
             //Redaccion de correo

@@ -43,7 +43,6 @@ public class ModifyRestaurantInformation extends AppCompatActivity {
 
         //Recuper ubicacion
         String location = ((MyLocation)getApplication()).getLocation();
-        Toast.makeText(this,"Ubicacion: " + location,Toast.LENGTH_SHORT).show();
 
         TextView nameBusinessSession = findViewById(R.id.nameBusinessSession);
         ImageView imageBusinessSession = findViewById(R.id.imageBusinessSession);
@@ -207,7 +206,7 @@ public class ModifyRestaurantInformation extends AppCompatActivity {
                 spinnerRestaurant.setOnItemSelectedListener(
                         new AdapterView.OnItemSelectedListener() {
                             public void onItemSelected(AdapterView<?> spn, android.view.View v, int posicion, long id) {
-                                Toast.makeText(spn.getContext(), "Has seleccionado " + spn.getItemAtPosition(posicion).toString(), Toast.LENGTH_LONG).show();
+                                //Toast.makeText(spn.getContext(), "Has seleccionado " + spn.getItemAtPosition(posicion).toString(), Toast.LENGTH_LONG).show();
                                 newNameRestaurantTV.setVisibility(View.VISIBLE);
                                 newAddressRestaurantTV.setVisibility(View.VISIBLE);
                                 newDescriptionRestaurantTV.setVisibility(View.VISIBLE);
@@ -229,7 +228,7 @@ public class ModifyRestaurantInformation extends AppCompatActivity {
                                 newPhoneRestaurantET.setText(restaurantsAdded.get(IDRestaurant)[4]);
 
                                 btnAddPromotionInformation.setOnClickListener(view -> {
-                                    Toast.makeText(ModifyRestaurantInformation.this,restaurantsAdded.get(IDRestaurant)[0],Toast.LENGTH_LONG).show();
+                                    //Toast.makeText(ModifyRestaurantInformation.this,restaurantsAdded.get(IDRestaurant)[0],Toast.LENGTH_LONG).show();
                                     String startDate = newDateStartNotification.getText().toString();
                                     String finalDate = newDateFinalNotification.getText().toString();
                                     String information = informationPromotionET.getText().toString();
@@ -299,51 +298,51 @@ public class ModifyRestaurantInformation extends AppCompatActivity {
                                         horariesLayoutSaturday.setVisibility(View.VISIBLE);
                                         horariesLayoutSunday.setVisibility(View.VISIBLE);
 
-                                        if(HorariesByID[0].equals("8")){
-                                            newOpeningHoraryRestaurantMondayET.setText("Cerrado");
-                                            newClosingHoraryRestaurantMondayET.setText("Cerrado");
+                                        if(HorariesByID[0].equals("8")||(HorariesByID[1].equals("00:00")&&HorariesByID[2].equals("00:00"))){
+                                            newOpeningHoraryRestaurantMondayET.setText("00:00");
+                                            newClosingHoraryRestaurantMondayET.setText("00:00");
                                         }else{
                                             newOpeningHoraryRestaurantMondayET.setText(Horaries[Integer.parseInt(HorariesByID[1])-1]);
                                             newClosingHoraryRestaurantMondayET.setText(Horaries[Integer.parseInt(HorariesByID[2])-1]);
                                         }
-                                        if(HorariesByID[3].equals("8")){
-                                            newOpeningHoraryRestaurantTuesdayET.setText("Cerrado");
-                                            newClosingHoraryRestaurantTuesdayET.setText("Cerrado");
+                                        if(HorariesByID[3].equals("8")||(HorariesByID[4].equals("00:00")&&HorariesByID[5].equals("00:00"))){
+                                            newOpeningHoraryRestaurantTuesdayET.setText("00:00");
+                                            newClosingHoraryRestaurantTuesdayET.setText("00:00");
                                         }else{
                                             newOpeningHoraryRestaurantTuesdayET.setText(Horaries[Integer.parseInt(HorariesByID[4])-1]);
                                             newClosingHoraryRestaurantTuesdayET.setText(Horaries[Integer.parseInt(HorariesByID[5])-1]);
                                         }
-                                        if(HorariesByID[6].equals("8")){
-                                            newOpeningHoraryRestaurantWednesdayET.setText("Cerrado");
-                                            newClosingHoraryRestaurantWednesdayET.setText("Cerrado");
+                                        if(HorariesByID[6].equals("8")||(HorariesByID[7].equals("00:00")&&HorariesByID[8].equals("00:00"))){
+                                            newOpeningHoraryRestaurantWednesdayET.setText("00:00");
+                                            newClosingHoraryRestaurantWednesdayET.setText("00:00");
                                         }else{
                                             newOpeningHoraryRestaurantWednesdayET.setText(Horaries[Integer.parseInt(HorariesByID[7])-1]);
                                             newClosingHoraryRestaurantWednesdayET.setText(Horaries[Integer.parseInt(HorariesByID[8])-1]);
                                         }
-                                        if(HorariesByID[9].equals("8")){
-                                            newOpeningHoraryRestaurantThursdayET.setText("Cerrado");
-                                            newClosingHoraryRestaurantThursdayET.setText("Cerrado");
+                                        if(HorariesByID[9].equals("8")||(HorariesByID[10].equals("00:00")&&HorariesByID[11].equals("00:00"))){
+                                            newOpeningHoraryRestaurantThursdayET.setText("00:00");
+                                            newClosingHoraryRestaurantThursdayET.setText("00:00");
                                         }else{
                                             newOpeningHoraryRestaurantThursdayET.setText(Horaries[Integer.parseInt(HorariesByID[10])-1]);
                                             newClosingHoraryRestaurantThursdayET.setText(Horaries[Integer.parseInt(HorariesByID[11])-1]);
                                         }
-                                        if(HorariesByID[12].equals("8")){
-                                            newOpeningHoraryRestaurantFridayET.setText("Cerrado");
-                                            newClosingHoraryRestaurantFridayET.setText("Cerrado");
+                                        if(HorariesByID[12].equals("8")||(HorariesByID[13].equals("00:00")&&HorariesByID[14].equals("00:00"))){
+                                            newOpeningHoraryRestaurantFridayET.setText("00:00");
+                                            newClosingHoraryRestaurantFridayET.setText("00:00");
                                         }else{
                                             newOpeningHoraryRestaurantFridayET.setText(Horaries[Integer.parseInt(HorariesByID[13])-1]);
                                             newClosingHoraryRestaurantFridayET.setText(Horaries[Integer.parseInt(HorariesByID[14])-1]);
                                         }
-                                        if(HorariesByID[15].equals("8")){
-                                            newOpeningHoraryRestaurantSaturdayET.setText("Cerrado");
-                                            newClosingHoraryRestaurantSaturdayET.setText("Cerrado");
+                                        if(HorariesByID[15].equals("8")||(HorariesByID[16].equals("00:00")&&HorariesByID[17].equals("00:00"))){
+                                            newOpeningHoraryRestaurantSaturdayET.setText("00:00");
+                                            newClosingHoraryRestaurantSaturdayET.setText("00:00");
                                         }else{
                                             newOpeningHoraryRestaurantSaturdayET.setText(Horaries[Integer.parseInt(HorariesByID[16])-1]);
                                             newClosingHoraryRestaurantSaturdayET.setText(Horaries[Integer.parseInt(HorariesByID[17])-1]);
                                         }
-                                        if(HorariesByID[18].equals("8")){
-                                            newOpeningHoraryRestaurantSundayET.setText("Cerrado");
-                                            newClosingHoraryRestaurantSundayET.setText("Cerrado");
+                                        if(HorariesByID[18].equals("8")||(HorariesByID[19].equals("00:00")&&HorariesByID[20].equals("00:00"))){
+                                            newOpeningHoraryRestaurantSundayET.setText("00:00");
+                                            newClosingHoraryRestaurantSundayET.setText("00:00");
                                         }else{
                                             newOpeningHoraryRestaurantSundayET.setText(Horaries[Integer.parseInt(HorariesByID[19])-1]);
                                             newClosingHoraryRestaurantSundayET.setText(Horaries[Integer.parseInt(HorariesByID[20])-1]);
@@ -381,54 +380,56 @@ public class ModifyRestaurantInformation extends AppCompatActivity {
                                                     OpeningHoraryRestaurantSunday.equals("")||ClosingHoraryRestaurantSunday.equals("")){
                                                 Toast.makeText(ModifyRestaurantInformation.this, "Ningun horario no debe quedar vacios", Toast.LENGTH_LONG).show();
                                             }else{
-                                                //Obtener el ID de la hora a actualizar
-                                                int IDHoraryOpeningMonday = getIDHorary(Horaries, OpeningHoraryRestaurantMonday);
-                                                int IDHoraryClosingMonday = getIDHorary(Horaries, ClosingHoraryRestaurantMonday);
-                                                int IDHoraryOpeningTuesday = getIDHorary(Horaries, OpeningHoraryRestaurantTuesday);
-                                                int IDHoraryClosingTuesday = getIDHorary(Horaries, ClosingHoraryRestaurantTuesday);
-                                                int IDHoraryOpeningWednesday = getIDHorary(Horaries, OpeningHoraryRestaurantWednesday);
-                                                int IDHoraryClosingWednesday = getIDHorary(Horaries, ClosingHoraryRestaurantMondayWednesday);
-                                                int IDHoraryOpeningThursday = getIDHorary(Horaries, OpeningHoraryRestaurantThursday);
-                                                int IDHoraryClosingThursday = getIDHorary(Horaries, ClosingHoraryRestaurantThursday);
-                                                int IDHoraryOpeningFriday = getIDHorary(Horaries, OpeningHoraryRestaurantFriday);
-                                                int IDHoraryClosingFriday = getIDHorary(Horaries, ClosingHoraryRestaurantFriday);
-                                                int IDHoraryOpeningSaturday = getIDHorary(Horaries, OpeningHoraryRestaurantSaturday);
-                                                int IDHoraryClosingSaturday = getIDHorary(Horaries, ClosingHoraryRestaurantSaturday);
-                                                int IDHoraryOpeningSunday = getIDHorary(Horaries, OpeningHoraryRestaurantSunday);
-                                                int IDHoraryClosingSunday = getIDHorary(Horaries, ClosingHoraryRestaurantSunday);
+                                                    //Obtener el ID de la hora a actualizar
+                                                    int IDHoraryOpeningMonday = getIDHorary(Horaries, OpeningHoraryRestaurantMonday);
+                                                    int IDHoraryClosingMonday = getIDHorary(Horaries, ClosingHoraryRestaurantMonday);
+                                                    int IDHoraryOpeningTuesday = getIDHorary(Horaries, OpeningHoraryRestaurantTuesday);
+                                                    int IDHoraryClosingTuesday = getIDHorary(Horaries, ClosingHoraryRestaurantTuesday);
+                                                    int IDHoraryOpeningWednesday = getIDHorary(Horaries, OpeningHoraryRestaurantWednesday);
+                                                    int IDHoraryClosingWednesday = getIDHorary(Horaries, ClosingHoraryRestaurantMondayWednesday);
+                                                    int IDHoraryOpeningThursday = getIDHorary(Horaries, OpeningHoraryRestaurantThursday);
+                                                    int IDHoraryClosingThursday = getIDHorary(Horaries, ClosingHoraryRestaurantThursday);
+                                                    int IDHoraryOpeningFriday = getIDHorary(Horaries, OpeningHoraryRestaurantFriday);
+                                                    int IDHoraryClosingFriday = getIDHorary(Horaries, ClosingHoraryRestaurantFriday);
+                                                    int IDHoraryOpeningSaturday = getIDHorary(Horaries, OpeningHoraryRestaurantSaturday);
+                                                    int IDHoraryClosingSaturday = getIDHorary(Horaries, ClosingHoraryRestaurantSaturday);
+                                                    int IDHoraryOpeningSunday = getIDHorary(Horaries, OpeningHoraryRestaurantSunday);
+                                                    int IDHoraryClosingSunday = getIDHorary(Horaries, ClosingHoraryRestaurantSunday);
 
-                                                //Verificar que los IDs sean diferentes de -1
-                                                if(IDHoraryOpeningMonday != -1 && IDHoraryClosingMonday != -1 && IDHoraryOpeningTuesday != -1 &&
-                                                        IDHoraryClosingTuesday != -1 && IDHoraryOpeningWednesday != -1 && IDHoraryClosingWednesday != -1 &&
-                                                        IDHoraryOpeningThursday != -1 && IDHoraryClosingThursday != -1 && IDHoraryOpeningFriday != -1 &&
-                                                        IDHoraryClosingFriday != -1 && IDHoraryOpeningSaturday != -1 && IDHoraryClosingSaturday != -1 &&
-                                                        IDHoraryOpeningSunday != -1 && IDHoraryClosingSunday != -1){
-                                                    String response = "";
-                                                    response = connection.updateHoraryRestaurantByID("IDHorario1Dia1",String.valueOf(IDHoraryOpeningMonday),restaurantsAdded.get(IDRestaurant)[0]);
-                                                    response = connection.updateHoraryRestaurantByID("IDHorario2Dia1",String.valueOf(IDHoraryOpeningTuesday),restaurantsAdded.get(IDRestaurant)[0]);
-                                                    response = connection.updateHoraryRestaurantByID("IDHorario1Dia2",String.valueOf(IDHoraryOpeningMonday),restaurantsAdded.get(IDRestaurant)[0]);
-                                                    response = connection.updateHoraryRestaurantByID("IDHorario2Dia2",String.valueOf(IDHoraryClosingTuesday),restaurantsAdded.get(IDRestaurant)[0]);
-                                                    response = connection.updateHoraryRestaurantByID("IDHorario1Dia3",String.valueOf(IDHoraryOpeningWednesday),restaurantsAdded.get(IDRestaurant)[0]);
-                                                    response = connection.updateHoraryRestaurantByID("IDHorario2Dia3",String.valueOf(IDHoraryClosingWednesday),restaurantsAdded.get(IDRestaurant)[0]);
-                                                    response = connection.updateHoraryRestaurantByID("IDHorario1Dia4",String.valueOf(IDHoraryOpeningThursday),restaurantsAdded.get(IDRestaurant)[0]);
-                                                    response = connection.updateHoraryRestaurantByID("IDHorario2Dia4",String.valueOf(IDHoraryClosingThursday),restaurantsAdded.get(IDRestaurant)[0]);
-                                                    response = connection.updateHoraryRestaurantByID("IDHorario1Dia5",String.valueOf(IDHoraryOpeningFriday),restaurantsAdded.get(IDRestaurant)[0]);
-                                                    response = connection.updateHoraryRestaurantByID("IDHorario2Dia5",String.valueOf(IDHoraryClosingFriday),restaurantsAdded.get(IDRestaurant)[0]);
-                                                    response = connection.updateHoraryRestaurantByID("IDHorario1Dia6",String.valueOf(IDHoraryOpeningSaturday),restaurantsAdded.get(IDRestaurant)[0]);
-                                                    response = connection.updateHoraryRestaurantByID("IDHorario2Dia6",String.valueOf(IDHoraryClosingSaturday),restaurantsAdded.get(IDRestaurant)[0]);
-                                                    response = connection.updateHoraryRestaurantByID("IDHorario1Dia7",String.valueOf(IDHoraryOpeningSunday),restaurantsAdded.get(IDRestaurant)[0]);
-                                                    response = connection.updateHoraryRestaurantByID("IDHorario2Dia7",String.valueOf(IDHoraryClosingSunday),restaurantsAdded.get(IDRestaurant)[0]);
-                                                    Toast.makeText(ModifyRestaurantInformation.this, response, Toast.LENGTH_LONG).show();
-                                                }else{
-                                                    Toast.makeText(ModifyRestaurantInformation.this, "Alguna de las fechas no tienen el formato adecuado", Toast.LENGTH_LONG).show();
-                                                }
+                                                    //Verificar que los IDs sean diferentes de -1
+                                                    if(IDHoraryOpeningMonday != -1 && IDHoraryClosingMonday != -1 && IDHoraryOpeningTuesday != -1 &&
+                                                            IDHoraryClosingTuesday != -1 && IDHoraryOpeningWednesday != -1 && IDHoraryClosingWednesday != -1 &&
+                                                            IDHoraryOpeningThursday != -1 && IDHoraryClosingThursday != -1 && IDHoraryOpeningFriday != -1 &&
+                                                            IDHoraryClosingFriday != -1 && IDHoraryOpeningSaturday != -1 && IDHoraryClosingSaturday != -1 &&
+                                                            IDHoraryOpeningSunday != -1 && IDHoraryClosingSunday != -1){
+                                                        String response = "";
+                                                        response = connection.updateHoraryRestaurantByID("IDHorario1Dia1",String.valueOf(IDHoraryOpeningMonday),restaurantsAdded.get(IDRestaurant)[0]);
+                                                        response = connection.updateHoraryRestaurantByID("IDHorario2Dia1",String.valueOf(IDHoraryClosingMonday),restaurantsAdded.get(IDRestaurant)[0]);
+                                                        response = connection.updateHoraryRestaurantByID("IDHorario1Dia2",String.valueOf(IDHoraryOpeningTuesday),restaurantsAdded.get(IDRestaurant)[0]);
+                                                        response = connection.updateHoraryRestaurantByID("IDHorario2Dia2",String.valueOf(IDHoraryClosingTuesday),restaurantsAdded.get(IDRestaurant)[0]);
+                                                        response = connection.updateHoraryRestaurantByID("IDHorario1Dia3",String.valueOf(IDHoraryOpeningWednesday),restaurantsAdded.get(IDRestaurant)[0]);
+                                                        response = connection.updateHoraryRestaurantByID("IDHorario2Dia3",String.valueOf(IDHoraryClosingWednesday),restaurantsAdded.get(IDRestaurant)[0]);
+                                                        response = connection.updateHoraryRestaurantByID("IDHorario1Dia4",String.valueOf(IDHoraryOpeningThursday),restaurantsAdded.get(IDRestaurant)[0]);
+                                                        response = connection.updateHoraryRestaurantByID("IDHorario2Dia4",String.valueOf(IDHoraryClosingThursday),restaurantsAdded.get(IDRestaurant)[0]);
+                                                        response = connection.updateHoraryRestaurantByID("IDHorario1Dia5",String.valueOf(IDHoraryOpeningFriday),restaurantsAdded.get(IDRestaurant)[0]);
+                                                        response = connection.updateHoraryRestaurantByID("IDHorario2Dia5",String.valueOf(IDHoraryClosingFriday),restaurantsAdded.get(IDRestaurant)[0]);
+                                                        response = connection.updateHoraryRestaurantByID("IDHorario1Dia6",String.valueOf(IDHoraryOpeningSaturday),restaurantsAdded.get(IDRestaurant)[0]);
+                                                        response = connection.updateHoraryRestaurantByID("IDHorario2Dia6",String.valueOf(IDHoraryClosingSaturday),restaurantsAdded.get(IDRestaurant)[0]);
+                                                        response = connection.updateHoraryRestaurantByID("IDHorario1Dia7",String.valueOf(IDHoraryOpeningSunday),restaurantsAdded.get(IDRestaurant)[0]);
+                                                        response = connection.updateHoraryRestaurantByID("IDHorario2Dia7",String.valueOf(IDHoraryClosingSunday),restaurantsAdded.get(IDRestaurant)[0]);
+                                                        Toast.makeText(ModifyRestaurantInformation.this, response, Toast.LENGTH_LONG).show();
+                                                    }else{
+                                                        Toast.makeText(ModifyRestaurantInformation.this, "Alguna de las fechas no tienen el formato adecuado", Toast.LENGTH_LONG).show();
+                                                    }
+
                                             }
                                         });
                                         helpUpdateHorariesIV.setOnClickListener(view -> {
                                             new AlertDialog.Builder(ModifyRestaurantInformation.this)
                                                     .setTitle("Ayuda")
                                                     .setMessage("El formato de horas debe ser de 24h y solo se permiten las horas en punto y la media" +
-                                                            "\nEjemplo: 10:00 y 10:30.")
+                                                            "\nEjemplo: 10:00 y 10:30." +
+                                                            "\nSi desea indicar que un dia el restaurante esta cerrado escriba de 00:00 en hora de apertura y cierre.")
                                                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                                         @Override
                                                         public void onClick(DialogInterface dialog, int which) {

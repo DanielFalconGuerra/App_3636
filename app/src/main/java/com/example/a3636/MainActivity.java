@@ -8,7 +8,9 @@ import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.animation.Animator;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -92,21 +94,29 @@ public class MainActivity extends AppCompatActivity {
 
                             if(ciudad.equals("Irapuato")){
                                 ((MyLocation)getApplication()).setLocation("Irapuato");
+                                Intent showCityRestaurants = new Intent(MainActivity.this, Interface3636.class);
+                                showCityRestaurants.putExtra("userName","not logged in");
+                                startActivity(showCityRestaurants);
                             }else
                             if(ciudad.equals("Guanajuato")){
                                 ((MyLocation)getApplication()).setLocation("Guanajuato");
+                                elementsError();
                             }else
                             if(ciudad.equals("León")){
                                 ((MyLocation)getApplication()).setLocation("León");
+                                elementsError();
                             }else
                             if(ciudad.equals("Celaya")){
                                 ((MyLocation)getApplication()).setLocation("Celaya");
+                                elementsError();
                             }else
                             if(ciudad.equals("Chihuahua")){
                                 ((MyLocation)getApplication()).setLocation("Chihuahua");
+                                elementsError();
                             }else
                             if(ciudad.equals("Juarez")) {
                                 ((MyLocation)getApplication()).setLocation("Juarez");
+                                elementsError();
                             }else {
                                 elementsError();
                                 btnSearch.setVisibility(View.GONE);
@@ -129,8 +139,8 @@ public class MainActivity extends AppCompatActivity {
                         DatabaseConnection connection = new DatabaseConnection();
                         connection.CONN();
                         //String inf = connection.getDayClosedRestaurant("1","1");
-                        ArrayList<String[]> test = connection.getRestaurantInformationByUserAdmin("17");
-                        if(test == null || test.size()==0){
+                        //ArrayList<String[]> test = connection.getRestaurantInformationByUserAdmin("17");
+                        /*if(test == null || test.size()==0){
                             Toast.makeText(MainActivity.this,"Error",Toast.LENGTH_SHORT).show();
                         }else{
                             Toast.makeText(MainActivity.this,test.size(),Toast.LENGTH_SHORT).show();
@@ -140,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
                             for(int j = 0; j < elementos.length; j++){
                                 Toast.makeText(MainActivity.this,elementos[j],Toast.LENGTH_SHORT).show();
                             }
-                        }
+                        }*/
 
                         /*LinearLayout layoutUsuario = new LinearLayout(MainActivity.this);
                         LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(50,50);
@@ -234,6 +244,21 @@ public class MainActivity extends AppCompatActivity {
                     Intent showCityRestaurants = new Intent(this, Interface3636.class);
                     showCityRestaurants.putExtra("userName","not logged in");
                     startActivity(showCityRestaurants);
+                }else
+                if(city.equals("León")){
+                    messageError();
+                }else
+                if(city.equals("Guanajuato")){
+                    messageError();
+                }else
+                if(city.equals("Chihuahua")){
+                    messageError();
+                }else
+                if(city.equals("Juarez")){
+                    messageError();
+                }else
+                if(city.equals("Celaya")){
+                    messageError();
                 }
             }
         });
@@ -330,6 +355,20 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+    public void messageError(){
+        new AlertDialog.Builder(this)
+                .setTitle("Error")
+                .setMessage("No hay restaurantes registrados en  esta ciudad. \nSeleccione una ciuda diferente.")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Log.d("alertDialog","OK");
+                    }
+                })
+                .show();
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.main_menu, menu);
@@ -339,10 +378,8 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case R.id.item1:
-                Toast.makeText(this,"Inicio", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.item2:
-                Toast.makeText(this,"Contacto", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.item3:
                 Intent login = new Intent(this, Login.class);

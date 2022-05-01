@@ -2,6 +2,8 @@ package com.example.a3636;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -42,8 +44,11 @@ public class Login extends AppCompatActivity {
         EditText userEditText = findViewById(R.id.userEditText);
         EditText passwordEditText = findViewById(R.id.passwordEditText);
 
+        LinearLayout layoutErrorLogin = findViewById(R.id.layoutErrorLogin);
+        Spinner spinnerCityLogin = findViewById(R.id.spinnerCityLogin);
+        Button buttonSearchByCityLogin = findViewById(R.id.buttonSearchByCityLogin);
+
         String location = ((MyLocation)getApplication()).getLocation();
-        Toast.makeText(this,"Ubicacion: " + location,Toast.LENGTH_SHORT).show();
 
         BtnLogin.setOnClickListener(view -> {
             user = userEditText.getText().toString();
@@ -67,11 +72,9 @@ public class Login extends AppCompatActivity {
             }
 
             if(passwordOK){
-                Toast.makeText(this, "OK", Toast.LENGTH_SHORT).show();
                 int IDTypeUser = Integer.valueOf(IDType);
                 switch (IDTypeUser){
                     case 1:
-                        Toast.makeText(this, "Usuario detectado", Toast.LENGTH_SHORT).show();
 
                         if(location.equals("Irapuato")){
                             ((MyLocation)getApplication()).setLocation("Irapuato");
@@ -96,7 +99,39 @@ public class Login extends AppCompatActivity {
                         }else {
                             LinearLayout layoutLogin = findViewById(R.id.layoutLoginComplete);
                             layoutLogin.setVisibility(View.GONE);
-                            LinearLayout layoutError = new LinearLayout(this);
+                            layoutErrorLogin.setVisibility(View.VISIBLE);
+                            String cities[] = {"Seleccione la ciudad", "Irapuato", "Guanajuato", "León", "Celaya", "Chihuahua", "Juarez"};
+                            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_text_style,cities );
+                            spinnerCityLogin.setAdapter(adapter);
+                            buttonSearchByCityLogin.setOnClickListener(view1 -> {
+                                String city = spinnerCityLogin.getSelectedItem().toString();
+                                if(city.equals("Seleccione la ciudad")){
+                                    Toast.makeText(this,"Debe seleccionar una ciudad antes de continuar", Toast.LENGTH_LONG).show();
+                                }else{
+                                    if(city.equals("Irapuato")){
+                                        ((MyLocation)getApplication()).setLocation("Irapuato");
+                                        Intent showCityRestaurants = new Intent(this, Interface3636.class);
+                                        showCityRestaurants.putExtra("userName",user);
+                                        startActivity(showCityRestaurants);
+                                    }else
+                                        if(city.equals("León")){
+                                            messageError();
+                                        }else
+                                        if(city.equals("Guanajuato")){
+                                            messageError();
+                                        }else
+                                        if(city.equals("Chihuahua")){
+                                            messageError();
+                                        }else
+                                        if(city.equals("Juarez")){
+                                            messageError();
+                                        }else
+                                        if(city.equals("Celaya")){
+                                            messageError();
+                                        }
+                                }
+                            });
+                            /*LinearLayout layoutError = new LinearLayout(this);
                             layoutError.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
                             layoutError.setOrientation(LinearLayout.VERTICAL);
                             TextView tvError = new TextView(this);
@@ -137,19 +172,17 @@ public class Login extends AppCompatActivity {
                                             startActivity(Interfaz_3636);
                                     }
                                 }
-                            });
+                            });*/
                         }
 
 
                         break;
                     case 2:
-                        Toast.makeText(this, "Administrador detectado", Toast.LENGTH_SHORT).show();
                         Intent admin = new Intent(this, Administrator.class);
                         admin.putExtra("userName",user);
                         startActivity(admin);
                         break;
                     case 3:
-                        Toast.makeText(this, "Empresa detectada", Toast.LENGTH_SHORT).show();
                         Intent business = new Intent(this, ModifyRestaurantInformation.class);
                         business.putExtra("userName",user);
                         startActivity(business);
@@ -163,5 +196,17 @@ public class Login extends AppCompatActivity {
             Intent registerUser = new Intent(this, RegisterUser.class);
             startActivity(registerUser);
         });
+    }
+    public void messageError(){
+        new AlertDialog.Builder(this)
+                .setTitle("Error")
+                .setMessage("No hay restaurantes registrados en  esta ciudad. \nSeleccione una ciuda diferente.")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Log.d("alertDialog","OK");
+                    }
+                })
+                .show();
     }
 }

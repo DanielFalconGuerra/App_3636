@@ -46,7 +46,6 @@ public class ShowRestaurantsFound extends AppCompatActivity {
             public void onAnimationEnd(Animator animation) {
 
                 String location = ((MyLocation)getApplication()).getLocation();
-                Toast.makeText(ShowRestaurantsFound.this,"Ubicacion: " + location,Toast.LENGTH_LONG).show();
 
                 Log.e("Animation:", "end");
                 imageAnimation.setVisibility(View.GONE);
@@ -67,7 +66,6 @@ public class ShowRestaurantsFound extends AppCompatActivity {
                 year = fecha.substring(0,4);
                 month = fecha.substring(5,7);
                 day = fecha.substring(8,10);
-                Toast.makeText(ShowRestaurantsFound.this,fecha,Toast.LENGTH_SHORT).show();
                 String inputDateStr = String.format("%s/%s/%s", day, month, year);
                 Date inputDate = null;
                 try {
@@ -286,7 +284,12 @@ public class ShowRestaurantsFound extends AppCompatActivity {
             logoBusiness.setLayoutParams(layoutParams);
             logoBusiness.setImageResource(R.mipmap.lagenareria);
             btnShowMenu.setOnClickListener(view -> {
-                Toast.makeText(this,"La Genarería", Toast.LENGTH_SHORT).show();
+                String urlMenu = "http://app.softappetit.mx:50293/apps/6If2zVm/genareria/MenuDigital.php";
+                Bundle url = new Bundle();
+                url.putString("url", urlMenu);
+                Intent showDigitalMenu = new Intent(this, ShowDigitalMenu.class);
+                showDigitalMenu.putExtras(url);
+                startActivity(showDigitalMenu);
             });
         }else
         if(idRestaurant.equals("2")){
@@ -319,7 +322,12 @@ public class ShowRestaurantsFound extends AppCompatActivity {
             logoBusiness.setLayoutParams(layoutParams);
             logoBusiness.setImageResource(R.mipmap.costilla);
             btnShowMenu.setOnClickListener(view -> {
-                Toast.makeText(this,"Costilla W", Toast.LENGTH_SHORT).show();
+                String urlMenu = "http://app.softappetit.mx:50293/apps/bcuV1kz/costilla/MenuDigital.php";
+                Bundle url = new Bundle();
+                url.putString("url", urlMenu);
+                Intent showDigitalMenu = new Intent(this, ShowDigitalMenu.class);
+                showDigitalMenu.putExtras(url);
+                startActivity(showDigitalMenu);
             });
         }else
             nameBusiness.setText("Error");

@@ -26,7 +26,6 @@ public class Administrator extends AppCompatActivity {
         setContentView(R.layout.activity_administrator);
 
         String location = ((MyLocation)getApplication()).getLocation();
-        Toast.makeText(this,"Ubicacion: " + location,Toast.LENGTH_SHORT).show();
 
         ImageView imageAdminSession = findViewById(R.id.imageAdminSession);
         ImageView settingsIMAdmin = findViewById(R.id.settingsIMAdmin);

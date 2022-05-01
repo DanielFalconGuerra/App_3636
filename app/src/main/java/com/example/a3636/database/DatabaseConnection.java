@@ -686,6 +686,20 @@ public class DatabaseConnection {
         }
     }
 
+    public String updateDayClosedRestaurantByID(String Field, String IDRestaurant){
+        try {
+            Connection conexion=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+db,user ,pss);
+            conexion.setAutoCommit(false);
+            Statement st = conexion.createStatement();
+            st.addBatch("update  horario_restaurante  set "+Field+"=8 where IDRestaurante='"+IDRestaurant+"'");
+            st.executeBatch();
+            conexion.commit();
+            return "Campos actualizados con éxito";
+        } catch(SQLException ex){
+            return ex.getMessage();
+        }
+    }
+
     public String[] getUserBusiness(){
         String[] usersBusiness = new String[2];
         int count = 0;

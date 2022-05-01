@@ -43,7 +43,6 @@ public class Interface3636 extends AppCompatActivity {
 
         //Recuper ubicacion
         String location = ((MyLocation)getApplication()).getLocation();
-        Toast.makeText(this,"Ubicacion: " + location,Toast.LENGTH_SHORT).show();
 
         String userName = getIntent().getStringExtra("userName");
 
@@ -52,7 +51,6 @@ public class Interface3636 extends AppCompatActivity {
             //Obtener ID del Usuario
             connection.CONN();
             String ID = connection.getIDUser(userName);
-            Toast.makeText(this,ID,Toast.LENGTH_SHORT).show();
             //Obtener imagen de usuario
             byte[] imageReceived = connection.getImage(ID);
             if(imageReceived != null){
@@ -72,7 +70,6 @@ public class Interface3636 extends AppCompatActivity {
 
         settingsIM.setOnClickListener(view -> {
             String userConnected = nameUserSession.getText().toString();
-            Toast.makeText(this,userConnected, Toast.LENGTH_LONG).show();
             if(userConnected.equals("")){
                 Toast.makeText(this,"Debes iniciar sesión para usar esta opción", Toast.LENGTH_LONG).show();
             }else{
@@ -411,13 +408,13 @@ public class Interface3636 extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case R.id.item1:
-                Toast.makeText(this,"Inicio", Toast.LENGTH_SHORT).show();
+
                 break;
             case R.id.item2:
-                Toast.makeText(this,"Contacto", Toast.LENGTH_SHORT).show();
+
                 break;
             case R.id.item3:
-                Toast.makeText(this,"Login", Toast.LENGTH_SHORT).show();
+
                 break;
         }
         return super.onOptionsItemSelected(item);

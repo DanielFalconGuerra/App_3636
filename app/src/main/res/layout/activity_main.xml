@@ -206,7 +206,7 @@
                                 android:layout_marginStart="16dp"
                                 android:layout_marginTop="16dp"
                                 android:layout_marginEnd="16dp"
-                                android:text="O bien, seleccione la ciudad donde desea buscar"
+                                android:text="Seleccione la ciudad donde desea buscar"
                                 android:textAlignment="center"
                                 android:textColor="@color/grey"
                                 android:textSize="20sp"

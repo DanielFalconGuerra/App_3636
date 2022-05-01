@@ -226,13 +226,10 @@ public class SomethingYouMightLike extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case R.id.item1:
-                Toast.makeText(this,"Inicio", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.item2:
-                Toast.makeText(this,"Contacto", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.item3:
-                Toast.makeText(this,"Login", Toast.LENGTH_SHORT).show();
                 break;
         }
         return super.onOptionsItemSelected(item);

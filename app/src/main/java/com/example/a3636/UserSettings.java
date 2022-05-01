@@ -35,7 +35,6 @@ public class UserSettings extends AppCompatActivity {
 
         //Recuperar ubicacion
         String location = ((MyLocation)getApplication()).getLocation();
-        Toast.makeText(this,"Ubicacion: " + location,Toast.LENGTH_SHORT).show();
 
         ImageView imageUserSessionSettings = findViewById(R.id.imageUserSessionSettings);
         TextView newUserSettings = findViewById(R.id.newUserSettings);
@@ -58,7 +57,6 @@ public class UserSettings extends AppCompatActivity {
             //Obtener ID del Usuario
             connection.CONN();
             String ID = connection.getIDUser(userName);
-            Toast.makeText(this,ID,Toast.LENGTH_SHORT).show();
             //Obtener imagen de usuario
             imageReceived = connection.getImage(ID);
             if(imageReceived != null){

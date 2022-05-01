@@ -24,7 +24,6 @@ public class NotificationsReceived extends AppCompatActivity {
 
         //Recuper ubicacion
         String location = ((MyLocation)getApplication()).getLocation();
-        Toast.makeText(this,"Ubicacion: " + location,Toast.LENGTH_SHORT).show();
 
         String numberNotifications = getIntent().getStringExtra("numberNotifications");
         String date = getIntent().getStringExtra("date");

@@ -37,7 +37,6 @@ public class RegisterUser extends AppCompatActivity {
         setContentView(R.layout.activity_register_user);
 
         String location = ((MyLocation)getApplication()).getLocation();
-        Toast.makeText(this,"Ubicacion: " + location,Toast.LENGTH_SHORT).show();
 
         DatabaseConnection dbConnection = new DatabaseConnection();
         btnSelectImage = findViewById(R.id.btnSelectImage);
@@ -122,7 +121,6 @@ public class RegisterUser extends AppCompatActivity {
                                         Intent login = new Intent(this, Login.class);
                                         startActivity(login);
                                     }
-                                    Toast.makeText(this, "Usuario seleccionado", Toast.LENGTH_SHORT).show();
                                 }else{
                                     if(businessCB.isChecked()){
                                         userCB.setChecked(false);
@@ -132,7 +130,6 @@ public class RegisterUser extends AppCompatActivity {
                                             Intent login = new Intent(this, Login.class);
                                             startActivity(login);
                                         }
-                                        Toast.makeText(this, "Empresa seleccionada", Toast.LENGTH_SHORT).show();
                                     }else{
                                         Toast.makeText(this, "Error, debe seleccionar un tipo de usuario antes de continuar", Toast.LENGTH_SHORT).show();
                                     }
