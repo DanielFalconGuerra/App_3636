@@ -70,7 +70,7 @@ public class Interface3636 extends AppCompatActivity {
 
         settingsIM.setOnClickListener(view -> {
             String userConnected = nameUserSession.getText().toString();
-            if(userConnected.equals("")){
+            if(userConnected.equals("not logged in")){
                 Toast.makeText(this,"Debes iniciar sesión para usar esta opción", Toast.LENGTH_LONG).show();
             }else{
                 Intent settings = new Intent(this, UserSettings.class);
@@ -83,7 +83,6 @@ public class Interface3636 extends AppCompatActivity {
         try {
             connection.CONN();
             numberNotificationReceived = connection.getNumberNotifications(date);
-            Toast.makeText(this,numberNotificationReceived, Toast.LENGTH_LONG).show();
             if(!numberNotificationReceived.equals("")){
                 notificationsIM.setImageResource(R.drawable.iconsnotification);
             }
@@ -93,7 +92,7 @@ public class Interface3636 extends AppCompatActivity {
 
         notificationsIM.setOnClickListener(view -> {
             String userConnected = nameUserSession.getText().toString();
-            if(userConnected.equals("")){
+            if(userConnected.equals("not logged in")){
                 Toast.makeText(this,"Debes iniciar sesión para usar esta opción", Toast.LENGTH_LONG).show();
             }else{
                 notificationsIM.setImageResource(R.drawable.ic_baseline_notifications_24);
@@ -398,25 +397,5 @@ public class Interface3636 extends AppCompatActivity {
             Intent moreInterface = new Intent(this, More.class);
             startActivity(moreInterface);
         });
-    }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        return true;
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        switch (item.getItemId()){
-            case R.id.item1:
-
-                break;
-            case R.id.item2:
-
-                break;
-            case R.id.item3:
-
-                break;
-        }
-        return super.onOptionsItemSelected(item);
     }
 }

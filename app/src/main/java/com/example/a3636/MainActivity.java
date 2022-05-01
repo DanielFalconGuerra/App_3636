@@ -369,7 +369,7 @@ public class MainActivity extends AppCompatActivity {
                 .show();
     }
 
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
@@ -387,5 +387,5 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 }

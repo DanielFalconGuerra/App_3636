@@ -217,21 +217,5 @@ public class SomethingYouMightLike extends AppCompatActivity {
 
         return layout;
     }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        return true;
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        switch (item.getItemId()){
-            case R.id.item1:
-                break;
-            case R.id.item2:
-                break;
-            case R.id.item3:
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+
 }

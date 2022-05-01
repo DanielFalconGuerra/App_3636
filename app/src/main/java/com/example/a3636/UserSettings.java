@@ -151,10 +151,8 @@ public class UserSettings extends AppCompatActivity {
                                 e.printStackTrace();
                             }
 
-                            // Transformamos la URI de la imagen a inputStream y este a un Bitmap
                             Bitmap bmp = BitmapFactory.decodeStream(imageStream);
 
-                            // Ponemos nuestro bitmap en un ImageView que tengamos en la vista
                             /*ImageView mImg = (ImageView) findViewById(R.id.imageTest);
                             mImg.setImageBitmap(bmp);*/
                             ByteArrayOutputStream stream = new ByteArrayOutputStream();
