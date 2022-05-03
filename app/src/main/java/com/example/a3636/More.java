@@ -20,7 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class More extends AppCompatActivity {
-    private final String mainMail = "danielfalcon.87@gmail.com";
+    private final String mainMail = "esantibañez@interpc.mx";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +45,7 @@ public class More extends AppCompatActivity {
                     "Dirección: " + txtAddress.getText()+"\n"+
                     "Número telefónico: " + txtPhone.getText()+"\n"+
                     "Espero su respuesta. \nSaludos."+
-                    "\nEnviado desde la app de Softappetit";
+                    "\nEnviado desde la app de Softappetit.";
             sendMessage(String.valueOf(txtMail.getText()), message, "Registro de restaurante");
         });
 
