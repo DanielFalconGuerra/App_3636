@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -79,10 +80,38 @@ public class Administrator extends AppCompatActivity {
         CheckBox JuarezCB = findViewById(R.id.JuarezCB);
         CheckBox homeServiceCB = findViewById(R.id.homeServiceCB);
         CheckBox bookingCB = findViewById(R.id.bookingCB);
+        CheckBox stateChihuahuaCB = findViewById(R.id.stateChihuahuaCB);
+        CheckBox stateGtoCB = findViewById(R.id.stateGtoCB);
 
         btnRegisterRestaurant.setBackgroundColor(Color.rgb(255, 128, 0));
 
-        IrapuatoCB.setChecked(true);
+        stateGtoCB.setChecked(true);
+        stateGtoCB.setOnClickListener(view -> {
+            stateGtoCB.setVisibility(View.GONE);
+            stateChihuahuaCB.setVisibility(View.VISIBLE);
+            IrapuatoCB.setChecked(true);
+            GuanajuatoCB.setVisibility(View.VISIBLE);
+            LeonCB.setVisibility(View.VISIBLE);
+            CelayaCB.setVisibility(View.VISIBLE);
+            IrapuatoCB.setVisibility(View.VISIBLE);
+            ChihuahuaCB.setVisibility(View.GONE);
+            JuarezCB.setVisibility(View.GONE);
+            stateChihuahuaCB.setChecked(false);
+        });
+
+        stateChihuahuaCB.setOnClickListener(view -> {
+            stateChihuahuaCB.setVisibility(View.GONE);
+            stateGtoCB.setVisibility(View.VISIBLE);
+            ChihuahuaCB.setChecked(true);
+            GuanajuatoCB.setVisibility(View.GONE);
+            LeonCB.setVisibility(View.GONE);
+            CelayaCB.setVisibility(View.GONE);
+            IrapuatoCB.setVisibility(View.GONE);
+            ChihuahuaCB.setVisibility(View.VISIBLE);
+            JuarezCB.setVisibility(View.VISIBLE);
+            stateGtoCB.setChecked(false);
+        });
+
         IrapuatoCB.setOnClickListener(view -> {
             GuanajuatoCB.setChecked(false);
             LeonCB.setChecked(false);

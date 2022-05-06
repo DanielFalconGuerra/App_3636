@@ -161,9 +161,17 @@
                         android:layout_height="match_parent"
                         android:layout_marginVertical="10dp"
                         android:gravity="center"
-                        android:text="Seleccione la ciudad donde se ubica el restaurante"
+                        android:text="Seleccione el estado y la ciudad donde se ubica el restaurante"
                         android:textColor="@color/orange"
                         android:textSize="30sp"/>
+                    <CheckBox
+                        android:id="@+id/stateGtoCB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/yellow"
+                        android:textSize="25sp"
+                        android:text="Guanajuato"
+                        android:layout_gravity="center"/>
                     <CheckBox
                         android:id="@+id/IrapuatoCB"
                         android:layout_width="wrap_content"
@@ -171,7 +179,8 @@
                         android:textColor="@color/yellow"
                         android:textSize="25sp"
                         android:text="Irapuato"
-                        android:layout_gravity="center"/>
+                        android:layout_gravity="center"
+                        android:visibility="gone"/>
                     <CheckBox
                         android:id="@+id/GuanajuatoCB"
                         android:layout_width="wrap_content"
@@ -180,7 +189,8 @@
                         android:textSize="25sp"
                         android:text="Guanajuato"
                         android:layout_gravity="center"
-                        android:layout_marginTop="10dp"/>
+                        android:layout_marginTop="10dp"
+                        android:visibility="gone"/>
                     <CheckBox
                         android:id="@+id/LeonCB"
                         android:layout_width="wrap_content"
@@ -189,7 +199,8 @@
                         android:textSize="25sp"
                         android:text="León"
                         android:layout_gravity="center"
-                        android:layout_marginTop="10dp"/>
+                        android:layout_marginTop="10dp"
+                        android:visibility="gone"/>
                     <CheckBox
                         android:id="@+id/CelayaCB"
                         android:layout_width="wrap_content"
@@ -198,7 +209,16 @@
                         android:textSize="25sp"
                         android:text="Celaya"
                         android:layout_gravity="center"
-                        android:layout_marginTop="10dp"/>
+                        android:layout_marginTop="10dp"
+                        android:visibility="gone"/>
+                    <CheckBox
+                        android:id="@+id/stateChihuahuaCB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/yellow"
+                        android:textSize="25sp"
+                        android:text="Chihuahua"
+                        android:layout_gravity="center"/>
                     <CheckBox
                         android:id="@+id/ChihuahuaCB"
                         android:layout_width="wrap_content"
@@ -207,7 +227,8 @@
                         android:textSize="25sp"
                         android:text="Chihuahua"
                         android:layout_gravity="center"
-                        android:layout_marginTop="10dp"/>
+                        android:layout_marginTop="10dp"
+                        android:visibility="gone"/>
                     <CheckBox
                         android:id="@+id/JuarezCB"
                         android:layout_width="wrap_content"
@@ -216,7 +237,8 @@
                         android:textSize="25sp"
                         android:text="Juarez"
                         android:layout_gravity="center"
-                        android:layout_marginTop="10dp"/>
+                        android:layout_marginTop="10dp"
+                        android:visibility="gone"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
