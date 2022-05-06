@@ -231,7 +231,8 @@ public class MainActivity extends AppCompatActivity {
         layout.setVisibility(View.VISIBLE);
         Spinner spinnerCiudad = findViewById(R.id.spinnerCiudad);
         String cities[] = {"Seleccione la ciudad", "Irapuato", "Guanajuato", "León", "Celaya", "Chihuahua", "Juarez"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_text_style,cities );
+        ArrayAdapter<CharSequence> adapter= new ArrayAdapter<>(this, R.layout.spinner_text_style, cities);
+        adapter.setDropDownViewResource(R.layout.spinner_item_style);
         spinnerCiudad.setAdapter(adapter);
         Button btnSearchByCity = findViewById(R.id.buttonBuscar);
         btnSearchByCity.setOnClickListener(view1 -> {

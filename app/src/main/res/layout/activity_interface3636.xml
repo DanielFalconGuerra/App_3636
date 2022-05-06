@@ -116,7 +116,6 @@
                                 android:layout_marginStart="16dp"
                                 android:layout_marginTop="16dp"
                                 android:layout_marginEnd="16dp"
-                                android:background="@color/black"
                                 android:gravity="center"
                                 android:orientation="vertical"
                                 app:layout_constraintEnd_toEndOf="parent"
@@ -126,19 +125,18 @@
 
                                 <Spinner
                                     android:id="@+id/menu_tipoComida"
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
-                                    android:background="@color/white"
                                     android:spinnerMode="dropdown"
-                                    android:theme="@style/Spinner" />
+                                    android:theme="@style/Spinner"
+                                    android:layout_marginBottom="6dp"/>
 
                                 <Spinner
                                     android:id="@+id/menu_Horario"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
-                                    android:background="@color/white"
                                     android:spinnerMode="dropdown"
                                     android:theme="@style/Spinner" />
                             </LinearLayout>
