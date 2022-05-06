@@ -174,6 +174,47 @@
                         android:textColor="@color/black"
                         android:layout_marginBottom="12dp"
                         android:visibility="invisible"/>
+
+                    <TextView
+                        android:id="@+id/newLinkHomeServiceTV"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="URL para servicio a domicilio"
+                        android:textColor="@color/yellow"
+                        android:textSize="20sp"
+                        android:visibility="gone"/>
+
+                    <EditText
+                        android:id="@+id/newLinkHomeOfficeET"
+                        android:layout_width="300dp"
+                        android:layout_height="35dp"
+                        android:layout_gravity="center"
+                        android:background="@color/yellowEditText"
+                        android:textColor="@color/black"
+                        android:layout_marginBottom="12dp"
+                        android:visibility="gone"/>
+
+                    <TextView
+                        android:id="@+id/newLinkBookingTV"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="URL para servicio a domicilio"
+                        android:textColor="@color/yellow"
+                        android:textSize="20sp"
+                        android:visibility="gone"/>
+
+                    <EditText
+                        android:id="@+id/newLinkBookingET"
+                        android:layout_width="300dp"
+                        android:layout_height="35dp"
+                        android:layout_gravity="center"
+                        android:background="@color/yellowEditText"
+                        android:textColor="@color/black"
+                        android:layout_marginBottom="12dp"
+                        android:visibility="gone"/>
+
                     <Button
                         android:id="@+id/btnUpdateInformationRestaurant"
                         android:layout_width="wrap_content"

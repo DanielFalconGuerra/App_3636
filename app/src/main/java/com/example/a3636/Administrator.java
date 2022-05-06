@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -35,6 +36,7 @@ public class Administrator extends AppCompatActivity {
         String userName = getIntent().getStringExtra("userName");
 
         nameAdminSession.setText(userName);
+
         try{
             //Obtener ID del Usuario
             connection.CONN();
@@ -62,6 +64,7 @@ public class Administrator extends AppCompatActivity {
             settings.putExtra("userName",userConnected);
             startActivity(settings);
         });
+
         EditText newNameRestaurantAdminET = findViewById(R.id.newNameRestaurantAdminET);
         EditText newAddressRestaurantAdminET = findViewById(R.id.newAddressRestaurantAdminET);
         EditText newDescrptionRestaurantAdminET = findViewById(R.id.newDescrptionRestaurantAdminET);
@@ -74,6 +77,8 @@ public class Administrator extends AppCompatActivity {
         CheckBox CelayaCB = findViewById(R.id.CelayaCB);
         CheckBox ChihuahuaCB = findViewById(R.id.ChihuahuaCB);
         CheckBox JuarezCB = findViewById(R.id.JuarezCB);
+        CheckBox homeServiceCB = findViewById(R.id.homeServiceCB);
+        CheckBox bookingCB = findViewById(R.id.bookingCB);
 
         btnRegisterRestaurant.setBackgroundColor(Color.rgb(255, 128, 0));
 
@@ -133,8 +138,8 @@ public class Administrator extends AppCompatActivity {
                 Toast.makeText(this,"Error, no hay usuario tipo empresa registrados", Toast.LENGTH_SHORT).show();
             }else{
                 int count = 0;
-                for(int i = 0; i < usersBusiness.length; i++){
-                    if(!usersBusiness[i].equals("")){
+                for (String business : usersBusiness) {
+                    if (business != null) {
                         count++;
                     }
                 }
@@ -152,6 +157,9 @@ public class Administrator extends AppCompatActivity {
                     String description = newDescrptionRestaurantAdminET.getText().toString();
                     String phone = newPhoneRestaurantAdminET.getText().toString();
                     String ciudad = "";
+                    String homeService = "NO";
+                    String booking = "NO";
+
                     if(!name.equals("") && !address.equals("") && !description.equals("") && !phone.equals("")){
                         if(!IrapuatoCB.isChecked() && !GuanajuatoCB.isChecked() && !LeonCB.isChecked() && !CelayaCB.isChecked() && !ChihuahuaCB.isChecked() && !JuarezCB.isChecked()){
                             Toast.makeText(this,"Error, debe seleccionar una ciudad", Toast.LENGTH_SHORT).show();
@@ -175,13 +183,18 @@ public class Administrator extends AppCompatActivity {
                                 ciudad = "6";
                             }else
                                 ciudad = "0";
-
+                            if(homeServiceCB.isChecked()){
+                                homeService = "SI";
+                            }
+                            if(bookingCB.isChecked()){
+                                booking = "SI";
+                            }
                             String userAdministratorRestaurant = spinnerUserAdminRestaurantBusiness.getSelectedItem().toString();
                             connection.CONN();
                             String IDUser = connection.getIDUser(userAdministratorRestaurant);
 
                             connection.CONN();
-                            String response = connection.registerRestaurant(name, address, description, phone, ciudad, IDUser);
+                            String response = connection.registerRestaurant(name, address, description, phone, ciudad, IDUser, homeService, booking);
                             Toast.makeText(this,response, Toast.LENGTH_SHORT).show();
                         }
                     }else{

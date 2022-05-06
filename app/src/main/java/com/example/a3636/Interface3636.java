@@ -7,17 +7,22 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.a3636.database.DatabaseConnection;
+import com.example.a3636.findrestaurants.FindRestaurantsByTypeOfFoodAndHorary;
 import com.example.a3636.restaurantdata.RestaurantInformation;
 
 import java.text.SimpleDateFormat;
@@ -40,6 +45,8 @@ public class Interface3636 extends AppCompatActivity {
 
         ImageView settingsIM = findViewById(R.id.settingsIM);
         ImageView notificationsIM = findViewById(R.id.notificationsIM);
+
+        LinearLayout layoutShowRestaurantFound = findViewById(R.id.layoutShowRestaurantFound);
 
         //Recuper ubicacion
         String location = ((MyLocation)getApplication()).getLocation();
@@ -134,13 +141,32 @@ public class Interface3636 extends AppCompatActivity {
             Button btnSearchRestaurant = findViewById(R.id.btnSearchRestaurant);
             btnSearchRestaurant.setBackgroundColor(Color.rgb(255, 128, 0));
             btnSearchRestaurant.setOnClickListener(view -> {
+                layoutShowRestaurantFound.setVisibility(View.VISIBLE);
                 String typeFood = spinnerTipoComida.getSelectedItem().toString();
                 String hour = spinnerHorario.getSelectedItem().toString();
                 if(!(typeFood.equals("Seleccione el tipo de comida")||(hour.equals("Selecciona la hora")))){
-                    Intent showRestaurantFound = new Intent(this, ShowRestaurantsFound.class);
+                    /*Intent showRestaurantFound = new Intent(this, ShowRestaurantsFound.class);
                     showRestaurantFound.putExtra("typeFood", typeFood);
                     showRestaurantFound.putExtra("hour", hour);
-                    startActivity(showRestaurantFound);
+                    startActivity(showRestaurantFound);*/
+                    if (layoutShowRestaurantFound.getChildCount() > 0)
+                        layoutShowRestaurantFound.removeAllViews();
+
+                    FindRestaurantsByTypeOfFoodAndHorary findRestaurantsObj = new FindRestaurantsByTypeOfFoodAndHorary();
+                    String restaurants[] = findRestaurantsObj.findRestaurants(typeFood, hour);
+                    for(int i = 0; i < restaurants.length; i++){
+                        if(!restaurants[i].equals("")&&!restaurants[i].equals("No se encontraron restaurantes")&&!restaurants[i].equals("Error")){
+                            layoutShowRestaurantFound.addView(showRestaurantsFound(restaurants[i]));
+                        }
+                    }
+                    if(layoutShowRestaurantFound.getChildCount() == 0){
+                        TextView errorTV = new TextView(this);
+                        errorTV.setText("No se encontraron restaurantes");
+                        errorTV.setTextColor(Color.GRAY);
+                        errorTV.setTextSize(20);
+                        errorTV.setGravity(Gravity.CENTER);
+                        layoutShowRestaurantFound.addView(errorTV);
+                    }
                 }
             });
         }catch (Exception e){
@@ -397,5 +423,102 @@ public class Interface3636 extends AppCompatActivity {
             Intent moreInterface = new Intent(this, More.class);
             startActivity(moreInterface);
         });
+    }
+    public LinearLayout showRestaurantsFound(String idRestaurant){
+        LinearLayout layout = new LinearLayout(this);
+        layout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        layout.setPadding(0,30,0,0);
+        layout.setOrientation(LinearLayout.VERTICAL);
+        TextView nameBusiness = new TextView(this);
+        TextView addressBusiness = new TextView(this);
+        TextView typeOfFoodBusiness = new TextView(this);
+        TextView phoneBusiness = new TextView(this);
+        TextView availabilityBusiness = new TextView(this);
+        ImageView logoBusiness = new ImageView(this);
+        Button btnShowMenu = new Button(this);
+
+        nameBusiness.setGravity(Gravity.CENTER);
+        nameBusiness.setTextSize(TypedValue.COMPLEX_UNIT_SP,24);
+        addressBusiness.setGravity(Gravity.CENTER);
+        typeOfFoodBusiness.setGravity(Gravity.CENTER);
+        phoneBusiness.setGravity(Gravity.CENTER);
+        availabilityBusiness.setGravity(Gravity.CENTER);
+        availabilityBusiness.setPadding(0,0,0,50);
+        btnShowMenu.setText("Menu");
+        btnShowMenu.setBackgroundColor(Color.rgb(255, 128, 0));
+
+        if(idRestaurant.equals("1")){
+            nameBusiness.setText("La Genarería");
+            addressBusiness.setText("Dirección: Irapuato, Guanajuato. Plaza 3636 Gómez Morín");
+            typeOfFoodBusiness.setText("Tipos de Comida: Americana, Restaurante - Bar, Bar");
+            phoneBusiness.setText("Teléfono: 462 200 4863");
+            availabilityBusiness.setText("Disponibilidad el día de hoy: 14:00 a 23:00");
+            LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(300, 300);
+            layoutParams.gravity= Gravity.CENTER;
+            logoBusiness.setLayoutParams(layoutParams);
+            logoBusiness.setImageResource(R.mipmap.lagenareria);
+            btnShowMenu.setOnClickListener(view -> {
+                String urlMenu = "http://app.softappetit.mx:50293/apps/6If2zVm/genareria/MenuDigital.php";
+                Bundle url = new Bundle();
+                url.putString("url", urlMenu);
+                Intent showDigitalMenu = new Intent(this, ShowDigitalMenu.class);
+                showDigitalMenu.putExtras(url);
+                startActivity(showDigitalMenu);
+            });
+        }else
+        if(idRestaurant.equals("2")){
+            nameBusiness.setText("Arena 88");
+            addressBusiness.setText("Dirección: Irapuato, Guanajuato. Plaza 3636 Gómez Morín");
+            typeOfFoodBusiness.setText("Tipos de Comida: Bar, Restaurante - Bar, Mariscos");
+            phoneBusiness.setText("Teléfono: 462 688 3664");
+            availabilityBusiness.setText("Disponibilidad el día de hoy: 12:00 a 23:00");
+            LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(300, 300);
+            layoutParams.gravity= Gravity.CENTER;
+            logoBusiness.setLayoutParams(layoutParams);
+            logoBusiness.setImageResource(R.mipmap.arena88);
+            btnShowMenu.setOnClickListener(view -> {
+                String urlMenu = "http://app.softappetit.mx:50293/apps/coA98wi/arena88/MenuDigital.php";
+                Bundle url = new Bundle();
+                url.putString("url", urlMenu);
+                Intent showDigitalMenu = new Intent(this, ShowDigitalMenu.class);
+                showDigitalMenu.putExtras(url);
+                startActivity(showDigitalMenu);
+            });
+        }else
+        if(idRestaurant.equals("16")){
+            nameBusiness.setText("Costilla Winebarlechon");
+            addressBusiness.setText("Dirección: Irapuato, Guanajuato. Plaza 3636 Gómez Morín");
+            typeOfFoodBusiness.setText("Tipos de Comida: Bar, Restaurante - Bar, Café");
+            phoneBusiness.setText("Teléfono: 462 607 9612");
+            availabilityBusiness.setText("Disponibilidad el día de hoy: 10:00 a 22:00");
+            LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(300, 300);
+            layoutParams.gravity= Gravity.CENTER;
+            logoBusiness.setLayoutParams(layoutParams);
+            logoBusiness.setImageResource(R.mipmap.costilla);
+            btnShowMenu.setOnClickListener(view -> {
+                String urlMenu = "http://app.softappetit.mx:50293/apps/bcuV1kz/costilla/MenuDigital.php";
+                Bundle url = new Bundle();
+                url.putString("url", urlMenu);
+                Intent showDigitalMenu = new Intent(this, ShowDigitalMenu.class);
+                showDigitalMenu.putExtras(url);
+                startActivity(showDigitalMenu);
+            });
+        }else
+            nameBusiness.setText("Error");
+        //nameBusiness.setTextSize(20);
+        nameBusiness.setTextColor(Color.GRAY);
+        addressBusiness.setTextColor(Color.GRAY);
+        typeOfFoodBusiness.setTextColor(Color.GRAY);
+        phoneBusiness.setTextColor(Color.GRAY);
+        availabilityBusiness.setTextColor(Color.GRAY);
+
+        layout.addView(logoBusiness);
+        layout.addView(nameBusiness);
+        layout.addView(addressBusiness);
+        layout.addView(typeOfFoodBusiness);
+        layout.addView(phoneBusiness);
+        layout.addView(availabilityBusiness);
+        layout.addView(btnShowMenu);
+        return layout;
     }
 }

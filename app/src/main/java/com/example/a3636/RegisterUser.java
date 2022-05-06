@@ -81,7 +81,7 @@ public class RegisterUser extends AppCompatActivity {
         businessHelpIV.setOnClickListener(view -> {
             new AlertDialog.Builder(this)
                     .setTitle("Empresa")
-                    .setMessage("El usuario tipo empresa puede modificar la informacion de su restaurante.")
+                    .setMessage("El usuario tipo restaurante puede modificar la informacion de su restaurante.")
                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {

@@ -59,6 +59,12 @@ public class ModifyRestaurantInformation extends AppCompatActivity {
         EditText newDescriptionRestaurantET = findViewById(R.id.newDescriptionRestaurantET);
         EditText newPhoneRestaurantET = findViewById(R.id.newPhoneRestaurantET);
 
+        TextView newLinkHomeServiceTV = findViewById(R.id.newLinkHomeServiceTV);
+        EditText newLinkHomeServiceET = findViewById(R.id.newLinkHomeOfficeET);
+
+        TextView newLinkBookingTV = findViewById(R.id.newLinkBookingTV);
+        EditText newLinkBookingET = findViewById(R.id.newLinkBookingET);
+
         Button btnUpdateInformationRestaurant = findViewById(R.id.btnUpdateInformationRestaurant);
         Button btnUpdateHorariesRestaurant = findViewById(R.id.btnUpdateHorariesRestaurant);
 
@@ -227,6 +233,22 @@ public class ModifyRestaurantInformation extends AppCompatActivity {
                                 newDescriptionRestaurantET.setText(restaurantsAdded.get(IDRestaurant)[3]);
                                 newPhoneRestaurantET.setText(restaurantsAdded.get(IDRestaurant)[4]);
 
+                                if(!restaurantsAdded.get(IDRestaurant)[5].equals("NO")){
+                                    newLinkHomeServiceTV.setVisibility(View.VISIBLE);
+                                    newLinkHomeServiceET.setVisibility(View.VISIBLE);
+                                    if(!restaurantsAdded.get(IDRestaurant)[5].equals("SI")){
+                                        newLinkHomeServiceET.setText(restaurantsAdded.get(IDRestaurant)[5]);
+                                    }
+                                }
+
+                                if(!restaurantsAdded.get(IDRestaurant)[6].equals("NO")){
+                                    newLinkBookingTV.setVisibility(View.VISIBLE);
+                                    newLinkBookingET.setVisibility(View.VISIBLE);
+                                    if(!restaurantsAdded.get(IDRestaurant)[6].equals("SI")){
+                                        newLinkBookingET.setText(restaurantsAdded.get(IDRestaurant)[6]);
+                                    }
+                                }
+
                                 btnAddPromotionInformation.setOnClickListener(view -> {
                                     //Toast.makeText(ModifyRestaurantInformation.this,restaurantsAdded.get(IDRestaurant)[0],Toast.LENGTH_LONG).show();
                                     String startDate = newDateStartNotification.getText().toString();
@@ -256,6 +278,16 @@ public class ModifyRestaurantInformation extends AppCompatActivity {
                                             response = connection.updateAddressRestaurant(newAddressRestaurantET.getText().toString(), restaurantsAdded.get(IDRestaurant)[0]);
                                             response = connection.updateDescriptionRestaurant(newDescriptionRestaurantET.getText().toString(), restaurantsAdded.get(IDRestaurant)[0]);
                                             response = connection.updatePhoneRestaurant(newPhoneRestaurantET.getText().toString(), restaurantsAdded.get(IDRestaurant)[0]);
+                                            if(newLinkHomeServiceET.getVisibility()==View.VISIBLE){
+                                                if(!newLinkHomeServiceET.getText().toString().equals("")){
+                                                    response = connection.updateURLHomeServiceRestaurant(newLinkHomeServiceET.getText().toString(), restaurantsAdded.get(IDRestaurant)[0]);
+                                                }
+                                            }
+                                            if(newLinkBookingET.getVisibility()==View.VISIBLE){
+                                                if(!newLinkBookingET.getText().toString().equals("")){
+                                                    response = connection.updateURLHomeServiceRestaurant(newLinkBookingET.getText().toString(), restaurantsAdded.get(IDRestaurant)[0]);
+                                                }
+                                            }
                                             Toast.makeText(ModifyRestaurantInformation.this,response,Toast.LENGTH_SHORT).show();
                                         }catch (Exception e ){
                                             Toast.makeText(ModifyRestaurantInformation.this,"Ha ocurrido un error, intentelo más tarde", Toast.LENGTH_LONG).show();
