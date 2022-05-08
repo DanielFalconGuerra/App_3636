@@ -2,6 +2,8 @@ package com.example.a3636;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -117,6 +119,15 @@ public class NotificationsReceived extends AppCompatActivity {
                     }else
                     if(dataNotifications[3].equals("17")){
                         logoRestaurantNot.setImageResource(R.mipmap.posdata);
+                    }else{
+                        //Obtener imagen de restaurante
+                        byte[] logo = connection.getLogoRestaurant(dataNotifications[3]);
+                        if(logo != null){
+                            Bitmap bitmap = BitmapFactory.decodeByteArray(logo, 0, logo.length);
+                            logoRestaurantNot.setImageBitmap(bitmap);
+                        }else{
+                            logoRestaurantNot.setImageResource(R.drawable.iconscubiertos);
+                        }
                     }
 
                     connection.CONN();

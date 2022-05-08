@@ -10,8 +10,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -26,6 +24,8 @@ import com.example.a3636.findrestaurants.FindRestaurantsByTypeOfFoodAndHorary;
 import com.example.a3636.restaurantdata.RestaurantInformation;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
@@ -51,6 +51,18 @@ public class Interface3636 extends AppCompatActivity {
         //Recuper ubicacion
         String location = ((MyLocation)getApplication()).getLocation();
 
+        ArrayList<String[]> dataCoffee = null;
+        ArrayList<String[]> dataRest = null;
+        ArrayList<String[]> dataBar = null;
+        int[] cont = {0};
+        if(location.equals("León")){
+            connection.CONN();
+            dataCoffee = connection.getRestaurantsThatSellCoffee("2");
+            connection.CONN();
+            dataRest = connection.getAllRestaurants("2");
+            connection.CONN();
+            dataBar = connection.getRestaurantsBar("2");
+        }
         String userName = getIntent().getStringExtra("userName");
 
         nameUserSession.setText(userName);
@@ -154,19 +166,49 @@ public class Interface3636 extends AppCompatActivity {
 
                     FindRestaurantsByTypeOfFoodAndHorary findRestaurantsObj = new FindRestaurantsByTypeOfFoodAndHorary();
                     String restaurants[] = findRestaurantsObj.findRestaurants(typeFood, hour);
-                    for(int i = 0; i < restaurants.length; i++){
-                        if(!restaurants[i].equals("")&&!restaurants[i].equals("No se encontraron restaurantes")&&!restaurants[i].equals("Error")){
-                            layoutShowRestaurantFound.addView(showRestaurantsFound(restaurants[i]));
+
+
+                        for(int i = 0; i < restaurants.length; i++){
+                            Log.e("Test3", restaurants[i]);
+                            if(!restaurants[i].equals("")&&!restaurants[i].equals("No se encontraron restaurantes")&&!restaurants[i].equals("Error")){
+                                Log.e("Test4", "Funciona");
+                                if(location.equals("Irapuato")) {
+                                    connection.CONN();
+                                    String IDCiudad = connection.getCityRestaurant(restaurants[i]);
+                                    if (IDCiudad.equals("3")) {
+                                        layoutShowRestaurantFound.addView(showRestaurantsFound(restaurants[i], location));
+                                    }
+                                }
+                                if(location.equals("León")) {
+                                    connection.CONN();
+                                    String IDCiudad = connection.getCityRestaurant(restaurants[i]);
+                                    if (IDCiudad.equals("2")) {
+                                        layoutShowRestaurantFound.addView(showRestaurantsFound(restaurants[i], location));
+                                    }
+                                }
+                                if(location.equals("Guanajuato")) {
+                                    connection.CONN();
+                                    String IDCiudad = connection.getCityRestaurant(restaurants[i]);
+                                    if (IDCiudad.equals("1")) {
+                                        layoutShowRestaurantFound.addView(showRestaurantsFound(restaurants[i], location));
+                                    }
+                                }
+                            }
                         }
-                    }
-                    if(layoutShowRestaurantFound.getChildCount() == 0){
-                        TextView errorTV = new TextView(this);
-                        errorTV.setText("No se encontraron restaurantes");
-                        errorTV.setTextColor(Color.GRAY);
-                        errorTV.setTextSize(20);
-                        errorTV.setGravity(Gravity.CENTER);
-                        layoutShowRestaurantFound.addView(errorTV);
-                    }
+                        if(layoutShowRestaurantFound.getChildCount() == 0){
+                            TextView errorTV = new TextView(this);
+                            errorTV.setText("No se encontraron restaurantes");
+                            errorTV.setTextColor(Color.GRAY);
+                            errorTV.setTextSize(20);
+                            errorTV.setGravity(Gravity.CENTER);
+                            layoutShowRestaurantFound.addView(errorTV);
+                        }
+
+                    if(location.equals("León")){}
+                    if(location.equals("Guanajuato")){}
+                    if(location.equals("Celaya")){}
+                    if(location.equals("Chihuahua")){}
+                    if(location.equals("Juárez")){}
                 }
             });
         }catch (Exception e){
@@ -231,6 +273,7 @@ public class Interface3636 extends AppCompatActivity {
         phoneText.setGravity(Gravity.CENTER);
         availabilityText.setGravity(Gravity.CENTER);
 
+        ArrayList<String[]> finalDataRest = dataRest;
         btnRestaurant.setOnClickListener(view -> {
             restaurantSelected.set(true);
             coffeeSelected.set(false);
@@ -238,179 +281,562 @@ public class Interface3636 extends AppCompatActivity {
 
             identificadorDeRestaurante.set(0);
 
-            nameText.setText(Arena88.getNameText());
-            addressText.setText(Arena88.getAddressText());
-            typesOfFoodText.setText(Arena88.getTypesOfFoodText());
-            phoneText.setText(Arena88.getPhoneText());
-            availabilityText.setText(Arena88.getAvailabilityText());
-            logoRestaurant.setImageResource(R.mipmap.arena88);
+           if(location.equals("Irapuato")){
+               nameText.setText(Arena88.getNameText());
+               addressText.setText(Arena88.getAddressText());
+               typesOfFoodText.setText(Arena88.getTypesOfFoodText());
+               phoneText.setText(Arena88.getPhoneText());
+               availabilityText.setText(Arena88.getAvailabilityText());
+               logoRestaurant.setImageResource(R.mipmap.arena88);
+           }else{
+               //Obtener un ArrayList con los datos de los restaurantes que venden café
+
+               if(finalDataRest.size() != 0){
+                   next_restaurant.setVisibility(View.VISIBLE);
+                   previos_restaurant.setVisibility(View.VISIBLE);
+                   nameText.setVisibility(View.VISIBLE);
+                   addressText.setVisibility(View.VISIBLE);
+                   //typesOfFoodText.setText(data.get(0)[2]);
+                   phoneText.setVisibility(View.VISIBLE);
+                   logoRestaurant.setVisibility(View.VISIBLE);
+
+                   nameText.setText(finalDataRest.get(cont[0])[2]);
+                   addressText.setText(finalDataRest.get(cont[0])[1]);
+                   //typesOfFoodText.setText(data.get(0)[2]);
+                   phoneText.setText(finalDataRest.get(cont[0])[4]);
+                   //availabilityText.setText(CostillaWinebarlechon.getAvailabilityText());
+                   //Obtener imagen de restaurante
+                   String IDRestaurant = finalDataRest.get(cont[0])[0];
+                   byte[] logo = connection.getLogoRestaurant(IDRestaurant);
+                   if(logo != null){
+                       Bitmap bitmap = BitmapFactory.decodeByteArray(logo, 0, logo.length);
+                       logoRestaurant.setImageBitmap(bitmap);
+                   }else{
+                       logoRestaurant.setImageResource(R.drawable.iconscubiertos);
+                   }
+               }else{
+                   Toast.makeText(this,"No hay restaurantes de este tipo registrados",Toast.LENGTH_SHORT).show();
+                   nameText.setVisibility(View.INVISIBLE);
+                   addressText.setVisibility(View.INVISIBLE);
+                   //typesOfFoodText.setText(data.get(0)[2]);
+                   phoneText.setVisibility(View.INVISIBLE);
+                   next_restaurant.setVisibility(View.INVISIBLE);
+                   previos_restaurant.setVisibility(View.INVISIBLE);
+                   logoRestaurant.setVisibility(View.INVISIBLE);
+               }
+           }
+            if(location.equals("León")){}
+            if(location.equals("Guanajuato")){}
+            if(location.equals("Celaya")){}
+            if(location.equals("Chihuahua")){}
+            if(location.equals("Juárez")){}
         });
+
+        ArrayList<String[]> finalData = dataCoffee;
         btnCoffee.setOnClickListener(view -> {
             restaurantSelected.set(false);
             coffeeSelected.set(true);
             barSelected.set(false);
             identificadorDeRestaurante.set(1);
-            nameText.setText(CostillaWinebarlechon.getNameText());
-            addressText.setText(CostillaWinebarlechon.getAddressText());
-            typesOfFoodText.setText(CostillaWinebarlechon.getTypesOfFoodText());
-            phoneText.setText(CostillaWinebarlechon.getPhoneText());
-            availabilityText.setText(CostillaWinebarlechon.getAvailabilityText());
-            logoRestaurant.setImageResource(R.mipmap.costilla);
+
+            if(location.equals("Irapuato")) {
+                nameText.setText(CostillaWinebarlechon.getNameText());
+                addressText.setText(CostillaWinebarlechon.getAddressText());
+                typesOfFoodText.setText(CostillaWinebarlechon.getTypesOfFoodText());
+                phoneText.setText(CostillaWinebarlechon.getPhoneText());
+                availabilityText.setText(CostillaWinebarlechon.getAvailabilityText());
+                logoRestaurant.setImageResource(R.mipmap.costilla);
+            }else{
+                //Obtener un ArrayList con los datos de los restaurantes que venden café
+
+                if(finalData.size() != 0){
+                        next_restaurant.setVisibility(View.VISIBLE);
+                        previos_restaurant.setVisibility(View.VISIBLE);
+                        nameText.setVisibility(View.VISIBLE);
+                        addressText.setVisibility(View.VISIBLE);
+                        //typesOfFoodText.setText(data.get(0)[2]);
+                        phoneText.setVisibility(View.VISIBLE);
+                        logoRestaurant.setVisibility(View.VISIBLE);
+
+                        nameText.setText(finalData.get(cont[0])[2]);
+                        addressText.setText(finalData.get(cont[0])[1]);
+                        //typesOfFoodText.setText(data.get(0)[2]);
+                        phoneText.setText(finalData.get(cont[0])[4]);
+                        //availabilityText.setText(CostillaWinebarlechon.getAvailabilityText());
+                        //Obtener imagen de restaurante
+                        String IDRestaurant = finalData.get(cont[0])[0];
+                        byte[] logo = connection.getLogoRestaurant(IDRestaurant);
+                    if(logo != null){
+                        Bitmap bitmap = BitmapFactory.decodeByteArray(logo, 0, logo.length);
+                        logoRestaurant.setImageBitmap(bitmap);
+                    }else{
+                        logoRestaurant.setImageResource(R.drawable.iconscubiertos);
+                    }
+                }else{
+                    Toast.makeText(this,"No hay restaurantes de este tipo registrados",Toast.LENGTH_SHORT).show();
+                    nameText.setVisibility(View.INVISIBLE);
+                    addressText.setVisibility(View.INVISIBLE);
+                    //typesOfFoodText.setText(data.get(0)[2]);
+                    phoneText.setVisibility(View.INVISIBLE);
+                    next_restaurant.setVisibility(View.INVISIBLE);
+                    previos_restaurant.setVisibility(View.INVISIBLE);
+                    logoRestaurant.setVisibility(View.INVISIBLE);
+                }
+            }
+            if(location.equals("Guanajuato")){}
+            if(location.equals("Celaya")){}
+            if(location.equals("Chihuahua")){}
+            if(location.equals("Juárez")){}
         });
+        ArrayList<String[]> finalDataBar = dataBar;
         btnBar.setOnClickListener(view -> {
             restaurantSelected.set(false);
             coffeeSelected.set(false);
             barSelected.set(true);
             identificadorDeRestaurante.set(0);
-            nameText.setText(CostillaWinebarlechon.getNameText());
-            addressText.setText(CostillaWinebarlechon.getAddressText());
-            typesOfFoodText.setText(CostillaWinebarlechon.getTypesOfFoodText());
-            phoneText.setText(CostillaWinebarlechon.getPhoneText());
-            availabilityText.setText(CostillaWinebarlechon.getAvailabilityText());
-            logoRestaurant.setImageResource(R.mipmap.costilla);
-
-        });
-        previos_restaurant.setOnClickListener(view -> {
-            if(restaurantSelected.get()){
-                switch (identificadorDeRestaurante.get()){
-                    case 0:
-                        identificadorDeRestaurante.set(2);
-                        nameText.setText(CostillaWinebarlechon.getNameText());
-                        addressText.setText(CostillaWinebarlechon.getAddressText());
-                        typesOfFoodText.setText(CostillaWinebarlechon.getTypesOfFoodText());
-                        phoneText.setText(CostillaWinebarlechon.getPhoneText());
-                        availabilityText.setText(CostillaWinebarlechon.getAvailabilityText());
-                        logoRestaurant.setImageResource(R.mipmap.costilla);
-                        break;
-                    case 1:
-                        identificadorDeRestaurante.set(0);
-                        nameText.setText(Arena88.getNameText());
-                        addressText.setText(Arena88.getAddressText());
-                        typesOfFoodText.setText(Arena88.getTypesOfFoodText());
-                        phoneText.setText(Arena88.getPhoneText());
-                        availabilityText.setText(Arena88.getAvailabilityText());
-                        logoRestaurant.setImageResource(R.mipmap.arena88);
-                        break;
-                    case 2:
-                        identificadorDeRestaurante.set(1);
-                        nameText.setText(LaGenareria.getNameText());
-                        addressText.setText(LaGenareria.getAddressText());
-                        typesOfFoodText.setText(LaGenareria.getTypesOfFoodText());
-                        phoneText.setText(LaGenareria.getPhoneText());
-                        availabilityText.setText(LaGenareria.getAvailabilityText());
-                        logoRestaurant.setImageResource(R.mipmap.lagenareria);break;
-                }
-            }else
-            if(coffeeSelected.get()){
+            if(location.equals("Irapuato")) {
                 nameText.setText(CostillaWinebarlechon.getNameText());
                 addressText.setText(CostillaWinebarlechon.getAddressText());
                 typesOfFoodText.setText(CostillaWinebarlechon.getTypesOfFoodText());
                 phoneText.setText(CostillaWinebarlechon.getPhoneText());
                 availabilityText.setText(CostillaWinebarlechon.getAvailabilityText());
                 logoRestaurant.setImageResource(R.mipmap.costilla);
+            }else{
+                Log.e("Bar", String.valueOf(finalDataBar.size()));
+                if(finalDataBar.size() != 0){
+                    next_restaurant.setVisibility(View.VISIBLE);
+                    previos_restaurant.setVisibility(View.VISIBLE);
+                    nameText.setVisibility(View.VISIBLE);
+                    addressText.setVisibility(View.VISIBLE);
+                    //typesOfFoodText.setText(data.get(0)[2]);
+                    phoneText.setVisibility(View.VISIBLE);
+                    logoRestaurant.setVisibility(View.VISIBLE);
+
+                   nameText.setText(finalDataBar.get(cont[0])[2]);
+                   addressText.setText(finalDataBar.get(cont[0])[1]);
+                   //typesOfFoodText.setText(data.get(0)[2]);
+                   phoneText.setText(finalDataBar.get(cont[0])[4]);
+                   //availabilityText.setText(CostillaWinebarlechon.getAvailabilityText());
+                   //Obtener imagen de restaurante
+                   String IDRestaurant = finalDataBar.get(cont[0])[0];
+                   byte[] logo = connection.getLogoRestaurant(IDRestaurant);
+                   if(logo != null){
+                       Bitmap bitmap = BitmapFactory.decodeByteArray(logo, 0, logo.length);
+                       logoRestaurant.setImageBitmap(bitmap);
+                   }else{
+                       logoRestaurant.setImageResource(R.drawable.iconscubiertos);
+                   }
+                }else{
+                    Toast.makeText(this,"No hay restaurantes de este tipo registrados",Toast.LENGTH_SHORT).show();
+                    nameText.setVisibility(View.INVISIBLE);
+                    addressText.setVisibility(View.INVISIBLE);
+                    //typesOfFoodText.setText(data.get(0)[2]);
+                    phoneText.setVisibility(View.INVISIBLE);
+                    next_restaurant.setVisibility(View.INVISIBLE);
+                    previos_restaurant.setVisibility(View.INVISIBLE);
+                    logoRestaurant.setVisibility(View.INVISIBLE);
+                }
+            }
+            if(location.equals("León")){}
+            if(location.equals("Guanajuato")){}
+            if(location.equals("Celaya")){}
+            if(location.equals("Chihuahua")){}
+            if(location.equals("Juárez")){}
+        });
+        previos_restaurant.setOnClickListener(view -> {
+            if(restaurantSelected.get()){
+                if(location.equals("Irapuato")) {
+                    switch (identificadorDeRestaurante.get()) {
+                        case 0:
+                            identificadorDeRestaurante.set(2);
+                            nameText.setText(CostillaWinebarlechon.getNameText());
+                            addressText.setText(CostillaWinebarlechon.getAddressText());
+                            typesOfFoodText.setText(CostillaWinebarlechon.getTypesOfFoodText());
+                            phoneText.setText(CostillaWinebarlechon.getPhoneText());
+                            availabilityText.setText(CostillaWinebarlechon.getAvailabilityText());
+                            logoRestaurant.setImageResource(R.mipmap.costilla);
+                            break;
+                        case 1:
+                            identificadorDeRestaurante.set(0);
+                            nameText.setText(Arena88.getNameText());
+                            addressText.setText(Arena88.getAddressText());
+                            typesOfFoodText.setText(Arena88.getTypesOfFoodText());
+                            phoneText.setText(Arena88.getPhoneText());
+                            availabilityText.setText(Arena88.getAvailabilityText());
+                            logoRestaurant.setImageResource(R.mipmap.arena88);
+                            break;
+                        case 2:
+                            identificadorDeRestaurante.set(1);
+                            nameText.setText(LaGenareria.getNameText());
+                            addressText.setText(LaGenareria.getAddressText());
+                            typesOfFoodText.setText(LaGenareria.getTypesOfFoodText());
+                            phoneText.setText(LaGenareria.getPhoneText());
+                            availabilityText.setText(LaGenareria.getAvailabilityText());
+                            logoRestaurant.setImageResource(R.mipmap.lagenareria);
+                            break;
+                    }
+                }else{
+                    if(cont[0] == 0){
+                        nameText.setText(finalDataRest.get(cont[0])[2]);
+                        addressText.setText(finalDataRest.get(cont[0])[1]);
+                        //typesOfFoodText.setText(data.get(0)[2]);
+                        phoneText.setText(finalDataRest.get(cont[0])[4]);
+                        //availabilityText.setText(CostillaWinebarlechon.getAvailabilityText());
+                        //Obtener imagen de restaurante
+                        String IDRestaurant = finalDataRest.get(cont[0])[0];
+                        byte[] logo = connection.getLogoRestaurant(IDRestaurant);
+                        if(logo != null){
+                            Bitmap bitmap = BitmapFactory.decodeByteArray(logo, 0, logo.length);
+                            logoRestaurant.setImageBitmap(bitmap);
+                        }else{
+                            logoRestaurant.setImageResource(R.drawable.iconscubiertos);
+                        }
+                        cont[0] = finalDataRest.size() - 1;
+                    }else{
+                        nameText.setText(finalDataRest.get(cont[0])[2]);
+                        addressText.setText(finalDataRest.get(cont[0])[1]);
+                        //typesOfFoodText.setText(data.get(0)[2]);
+                        phoneText.setText(finalDataRest.get(cont[0])[4]);
+                        //availabilityText.setText(CostillaWinebarlechon.getAvailabilityText());
+                        //Obtener imagen de restaurante
+                        String IDRestaurant = finalDataRest.get(cont[0])[0];
+                        byte[] logo = connection.getLogoRestaurant(IDRestaurant);
+                        if(logo != null){
+                            Bitmap bitmap = BitmapFactory.decodeByteArray(logo, 0, logo.length);
+                            logoRestaurant.setImageBitmap(bitmap);
+                        }else{
+                            logoRestaurant.setImageResource(R.drawable.iconscubiertos);
+                        }
+
+                        cont[0]--;
+                    }
+                }
+                if(location.equals("León")){}
+                if(location.equals("Guanajuato")){}
+                if(location.equals("Celaya")){}
+                if(location.equals("Chihuahua")){}
+                if(location.equals("Juárez")){}
+            }else
+            if(coffeeSelected.get()){
+                if(location.equals("Irapuato")) {
+                    nameText.setText(CostillaWinebarlechon.getNameText());
+                    addressText.setText(CostillaWinebarlechon.getAddressText());
+                    typesOfFoodText.setText(CostillaWinebarlechon.getTypesOfFoodText());
+                    phoneText.setText(CostillaWinebarlechon.getPhoneText());
+                    availabilityText.setText(CostillaWinebarlechon.getAvailabilityText());
+                    logoRestaurant.setImageResource(R.mipmap.costilla);
+                }else{
+                    if(cont[0] == 0){
+                        nameText.setText(finalData.get(cont[0])[2]);
+                        addressText.setText(finalData.get(cont[0])[1]);
+                        //typesOfFoodText.setText(data.get(0)[2]);
+                        phoneText.setText(finalData.get(cont[0])[4]);
+                        //availabilityText.setText(CostillaWinebarlechon.getAvailabilityText());
+                        //Obtener imagen de restaurante
+                        String IDRestaurant = finalData.get(cont[0])[0];
+                        byte[] logo = connection.getLogoRestaurant(IDRestaurant);
+                        if(logo != null){
+                            Bitmap bitmap = BitmapFactory.decodeByteArray(logo, 0, logo.length);
+                            logoRestaurant.setImageBitmap(bitmap);
+                        }else{
+                            logoRestaurant.setImageResource(R.drawable.iconscubiertos);
+                        }
+                        cont[0] = finalData.size() - 1;
+                    }else{
+                        nameText.setText(finalData.get(cont[0])[2]);
+                        addressText.setText(finalData.get(cont[0])[1]);
+                        //typesOfFoodText.setText(data.get(0)[2]);
+                        phoneText.setText(finalData.get(cont[0])[4]);
+                        //availabilityText.setText(CostillaWinebarlechon.getAvailabilityText());
+                        //Obtener imagen de restaurante
+                        String IDRestaurant = finalData.get(cont[0])[0];
+                        byte[] logo = connection.getLogoRestaurant(IDRestaurant);
+                        if(logo != null){
+                            Bitmap bitmap = BitmapFactory.decodeByteArray(logo, 0, logo.length);
+                            logoRestaurant.setImageBitmap(bitmap);
+                        }else{
+                            logoRestaurant.setImageResource(R.drawable.iconscubiertos);
+                        }
+
+                        cont[0]--;
+                    }
+                }
+                if(location.equals("León")){}
+                if(location.equals("Guanajuato")){}
+                if(location.equals("Celaya")){}
+                if(location.equals("Chihuahua")){}
+                if(location.equals("Juárez")){}
             }else
             if(barSelected.get()){
-                switch (identificadorDeRestaurante.get()){
-                    case 0:
-                        identificadorDeRestaurante.set(2);
-                        nameText.setText(LaGenareria.getNameText());
-                        addressText.setText(LaGenareria.getAddressText());
-                        typesOfFoodText.setText(LaGenareria.getTypesOfFoodText());
-                        phoneText.setText(LaGenareria.getPhoneText());
-                        availabilityText.setText(LaGenareria.getAvailabilityText());
-                        logoRestaurant.setImageResource(R.mipmap.lagenareria);
-                        break;
-                    case 1:
-                        identificadorDeRestaurante.set(0);
-                        nameText.setText(CostillaWinebarlechon.getNameText());
-                        addressText.setText(CostillaWinebarlechon.getAddressText());
-                        typesOfFoodText.setText(CostillaWinebarlechon.getTypesOfFoodText());
-                        phoneText.setText(CostillaWinebarlechon.getPhoneText());
-                        availabilityText.setText(CostillaWinebarlechon.getAvailabilityText());
-                        logoRestaurant.setImageResource(R.mipmap.costilla);
-                        break;
-                    case 2:
-                        identificadorDeRestaurante.set(1);
-                        nameText.setText(Arena88.getNameText());
-                        addressText.setText(Arena88.getAddressText());
-                        typesOfFoodText.setText(Arena88.getTypesOfFoodText());
-                        phoneText.setText(Arena88.getPhoneText());
-                        availabilityText.setText(Arena88.getAvailabilityText());
-                        logoRestaurant.setImageResource(R.mipmap.arena88);
-                        break;
+                if(location.equals("Irapuato")) {
+                    switch (identificadorDeRestaurante.get()) {
+                        case 0:
+                            identificadorDeRestaurante.set(2);
+                            nameText.setText(LaGenareria.getNameText());
+                            addressText.setText(LaGenareria.getAddressText());
+                            typesOfFoodText.setText(LaGenareria.getTypesOfFoodText());
+                            phoneText.setText(LaGenareria.getPhoneText());
+                            availabilityText.setText(LaGenareria.getAvailabilityText());
+                            logoRestaurant.setImageResource(R.mipmap.lagenareria);
+                            break;
+                        case 1:
+                            identificadorDeRestaurante.set(0);
+                            nameText.setText(CostillaWinebarlechon.getNameText());
+                            addressText.setText(CostillaWinebarlechon.getAddressText());
+                            typesOfFoodText.setText(CostillaWinebarlechon.getTypesOfFoodText());
+                            phoneText.setText(CostillaWinebarlechon.getPhoneText());
+                            availabilityText.setText(CostillaWinebarlechon.getAvailabilityText());
+                            logoRestaurant.setImageResource(R.mipmap.costilla);
+                            break;
+                        case 2:
+                            identificadorDeRestaurante.set(1);
+                            nameText.setText(Arena88.getNameText());
+                            addressText.setText(Arena88.getAddressText());
+                            typesOfFoodText.setText(Arena88.getTypesOfFoodText());
+                            phoneText.setText(Arena88.getPhoneText());
+                            availabilityText.setText(Arena88.getAvailabilityText());
+                            logoRestaurant.setImageResource(R.mipmap.arena88);
+                            break;
+                    }
+                }else{
+                    if(cont[0] == 0){
+                        nameText.setText(finalDataBar.get(cont[0])[2]);
+                        addressText.setText(finalDataBar.get(cont[0])[1]);
+                        //typesOfFoodText.setText(data.get(0)[2]);
+                        phoneText.setText(finalDataBar.get(cont[0])[4]);
+                        //availabilityText.setText(CostillaWinebarlechon.getAvailabilityText());
+                        //Obtener imagen de restaurante
+                        String IDRestaurant = finalDataBar.get(cont[0])[0];
+                        byte[] logo = connection.getLogoRestaurant(IDRestaurant);
+                        if(logo != null){
+                            Bitmap bitmap = BitmapFactory.decodeByteArray(logo, 0, logo.length);
+                            logoRestaurant.setImageBitmap(bitmap);
+                        }else{
+                            logoRestaurant.setImageResource(R.drawable.iconscubiertos);
+                        }
+                        cont[0] = finalDataBar.size() - 1;
+                    }else{
+                        nameText.setText(finalDataBar.get(cont[0])[2]);
+                        addressText.setText(finalDataBar.get(cont[0])[1]);
+                        //typesOfFoodText.setText(data.get(0)[2]);
+                        phoneText.setText(finalDataBar.get(cont[0])[4]);
+                        //availabilityText.setText(CostillaWinebarlechon.getAvailabilityText());
+                        //Obtener imagen de restaurante
+                        String IDRestaurant = finalDataBar.get(cont[0])[0];
+                        byte[] logo = connection.getLogoRestaurant(IDRestaurant);
+                        if(logo != null){
+                            Bitmap bitmap = BitmapFactory.decodeByteArray(logo, 0, logo.length);
+                            logoRestaurant.setImageBitmap(bitmap);
+                        }else{
+                            logoRestaurant.setImageResource(R.drawable.iconscubiertos);
+                        }
+
+                        cont[0]--;
+                    }
                 }
+                if(location.equals("León")){}
+                if(location.equals("Guanajuato")){}
+                if(location.equals("Celaya")){}
+                if(location.equals("Chihuahua")){}
+                if(location.equals("Juárez")){}
             }
         });
         next_restaurant.setOnClickListener(view -> {
             if(restaurantSelected.get()){
-                switch (identificadorDeRestaurante.get()){
-                    case 0:
-                        identificadorDeRestaurante.set(1);
-                        nameText.setText(LaGenareria.getNameText());
-                        addressText.setText(LaGenareria.getAddressText());
-                        typesOfFoodText.setText(LaGenareria.getTypesOfFoodText());
-                        phoneText.setText(LaGenareria.getPhoneText());
-                        availabilityText.setText(LaGenareria.getAvailabilityText());
-                        logoRestaurant.setImageResource(R.mipmap.lagenareria);
-                        break;
-                    case 1:
-                        identificadorDeRestaurante.set(2);
-                        nameText.setText(CostillaWinebarlechon.getNameText());
-                        addressText.setText(CostillaWinebarlechon.getAddressText());
-                        typesOfFoodText.setText(CostillaWinebarlechon.getTypesOfFoodText());
-                        phoneText.setText(CostillaWinebarlechon.getPhoneText());
-                        availabilityText.setText(CostillaWinebarlechon.getAvailabilityText());
-                        logoRestaurant.setImageResource(R.mipmap.costilla);
-                        break;
-                    case 2:
-                        identificadorDeRestaurante.set(0);
-                        nameText.setText(Arena88.getNameText());
-                        addressText.setText(Arena88.getAddressText());
-                        typesOfFoodText.setText(Arena88.getTypesOfFoodText());
-                        phoneText.setText(Arena88.getPhoneText());
-                        availabilityText.setText(Arena88.getAvailabilityText());
-                        logoRestaurant.setImageResource(R.mipmap.arena88);
-                        break;
+                if(location.equals("Irapuato")) {
+                    switch (identificadorDeRestaurante.get()) {
+                        case 0:
+                            identificadorDeRestaurante.set(1);
+                            nameText.setText(LaGenareria.getNameText());
+                            addressText.setText(LaGenareria.getAddressText());
+                            typesOfFoodText.setText(LaGenareria.getTypesOfFoodText());
+                            phoneText.setText(LaGenareria.getPhoneText());
+                            availabilityText.setText(LaGenareria.getAvailabilityText());
+                            logoRestaurant.setImageResource(R.mipmap.lagenareria);
+                            break;
+                        case 1:
+                            identificadorDeRestaurante.set(2);
+                            nameText.setText(CostillaWinebarlechon.getNameText());
+                            addressText.setText(CostillaWinebarlechon.getAddressText());
+                            typesOfFoodText.setText(CostillaWinebarlechon.getTypesOfFoodText());
+                            phoneText.setText(CostillaWinebarlechon.getPhoneText());
+                            availabilityText.setText(CostillaWinebarlechon.getAvailabilityText());
+                            logoRestaurant.setImageResource(R.mipmap.costilla);
+                            break;
+                        case 2:
+                            identificadorDeRestaurante.set(0);
+                            nameText.setText(Arena88.getNameText());
+                            addressText.setText(Arena88.getAddressText());
+                            typesOfFoodText.setText(Arena88.getTypesOfFoodText());
+                            phoneText.setText(Arena88.getPhoneText());
+                            availabilityText.setText(Arena88.getAvailabilityText());
+                            logoRestaurant.setImageResource(R.mipmap.arena88);
+                            break;
+                    }
+                }else{
+                    if(cont[0] == finalDataRest.size() - 1){
+                        nameText.setText(finalDataRest.get(cont[0])[2]);
+                        addressText.setText(finalDataRest.get(cont[0])[1]);
+                        //typesOfFoodText.setText(data.get(0)[2]);
+                        phoneText.setText(finalDataRest.get(cont[0])[4]);
+                        //availabilityText.setText(CostillaWinebarlechon.getAvailabilityText());
+                        //Obtener imagen de restaurante
+                        String IDRestaurant = finalDataRest.get(cont[0])[0];
+                        byte[] logo = connection.getLogoRestaurant(IDRestaurant);
+                        if(logo != null){
+                            Bitmap bitmap = BitmapFactory.decodeByteArray(logo, 0, logo.length);
+                            logoRestaurant.setImageBitmap(bitmap);
+                        }else{
+                            logoRestaurant.setImageResource(R.drawable.iconscubiertos);
+                        }
+                        cont[0] = 0;
+                    }else{
+                        nameText.setText(finalDataRest.get(cont[0])[2]);
+                        addressText.setText(finalDataRest.get(cont[0])[1]);
+                        //typesOfFoodText.setText(data.get(0)[2]);
+                        phoneText.setText(finalDataRest.get(cont[0])[4]);
+                        //availabilityText.setText(CostillaWinebarlechon.getAvailabilityText());
+                        //Obtener imagen de restaurante
+                        String IDRestaurant = finalDataRest.get(cont[0])[0];
+                        byte[] logo = connection.getLogoRestaurant(IDRestaurant);
+                        if(logo != null){
+                            Bitmap bitmap = BitmapFactory.decodeByteArray(logo, 0, logo.length);
+                            logoRestaurant.setImageBitmap(bitmap);
+                        }else{
+                            logoRestaurant.setImageResource(R.drawable.iconscubiertos);
+                        }
+
+                        cont[0]++;
+                    }
                 }
+                if(location.equals("León")){}
+                if(location.equals("Guanajuato")){}
+                if(location.equals("Celaya")){}
+                if(location.equals("Chihuahua")){}
+                if(location.equals("Juárez")){}
             }else
             if(coffeeSelected.get()){
-                nameText.setText(CostillaWinebarlechon.getNameText());
-                addressText.setText(CostillaWinebarlechon.getAddressText());
-                typesOfFoodText.setText(CostillaWinebarlechon.getTypesOfFoodText());
-                phoneText.setText(CostillaWinebarlechon.getPhoneText());
-                availabilityText.setText(CostillaWinebarlechon.getAvailabilityText());
-                logoRestaurant.setImageResource(R.mipmap.costilla);
+                if(location.equals("Irapuato")) {
+                    nameText.setText(CostillaWinebarlechon.getNameText());
+                    addressText.setText(CostillaWinebarlechon.getAddressText());
+                    typesOfFoodText.setText(CostillaWinebarlechon.getTypesOfFoodText());
+                    phoneText.setText(CostillaWinebarlechon.getPhoneText());
+                    availabilityText.setText(CostillaWinebarlechon.getAvailabilityText());
+                    logoRestaurant.setImageResource(R.mipmap.costilla);
+                }else{
+                    if(cont[0] == finalData.size() - 1){
+                        nameText.setText(finalData.get(cont[0])[2]);
+                        addressText.setText(finalData.get(cont[0])[1]);
+                        //typesOfFoodText.setText(data.get(0)[2]);
+                        phoneText.setText(finalData.get(cont[0])[4]);
+                        //availabilityText.setText(CostillaWinebarlechon.getAvailabilityText());
+                        //Obtener imagen de restaurante
+                        String IDRestaurant = finalData.get(cont[0])[0];
+                        byte[] logo = connection.getLogoRestaurant(IDRestaurant);
+                        if(logo != null){
+                            Bitmap bitmap = BitmapFactory.decodeByteArray(logo, 0, logo.length);
+                            logoRestaurant.setImageBitmap(bitmap);
+                        }else{
+                            logoRestaurant.setImageResource(R.drawable.iconscubiertos);
+                        }
+                        cont[0] = 0;
+                    }else{
+                        nameText.setText(finalData.get(cont[0])[2]);
+                        addressText.setText(finalData.get(cont[0])[1]);
+                        //typesOfFoodText.setText(data.get(0)[2]);
+                        phoneText.setText(finalData.get(cont[0])[4]);
+                        //availabilityText.setText(CostillaWinebarlechon.getAvailabilityText());
+                        //Obtener imagen de restaurante
+                        String IDRestaurant = finalData.get(cont[0])[0];
+                        byte[] logo = connection.getLogoRestaurant(IDRestaurant);
+                        if(logo != null){
+                            Bitmap bitmap = BitmapFactory.decodeByteArray(logo, 0, logo.length);
+                            logoRestaurant.setImageBitmap(bitmap);
+                        }else{
+                            logoRestaurant.setImageResource(R.drawable.iconscubiertos);
+                        }
+
+                        cont[0]++;
+                    }
+                }
+                if(location.equals("León")){}
+                if(location.equals("Guanajuato")){}
+                if(location.equals("Celaya")){}
+                if(location.equals("Chihuahua")){}
+                if(location.equals("Juárez")){}
             }else
             if(barSelected.get()){
-                switch (identificadorDeRestaurante.get()){
-                    case 0:
-                        identificadorDeRestaurante.set(1);
-                        nameText.setText(LaGenareria.getNameText());
-                        addressText.setText(LaGenareria.getAddressText());
-                        typesOfFoodText.setText(LaGenareria.getTypesOfFoodText());
-                        phoneText.setText(LaGenareria.getPhoneText());
-                        availabilityText.setText(LaGenareria.getAvailabilityText());
-                        logoRestaurant.setImageResource(R.mipmap.lagenareria);
-                        break;
-                    case 1:
-                        identificadorDeRestaurante.set(2);
-                        nameText.setText(Arena88.getNameText());
-                        addressText.setText(Arena88.getAddressText());
-                        typesOfFoodText.setText(Arena88.getTypesOfFoodText());
-                        phoneText.setText(Arena88.getPhoneText());
-                        availabilityText.setText(Arena88.getAvailabilityText());
-                        logoRestaurant.setImageResource(R.mipmap.arena88);
-                        break;
-                    case 2:
-                        identificadorDeRestaurante.set(0);
-                        nameText.setText(CostillaWinebarlechon.getNameText());
-                        addressText.setText(CostillaWinebarlechon.getAddressText());
-                        typesOfFoodText.setText(CostillaWinebarlechon.getTypesOfFoodText());
-                        phoneText.setText(CostillaWinebarlechon.getPhoneText());
-                        availabilityText.setText(CostillaWinebarlechon.getAvailabilityText());
-                        logoRestaurant.setImageResource(R.mipmap.costilla);
-                        break;
+                if(location.equals("Irapuato")) {
+                    switch (identificadorDeRestaurante.get()) {
+                        case 0:
+                            identificadorDeRestaurante.set(1);
+                            nameText.setText(LaGenareria.getNameText());
+                            addressText.setText(LaGenareria.getAddressText());
+                            typesOfFoodText.setText(LaGenareria.getTypesOfFoodText());
+                            phoneText.setText(LaGenareria.getPhoneText());
+                            availabilityText.setText(LaGenareria.getAvailabilityText());
+                            logoRestaurant.setImageResource(R.mipmap.lagenareria);
+                            break;
+                        case 1:
+                            identificadorDeRestaurante.set(2);
+                            nameText.setText(Arena88.getNameText());
+                            addressText.setText(Arena88.getAddressText());
+                            typesOfFoodText.setText(Arena88.getTypesOfFoodText());
+                            phoneText.setText(Arena88.getPhoneText());
+                            availabilityText.setText(Arena88.getAvailabilityText());
+                            logoRestaurant.setImageResource(R.mipmap.arena88);
+                            break;
+                        case 2:
+                            identificadorDeRestaurante.set(0);
+                            nameText.setText(CostillaWinebarlechon.getNameText());
+                            addressText.setText(CostillaWinebarlechon.getAddressText());
+                            typesOfFoodText.setText(CostillaWinebarlechon.getTypesOfFoodText());
+                            phoneText.setText(CostillaWinebarlechon.getPhoneText());
+                            availabilityText.setText(CostillaWinebarlechon.getAvailabilityText());
+                            logoRestaurant.setImageResource(R.mipmap.costilla);
+                            break;
+                    }
+                }else{
+                    if(cont[0] == finalDataBar.size() - 1){
+                        nameText.setText(finalDataBar.get(cont[0])[2]);
+                        addressText.setText(finalDataBar.get(cont[0])[1]);
+                        //typesOfFoodText.setText(data.get(0)[2]);
+                        phoneText.setText(finalDataBar.get(cont[0])[4]);
+                        //availabilityText.setText(CostillaWinebarlechon.getAvailabilityText());
+                        //Obtener imagen de restaurante
+                        String IDRestaurant = finalDataBar.get(cont[0])[0];
+                        byte[] logo = connection.getLogoRestaurant(IDRestaurant);
+                        if(logo != null){
+                            Bitmap bitmap = BitmapFactory.decodeByteArray(logo, 0, logo.length);
+                            logoRestaurant.setImageBitmap(bitmap);
+                        }else{
+                            logoRestaurant.setImageResource(R.drawable.iconscubiertos);
+                        }
+                        cont[0] = 0;
+                    }else{
+                        nameText.setText(finalDataBar.get(cont[0])[2]);
+                        addressText.setText(finalDataBar.get(cont[0])[1]);
+                        //typesOfFoodText.setText(data.get(0)[2]);
+                        phoneText.setText(finalDataBar.get(cont[0])[4]);
+                        //availabilityText.setText(CostillaWinebarlechon.getAvailabilityText());
+                        //Obtener imagen de restaurante
+                        String IDRestaurant = finalDataBar.get(cont[0])[0];
+                        byte[] logo = connection.getLogoRestaurant(IDRestaurant);
+                        if(logo != null){
+                            Bitmap bitmap = BitmapFactory.decodeByteArray(logo, 0, logo.length);
+                            logoRestaurant.setImageBitmap(bitmap);
+                        }else{
+                            logoRestaurant.setImageResource(R.drawable.iconscubiertos);
+                        }
+
+                        cont[0]++;
+                    }
                 }
+                if(location.equals("León")){}
+                if(location.equals("Guanajuato")){}
+                if(location.equals("Celaya")){}
+                if(location.equals("Chihuahua")){}
+                if(location.equals("Juárez")){}
             }
         });
         somethingyoumightlikebutton.setOnClickListener(view -> {
@@ -424,7 +850,7 @@ public class Interface3636 extends AppCompatActivity {
             startActivity(moreInterface);
         });
     }
-    public LinearLayout showRestaurantsFound(String idRestaurant){
+    public LinearLayout showRestaurantsFound(String idRestaurant, String location){
         LinearLayout layout = new LinearLayout(this);
         layout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         layout.setPadding(0,30,0,0);
@@ -436,6 +862,8 @@ public class Interface3636 extends AppCompatActivity {
         TextView availabilityBusiness = new TextView(this);
         ImageView logoBusiness = new ImageView(this);
         Button btnShowMenu = new Button(this);
+        Button booking = new Button(this);
+        Button homeService = new Button(this);
 
         nameBusiness.setGravity(Gravity.CENTER);
         nameBusiness.setTextSize(TypedValue.COMPLEX_UNIT_SP,24);
@@ -444,73 +872,150 @@ public class Interface3636 extends AppCompatActivity {
         phoneBusiness.setGravity(Gravity.CENTER);
         availabilityBusiness.setGravity(Gravity.CENTER);
         availabilityBusiness.setPadding(0,0,0,50);
-        btnShowMenu.setText("Menu");
-        btnShowMenu.setBackgroundColor(Color.rgb(255, 128, 0));
 
-        if(idRestaurant.equals("1")){
-            nameBusiness.setText("La Genarería");
-            addressBusiness.setText("Dirección: Irapuato, Guanajuato. Plaza 3636 Gómez Morín");
-            typeOfFoodBusiness.setText("Tipos de Comida: Americana, Restaurante - Bar, Bar");
-            phoneBusiness.setText("Teléfono: 462 200 4863");
-            availabilityBusiness.setText("Disponibilidad el día de hoy: 14:00 a 23:00");
-            LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(300, 300);
+        btnShowMenu.setVisibility(View.GONE);
+        booking.setVisibility(View.GONE);
+        homeService.setVisibility(View.GONE);
+
+        btnShowMenu.setGravity(Gravity.CENTER);
+        booking.setGravity(Gravity.CENTER);
+        homeService.setGravity(Gravity.CENTER);
+
+        if(location.equals("Irapuato")){
+            if(idRestaurant.equals("1")){
+                btnShowMenu.setGravity(View.VISIBLE);
+                nameBusiness.setText("La Genarería");
+                addressBusiness.setText("Dirección: Irapuato, Guanajuato. Plaza 3636 Gómez Morín");
+                typeOfFoodBusiness.setText("Tipos de Comida: Americana, Restaurante - Bar, Bar");
+                phoneBusiness.setText("Teléfono: 462 200 4863");
+                availabilityBusiness.setText("Disponibilidad el día de hoy: 14:00 a 23:00");
+                LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(300, 300);
+                layoutParams.gravity= Gravity.CENTER;
+                logoBusiness.setLayoutParams(layoutParams);
+                logoBusiness.setImageResource(R.mipmap.lagenareria);
+                btnShowMenu.setOnClickListener(view -> {
+                    String urlMenu = "http://app.softappetit.mx:50293/apps/6If2zVm/genareria/MenuDigital.php";
+                    Bundle url = new Bundle();
+                    url.putString("url", urlMenu);
+                    Intent showDigitalMenu = new Intent(this, ShowDigitalMenu.class);
+                    showDigitalMenu.putExtras(url);
+                    startActivity(showDigitalMenu);
+                });
+            }else
+            if(idRestaurant.equals("2")){
+                btnShowMenu.setGravity(View.VISIBLE);
+                nameBusiness.setText("Arena 88");
+                addressBusiness.setText("Dirección: Irapuato, Guanajuato. Plaza 3636 Gómez Morín");
+                typeOfFoodBusiness.setText("Tipos de Comida: Bar, Restaurante - Bar, Mariscos");
+                phoneBusiness.setText("Teléfono: 462 688 3664");
+                availabilityBusiness.setText("Disponibilidad el día de hoy: 12:00 a 23:00");
+                LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(300, 300);
+                layoutParams.gravity= Gravity.CENTER;
+                logoBusiness.setLayoutParams(layoutParams);
+                logoBusiness.setImageResource(R.mipmap.arena88);
+                btnShowMenu.setOnClickListener(view -> {
+                    String urlMenu = "http://app.softappetit.mx:50293/apps/coA98wi/arena88/MenuDigital.php";
+                    Bundle url = new Bundle();
+                    url.putString("url", urlMenu);
+                    Intent showDigitalMenu = new Intent(this, ShowDigitalMenu.class);
+                    showDigitalMenu.putExtras(url);
+                    startActivity(showDigitalMenu);
+                });
+            }else
+            if(idRestaurant.equals("16")){
+                btnShowMenu.setGravity(View.VISIBLE);
+                nameBusiness.setText("Costilla Winebarlechon");
+                addressBusiness.setText("Dirección: Irapuato, Guanajuato. Plaza 3636 Gómez Morín");
+                typeOfFoodBusiness.setText("Tipos de Comida: Bar, Restaurante - Bar, Café");
+                phoneBusiness.setText("Teléfono: 462 607 9612");
+                availabilityBusiness.setText("Disponibilidad el día de hoy: 10:00 a 22:00");
+                LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(300, 300);
+                layoutParams.gravity= Gravity.CENTER;
+                logoBusiness.setLayoutParams(layoutParams);
+                logoBusiness.setImageResource(R.mipmap.costilla);
+                btnShowMenu.setOnClickListener(view -> {
+                    String urlMenu = "http://app.softappetit.mx:50293/apps/bcuV1kz/costilla/MenuDigital.php";
+                    Bundle url = new Bundle();
+                    url.putString("url", urlMenu);
+                    Intent showDigitalMenu = new Intent(this, ShowDigitalMenu.class);
+                    showDigitalMenu.putExtras(url);
+                    startActivity(showDigitalMenu);
+                });
+            }else
+                nameBusiness.setText("Error");
+        }else{
+            ImageView restaurantLogo = new ImageView(this);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(300, 300);
             layoutParams.gravity= Gravity.CENTER;
-            logoBusiness.setLayoutParams(layoutParams);
-            logoBusiness.setImageResource(R.mipmap.lagenareria);
-            btnShowMenu.setOnClickListener(view -> {
-                String urlMenu = "http://app.softappetit.mx:50293/apps/6If2zVm/genareria/MenuDigital.php";
-                Bundle url = new Bundle();
-                url.putString("url", urlMenu);
-                Intent showDigitalMenu = new Intent(this, ShowDigitalMenu.class);
-                showDigitalMenu.putExtras(url);
-                startActivity(showDigitalMenu);
-            });
-        }else
-        if(idRestaurant.equals("2")){
-            nameBusiness.setText("Arena 88");
-            addressBusiness.setText("Dirección: Irapuato, Guanajuato. Plaza 3636 Gómez Morín");
-            typeOfFoodBusiness.setText("Tipos de Comida: Bar, Restaurante - Bar, Mariscos");
-            phoneBusiness.setText("Teléfono: 462 688 3664");
-            availabilityBusiness.setText("Disponibilidad el día de hoy: 12:00 a 23:00");
-            LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(300, 300);
-            layoutParams.gravity= Gravity.CENTER;
-            logoBusiness.setLayoutParams(layoutParams);
-            logoBusiness.setImageResource(R.mipmap.arena88);
-            btnShowMenu.setOnClickListener(view -> {
-                String urlMenu = "http://app.softappetit.mx:50293/apps/coA98wi/arena88/MenuDigital.php";
-                Bundle url = new Bundle();
-                url.putString("url", urlMenu);
-                Intent showDigitalMenu = new Intent(this, ShowDigitalMenu.class);
-                showDigitalMenu.putExtras(url);
-                startActivity(showDigitalMenu);
-            });
-        }else
-        if(idRestaurant.equals("16")){
-            nameBusiness.setText("Costilla Winebarlechon");
-            addressBusiness.setText("Dirección: Irapuato, Guanajuato. Plaza 3636 Gómez Morín");
-            typeOfFoodBusiness.setText("Tipos de Comida: Bar, Restaurante - Bar, Café");
-            phoneBusiness.setText("Teléfono: 462 607 9612");
-            availabilityBusiness.setText("Disponibilidad el día de hoy: 10:00 a 22:00");
-            LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(300, 300);
-            layoutParams.gravity= Gravity.CENTER;
-            logoBusiness.setLayoutParams(layoutParams);
-            logoBusiness.setImageResource(R.mipmap.costilla);
-            btnShowMenu.setOnClickListener(view -> {
-                String urlMenu = "http://app.softappetit.mx:50293/apps/bcuV1kz/costilla/MenuDigital.php";
-                Bundle url = new Bundle();
-                url.putString("url", urlMenu);
-                Intent showDigitalMenu = new Intent(this, ShowDigitalMenu.class);
-                showDigitalMenu.putExtras(url);
-                startActivity(showDigitalMenu);
-            });
-        }else
-            nameBusiness.setText("Error");
+            restaurantLogo.setLayoutParams(layoutParams);
+            connection.CONN();
+            String[] data = connection.getRestaurantData(idRestaurant);
+            if(data[0] != null && data[1] != null && data[2] != null && data[3] != null && data[4] != null){
+                connection.CONN();
+                byte[] logo = connection.getLogoRestaurant(idRestaurant);
+                if(logo != null){
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(logo, 0, logo.length);
+                    restaurantLogo.setImageBitmap(bitmap);
+                }else{
+                    restaurantLogo.setImageResource(R.drawable.iconscubiertos);
+                }
+                nameBusiness.setText(data[0]);
+                addressBusiness.setText(data[1]);
+                phoneBusiness.setText(data[2]);
+
+                layout.addView(restaurantLogo);
+                if(!data[3].equals("'NO'")){
+                    homeService.setVisibility(View.VISIBLE);
+                    homeService.setOnClickListener(view -> {
+                        String urlMenu = data[3];
+                        Bundle url = new Bundle();
+                        url.putString("url", urlMenu);
+                        Intent showDigitalMenu = new Intent(this, ShowDigitalMenu.class);
+                        showDigitalMenu.putExtras(url);
+                        startActivity(showDigitalMenu);
+                    });
+                }
+
+                if(!data[4].equals("'NO'")){
+                    booking.setVisibility(View.VISIBLE);
+                    booking.setOnClickListener(view -> {
+                        String urlMenu = data[4];
+                        Bundle url = new Bundle();
+                        url.putString("url", urlMenu);
+                        Intent showDigitalMenu = new Intent(this, ShowDigitalMenu.class);
+                        showDigitalMenu.putExtras(url);
+                        startActivity(showDigitalMenu);
+                    });
+                }
+                if(data[5] != null){
+                    btnShowMenu.setVisibility(View.VISIBLE);
+                    btnShowMenu.setOnClickListener(view -> {
+                        String urlMenu = data[5];
+                        Bundle url = new Bundle();
+                        url.putString("url", urlMenu);
+                        Intent showDigitalMenu = new Intent(this, ShowDigitalMenu.class);
+                        showDigitalMenu.putExtras(url);
+                        startActivity(showDigitalMenu);
+                    });
+                }
+            }
+        }
         //nameBusiness.setTextSize(20);
         nameBusiness.setTextColor(Color.GRAY);
         addressBusiness.setTextColor(Color.GRAY);
         typeOfFoodBusiness.setTextColor(Color.GRAY);
         phoneBusiness.setTextColor(Color.GRAY);
         availabilityBusiness.setTextColor(Color.GRAY);
+
+        btnShowMenu.setText("Menu");
+        btnShowMenu.setBackgroundColor(Color.rgb(255, 128, 0));
+
+        homeService.setBackgroundColor(Color.rgb(255, 128, 0));
+        homeService.setText("Servicio a domiclio");
+
+        booking.setBackgroundColor(Color.rgb(255, 128, 0));
+        booking.setText("Reservaciones");
+
 
         layout.addView(logoBusiness);
         layout.addView(nameBusiness);
@@ -519,6 +1024,8 @@ public class Interface3636 extends AppCompatActivity {
         layout.addView(phoneBusiness);
         layout.addView(availabilityBusiness);
         layout.addView(btnShowMenu);
+        layout.addView(booking);
+        layout.addView(homeService);
         return layout;
     }
 }

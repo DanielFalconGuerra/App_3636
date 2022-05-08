@@ -2,21 +2,20 @@ package com.example.a3636;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.text.Layout;
-import android.util.Log;
 import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.a3636.database.DatabaseConnection;
 import com.example.a3636.restaurantdata.AddRestaurantInformationSomethingYouLike;
+
+import java.util.ArrayList;
 
 public class SomethingYouMightLike extends AppCompatActivity {
 
@@ -26,7 +25,6 @@ public class SomethingYouMightLike extends AppCompatActivity {
         setContentView(R.layout.activity_something_you_might_like);
 
         String location = ((MyLocation)getApplication()).getLocation();
-        Toast.makeText(this,"Ubicacion: " + location,Toast.LENGTH_SHORT).show();
 
 
         LinearLayout dataBusinessLayout = (LinearLayout) findViewById(R.id.dataBusinessLayout);
@@ -120,69 +118,82 @@ public class SomethingYouMightLike extends AppCompatActivity {
                 "podrás acompañar tus alimentos con un buen trago a base de mezcal o cheves con un ambiente agradable para toda la familia.");
         Raices.setBusinessLogo(R.mipmap.raices);
 
+        if(location.equals("Irapuato")){
+            for (int i = 0; i < 15; i++){
+                switch (i){
+                    case 0:
+                        layoutFunction = addInformationBussines(Negrito_Cafe.getBusinessName(), Negrito_Cafe.getBusinessDescription(), Negrito_Cafe.getBusinessLogo());
+                        dataBusinessLayout.addView(layoutFunction);
+                        break;
+                    case 1:
+                        layoutFunction = addInformationBussines(Curandero.getBusinessName(), Curandero.getBusinessDescription(), Curandero.getBusinessLogo());
+                        dataBusinessLayout.addView(layoutFunction);
+                        break;
+                    case 2:
+                        layoutFunction = addInformationBussines(LaMarinba.getBusinessName(), LaMarinba.getBusinessDescription(), LaMarinba.getBusinessLogo());
+                        dataBusinessLayout.addView(layoutFunction);
+                        break;
+                    case 3:
+                        layoutFunction = addInformationBussines(Mirrey.getBusinessName(), Mirrey.getBusinessDescription(), Mirrey.getBusinessLogo());
+                        dataBusinessLayout.addView(layoutFunction);
+                        break;
+                    case 4:
+                        layoutFunction = addInformationBussines(HappyBox.getBusinessName(), HappyBox.getBusinessDescription(), HappyBox.getBusinessLogo());
+                        dataBusinessLayout.addView(layoutFunction);
+                        break;
+                    case 5:
+                        layoutFunction = addInformationBussines(LaEscotilla.getBusinessName(), LaEscotilla.getBusinessDescription(), LaEscotilla.getBusinessLogo());
+                        dataBusinessLayout.addView(layoutFunction);
+                        break;
+                    case 6:
+                        layoutFunction = addInformationBussines(Monchster.getBusinessName(), Monchster.getBusinessDescription(), Monchster.getBusinessLogo());
+                        dataBusinessLayout.addView(layoutFunction);
+                        break;
+                    case 7:
+                        layoutFunction = addInformationBussines(ElGranChamorro.getBusinessName(), ElGranChamorro.getBusinessDescription(), ElGranChamorro.getBusinessLogo());
+                        dataBusinessLayout.addView(layoutFunction);
+                        break;
+                    case 8:
+                        layoutFunction = addInformationBussines(LaCuevaDelLobo.getBusinessName(), LaCuevaDelLobo.getBusinessDescription(), LaCuevaDelLobo.getBusinessLogo());
+                        dataBusinessLayout.addView(layoutFunction);
+                        break;
+                    case 9:
+                        layoutFunction = addInformationBussines(Indigo.getBusinessName(), Indigo.getBusinessDescription(), Indigo.getBusinessLogo());
+                        dataBusinessLayout.addView(layoutFunction);
+                        break;
+                    case 10:
+                        layoutFunction = addInformationBussines(Manhattan.getBusinessName(), Manhattan.getBusinessDescription(), Manhattan.getBusinessLogo());
+                        dataBusinessLayout.addView(layoutFunction);
+                        break;
+                    case 11:
+                        layoutFunction = addInformationBussines(PosdataCoffeAndBakery.getBusinessName(), PosdataCoffeAndBakery.getBusinessDescription(), PosdataCoffeAndBakery.getBusinessLogo());
+                        dataBusinessLayout.addView(layoutFunction);
+                        break;
+                    case 12:
+                        layoutFunction = addInformationBussines(BuenaVida.getBusinessName(), BuenaVida.getBusinessDescription(), BuenaVida.getBusinessLogo());
+                        dataBusinessLayout.addView(layoutFunction);
+                        break;
+                    case 13:
+                        layoutFunction = addInformationBussines(Arena88.getBusinessName(), Arena88.getBusinessDescription(), Arena88.getBusinessLogo());
+                        dataBusinessLayout.addView(layoutFunction);
+                        break;
+                    case 14:
+                        layoutFunction = addInformationBussines(Raices.getBusinessName(), Raices.getBusinessDescription(), Raices.getBusinessLogo());
+                        dataBusinessLayout.addView(layoutFunction);
+                        break;
+                }
+            }
+        }else{
+            DatabaseConnection connection = new DatabaseConnection();
+            connection.CONN();
+            if(location.equals("León")){
+                ArrayList<String[]> data = connection.getAllRestaurantsWithTypeOfFood("2");
+                for(int i = 0; i < data.size(); i++){
+                    String IDRestaurant = data.get(i)[0];
+                    byte[] logo = connection.getLogoRestaurant(IDRestaurant);
+                    dataBusinessLayout.addView(addInformationBussines(data.get(i)[2], data.get(i)[3],logo, data.get(i)[1], data.get(i)[4]));
 
-        for (int i = 0; i < 15; i++){
-            switch (i){
-                case 0:
-                    layoutFunction = addInformationBussines(Negrito_Cafe.getBusinessName(), Negrito_Cafe.getBusinessDescription(), Negrito_Cafe.getBusinessLogo());
-                    dataBusinessLayout.addView(layoutFunction);
-                    break;
-                case 1:
-                    layoutFunction = addInformationBussines(Curandero.getBusinessName(), Curandero.getBusinessDescription(), Curandero.getBusinessLogo());
-                    dataBusinessLayout.addView(layoutFunction);
-                    break;
-                case 2:
-                    layoutFunction = addInformationBussines(LaMarinba.getBusinessName(), LaMarinba.getBusinessDescription(), LaMarinba.getBusinessLogo());
-                    dataBusinessLayout.addView(layoutFunction);
-                    break;
-                case 3:
-                    layoutFunction = addInformationBussines(Mirrey.getBusinessName(), Mirrey.getBusinessDescription(), Mirrey.getBusinessLogo());
-                    dataBusinessLayout.addView(layoutFunction);
-                    break;
-                case 4:
-                    layoutFunction = addInformationBussines(HappyBox.getBusinessName(), HappyBox.getBusinessDescription(), HappyBox.getBusinessLogo());
-                    dataBusinessLayout.addView(layoutFunction);
-                    break;
-                case 5:
-                    layoutFunction = addInformationBussines(LaEscotilla.getBusinessName(), LaEscotilla.getBusinessDescription(), LaEscotilla.getBusinessLogo());
-                    dataBusinessLayout.addView(layoutFunction);
-                    break;
-                case 6:
-                    layoutFunction = addInformationBussines(Monchster.getBusinessName(), Monchster.getBusinessDescription(), Monchster.getBusinessLogo());
-                    dataBusinessLayout.addView(layoutFunction);
-                    break;
-                case 7:
-                    layoutFunction = addInformationBussines(ElGranChamorro.getBusinessName(), ElGranChamorro.getBusinessDescription(), ElGranChamorro.getBusinessLogo());
-                    dataBusinessLayout.addView(layoutFunction);
-                    break;
-                case 8:
-                    layoutFunction = addInformationBussines(LaCuevaDelLobo.getBusinessName(), LaCuevaDelLobo.getBusinessDescription(), LaCuevaDelLobo.getBusinessLogo());
-                    dataBusinessLayout.addView(layoutFunction);
-                    break;
-                case 9:
-                    layoutFunction = addInformationBussines(Indigo.getBusinessName(), Indigo.getBusinessDescription(), Indigo.getBusinessLogo());
-                    dataBusinessLayout.addView(layoutFunction);
-                    break;
-                case 10:
-                    layoutFunction = addInformationBussines(Manhattan.getBusinessName(), Manhattan.getBusinessDescription(), Manhattan.getBusinessLogo());
-                    dataBusinessLayout.addView(layoutFunction);
-                    break;
-                case 11:
-                    layoutFunction = addInformationBussines(PosdataCoffeAndBakery.getBusinessName(), PosdataCoffeAndBakery.getBusinessDescription(), PosdataCoffeAndBakery.getBusinessLogo());
-                    dataBusinessLayout.addView(layoutFunction);
-                    break;
-                case 12:
-                    layoutFunction = addInformationBussines(BuenaVida.getBusinessName(), BuenaVida.getBusinessDescription(), BuenaVida.getBusinessLogo());
-                    dataBusinessLayout.addView(layoutFunction);
-                    break;
-                case 13:
-                    layoutFunction = addInformationBussines(Arena88.getBusinessName(), Arena88.getBusinessDescription(), Arena88.getBusinessLogo());
-                    dataBusinessLayout.addView(layoutFunction);
-                    break;
-                case 14:
-                    layoutFunction = addInformationBussines(Raices.getBusinessName(), Raices.getBusinessDescription(), Raices.getBusinessLogo());
-                    dataBusinessLayout.addView(layoutFunction);
-                    break;
+                }
             }
         }
     }
@@ -218,4 +229,51 @@ public class SomethingYouMightLike extends AppCompatActivity {
         return layout;
     }
 
+    public LinearLayout addInformationBussines(String name, String description, byte[] logo, String address, String phone){
+        LinearLayout layout = new LinearLayout(this);
+        layout.setOrientation(LinearLayout.VERTICAL);
+
+        TextView nameBusiness = new TextView(this);
+        TextView descriptionBusiness = new TextView(this);
+        TextView addressBusiness = new TextView(this);
+        TextView phoneBusiness = new TextView(this);
+        ImageView logoBusiness = new ImageView(this);
+
+        nameBusiness.setGravity(Gravity.CENTER);
+        descriptionBusiness.setGravity(Gravity.CENTER);
+        addressBusiness.setGravity(Gravity.CENTER);
+        phoneBusiness.setGravity(Gravity.CENTER);
+
+        nameBusiness.setTextColor(Color.BLACK);
+        descriptionBusiness.setTextColor(Color.BLACK);
+        addressBusiness.setTextColor(Color.BLACK);
+        phoneBusiness.setTextColor(Color.BLACK);
+
+        LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(300, 300);
+        layoutParams.gravity=Gravity.CENTER;
+        logoBusiness.setLayoutParams(layoutParams);
+        //logoBusiness.setLayoutParams(new LinearLayout.LayoutParams(300,300));
+        if(logo != null){
+            Bitmap bitmap = BitmapFactory.decodeByteArray(logo, 0, logo.length);
+            logoBusiness.setImageBitmap(bitmap);
+        }else{
+            logoBusiness.setImageResource(R.drawable.iconscubiertos);
+        }
+
+        ViewGroup.MarginLayoutParams marginParams = (ViewGroup.MarginLayoutParams) logoBusiness.getLayoutParams();
+        marginParams.setMargins(30, 30, 30, 30);
+
+        nameBusiness.setText(name);
+        descriptionBusiness.setText(description);
+        addressBusiness.setText(address);
+        phoneBusiness.setText(phone);
+
+        layout.addView(logoBusiness);
+        layout.addView(nameBusiness);
+        layout.addView(addressBusiness);
+        layout.addView(phoneBusiness);
+        layout.addView(descriptionBusiness);
+
+        return layout;
+    }
 }

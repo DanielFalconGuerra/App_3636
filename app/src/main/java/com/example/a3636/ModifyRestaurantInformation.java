@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -35,6 +37,7 @@ import java.util.Locale;
 
 public class ModifyRestaurantInformation extends AppCompatActivity {
     DatabaseConnection connection = new DatabaseConnection();
+    private final String mainMail = "esantibañez@interpc.mx";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,6 +100,21 @@ public class ModifyRestaurantInformation extends AppCompatActivity {
         btnUpdateInformationRestaurant.setBackgroundColor(Color.rgb(255, 128, 0));
         btnUpdateHorariesRestaurant.setBackgroundColor(Color.rgb(255, 128, 0));
 
+        TextView newNameRestaurantRegisterTV = findViewById(R.id.newNameRestaurantRegisterTV);
+        EditText newNameRestaurantRegisterET = findViewById(R.id.newNameRestaurantRegisterET);
+        TextView newDescriptionRestaurantRegisterTV = findViewById(R.id.newDescriptionRestaurantRegisterTV);
+        EditText newDescriptionRestaurantRegisterET = findViewById(R.id.newDescriptionRestaurantRegisterET);
+        TextView newAddressRestaurantRegisterTV = findViewById(R.id.newAddressRestaurantRegisterTV);
+        EditText newAddressRestaurantRegisterET = findViewById(R.id.newAddressRestaurantRegisterET);
+        TextView newPhoneRestaurantRegisterTV = findViewById(R.id.newPhoneRestaurantRegisterTV);
+        EditText newPhoneRestaurantRegisterET = findViewById(R.id.newPhoneRestaurantRegisterET);
+        TextView mailToRestaurantRegisterTV = findViewById(R.id.mailToRestaurantRegisterTV);
+        EditText mailToRestaurantRegisterET = findViewById(R.id.mailToRestaurantRegisterET);
+        CheckBox bookingRegisterCB = findViewById(R.id.bookingRegisterCB);
+        CheckBox homeServiceRegisterCB = findViewById(R.id.homeServiceRegisterCB);
+        Button btnRegisterNewRestaurant = findViewById(R.id.btnRegisterNewRestaurant);
+        btnRegisterNewRestaurant.setBackgroundColor(Color.rgb(255, 128, 0));
+
         String userName = getIntent().getStringExtra("userName");
 
         nameBusinessSession.setText(userName);
@@ -144,6 +162,54 @@ public class ModifyRestaurantInformation extends AppCompatActivity {
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
                 spinnerRestaurant.setAdapter(adapter);
                 spinnerRestaurant.setBackgroundColor(Color.BLACK);
+
+                newNameRestaurantRegisterTV.setVisibility(View.VISIBLE);
+                newNameRestaurantRegisterET.setVisibility(View.VISIBLE);
+                newDescriptionRestaurantRegisterTV.setVisibility(View.VISIBLE);
+                newDescriptionRestaurantRegisterET.setVisibility(View.VISIBLE);
+                newAddressRestaurantRegisterTV.setVisibility(View.VISIBLE);
+                newAddressRestaurantRegisterET.setVisibility(View.VISIBLE);
+                newPhoneRestaurantRegisterTV.setVisibility(View.VISIBLE);
+                newPhoneRestaurantRegisterET.setVisibility(View.VISIBLE);
+                mailToRestaurantRegisterTV.setVisibility(View.VISIBLE);
+                mailToRestaurantRegisterET.setVisibility(View.VISIBLE);
+                bookingRegisterCB.setVisibility(View.VISIBLE);
+                homeServiceRegisterCB.setVisibility(View.VISIBLE);
+                btnRegisterNewRestaurant.setVisibility(View.VISIBLE);
+
+                btnRegisterNewRestaurant.setOnClickListener(view -> {
+                    String nameRestaurant = newNameRestaurantRegisterET.getText().toString();
+                    String descriptionRestaurant = newDescriptionRestaurantRegisterET.getText().toString();
+                    String addressRestaurant = newAddressRestaurantRegisterET.getText().toString();
+                    String phoneRestaurant = newPhoneRestaurantRegisterET.getText().toString();
+                    String mail = mailToRestaurantRegisterET.getText().toString();
+                    String hasHomeDelivery = "No";
+                    String hasBooking = "No";
+                    if(homeServiceRegisterCB.isChecked()){
+                        hasHomeDelivery = "Si";
+                    }else{
+                        hasHomeDelivery = "No";
+                    }
+                    if(bookingRegisterCB.isChecked()){
+                        hasBooking = "Si";
+                    }else{
+                        hasBooking = "No";
+                    }
+                    if(nameRestaurant.equals("")||descriptionRestaurant.equals("")||addressRestaurant.equals("")||phoneRestaurant.equals("")||mail.equals("")){
+                        Toast.makeText(this,"Debe llenar todos los campos",Toast.LENGTH_SHORT).show();
+                    }else{
+                        String message = "Buen día.\nDeseo que mi restaurante sea agregado a su sistema Softappetit.\nMis datos son los siguientes: \n"+
+                                "Nombre del restaurante: " + nameRestaurant+"\n"+
+                                "Descripción: " + descriptionRestaurant+"\n"+
+                                "Dirección: " + addressRestaurant+"\n"+
+                                "Número telefónico: " + phoneRestaurant+"\n"+
+                                "Cuenta con servicio a Domiclio: " + hasHomeDelivery + "\n"+
+                                "Cuenta con servicio de reservación: " + hasBooking + "\n"+
+                                "Espero su respuesta. \nSaludos."+
+                                "\nEnviado desde la app de Softappetit.";;
+                        sendMessageToRegisterRestaurant(mail,message,"Registro de restaurante");
+                    }
+                });
             }else{
 
                 EditText newDateStartNotification = findViewById(R.id.newDateStartNotification);
@@ -233,7 +299,7 @@ public class ModifyRestaurantInformation extends AppCompatActivity {
                                 newDescriptionRestaurantET.setText(restaurantsAdded.get(IDRestaurant)[3]);
                                 newPhoneRestaurantET.setText(restaurantsAdded.get(IDRestaurant)[4]);
 
-                                if(!restaurantsAdded.get(IDRestaurant)[5].equals("NO")){
+                                if(!restaurantsAdded.get(IDRestaurant)[5].equals("'NO'")){
                                     newLinkHomeServiceTV.setVisibility(View.VISIBLE);
                                     newLinkHomeServiceET.setVisibility(View.VISIBLE);
                                     if(!restaurantsAdded.get(IDRestaurant)[5].equals("SI")){
@@ -241,7 +307,7 @@ public class ModifyRestaurantInformation extends AppCompatActivity {
                                     }
                                 }
 
-                                if(!restaurantsAdded.get(IDRestaurant)[6].equals("NO")){
+                                if(!restaurantsAdded.get(IDRestaurant)[6].equals("'NO'")){
                                     newLinkBookingTV.setVisibility(View.VISIBLE);
                                     newLinkBookingET.setVisibility(View.VISIBLE);
                                     if(!restaurantsAdded.get(IDRestaurant)[6].equals("SI")){
@@ -503,5 +569,25 @@ public class ModifyRestaurantInformation extends AppCompatActivity {
         SimpleDateFormat sdf = new SimpleDateFormat(formatoDeFecha, Locale.US);
 
         newDateStartNotification.setText(sdf.format(calendario.getTime()));
+    }
+    private void sendMessageToRegisterRestaurant(String mail, String message, String subject){
+        String[] TO = {mainMail};
+        String[] CC = {mail};
+        Intent emailIntent = new Intent(Intent.ACTION_SEND);
+        emailIntent.setData(Uri.parse("mailto:"));
+        emailIntent.setType("text/plain");
+
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
+        emailIntent.putExtra(Intent.EXTRA_CC, CC);
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, subject); //asunto
+        emailIntent.putExtra(Intent.EXTRA_TEXT, message); //mensaje
+
+        try {
+            startActivity(Intent.createChooser(emailIntent, "Mensaje enviado..."));
+            finish();
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(this,
+                    "There is no email client installed.", Toast.LENGTH_SHORT).show();
+        }
     }
 }

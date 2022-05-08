@@ -4,6 +4,7 @@ import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.a3636.Interface3636;
 import com.example.a3636.ShowRestaurantsFound;
 import com.example.a3636.database.DatabaseConnection;
 
@@ -49,28 +50,28 @@ public class FindRestaurantsByTypeOfFoodAndHorary {
                     break;
                 }
             }
-
             //Obtener tipos de comida de cada restaurante
             String IDsRestaurantes[][] = new String[3][3];
 
             IDsRestaurantes = dbConnect.getTypesFoodEachRestaurant();
             int cont = 0;
-            for(int i = 0; i < 3; i++){
-                for(int j = 0; j < 3; j++){
-                    if(idTypeFood == Integer.parseInt(IDsRestaurantes[i][j])){
-                        //Consultar ID de Restaurante
-                        IDRestaurantFound[cont] = dbConnect.getIDRestaurant(String.valueOf(i + 1));
-                        cont++;
+            for(int i = 0; i < IDsRestaurantes.length; i++){
+                for(int j = 0; j < IDsRestaurantes[0].length; j++){
+                    if(IDsRestaurantes[i][j] != null){
+                        if(idTypeFood == Integer.parseInt(IDsRestaurantes[i][j])){
+                            //Consultar ID de Restaurante
+                            IDRestaurantFound[cont] = dbConnect.getIDRestaurant(String.valueOf(i + 1));
+                            cont++;
+                        }
                     }
                 }
             }
             //if para verificar que se encontró al menos un restaurante
             if(IDRestaurantFound[0]!=null){
-                for(int i = 0; i < 3; i++){
-                    if(IDRestaurantFound[i] != null){
+                for(int i = 0; i < IDRestaurantFound.length; i++){
+                    if(IDRestaurantFound[i] != null && !IDRestaurantFound[i].equals("")){
                         //Obtener los dias que los restuarantes no estan cerrados
                         String IDDIa = dbConnect.getDayClosedRestaurant(IDRestaurantFound[i],String.valueOf(dayWeek));
-                        Log.d("IDDia",IDDIa);
                         if(!IDDIa.equals("8")){
                             //Obtener el horario de los restaurantes
                             String schedule[] = dbConnect.getScheduleOfRestaurant(IDRestaurantFound[i],String.valueOf(dayWeek));
@@ -78,7 +79,6 @@ public class FindRestaurantsByTypeOfFoodAndHorary {
                             Log.d("prueba_horario", schedule[0]);
                             String openingTime = schedule[0];
                             String closingTime = schedule[1];
-                            Log.d("prueba", openingTime);
                             if(!(openingTime.equals("") && closingTime.equals(""))){
                                 //Obtener los horarios reales a partir de los IDs
                                 String schedulesReceivedOne = dbConnect.getSchedule(openingTime);
@@ -102,6 +102,7 @@ public class FindRestaurantsByTypeOfFoodAndHorary {
                                         if(timeToReview.after(startTime) && timeToReview.before(finalTime)){
                                             //Obtener datos del restaurante
                                             RestaurantFound[count] = IDRestaurantFound[i];
+                                            Log.e("Restaurante", RestaurantFound[count]);
                                             count++;
                                         }else{
                                             if(countRestaurantFound[0] == 0){

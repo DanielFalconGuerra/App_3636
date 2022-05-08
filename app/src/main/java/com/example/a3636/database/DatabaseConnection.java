@@ -13,10 +13,10 @@ import java.util.ArrayList;
 //10.0.2.2
 
 public class DatabaseConnection {
-    private final String ip = "192.168.0.34";
-    private final String user = "daniel";
-    private final String pss = "1234";
-    private final String db = "demo2";
+    private final String ip = "192.185.188.83";
+    private final String user = "softappe_android";
+    private final String pss = "__Wzd__";
+    private final String db = "softappe_android";
     public Connection CONN()
     {
 
@@ -178,7 +178,7 @@ public class DatabaseConnection {
     }
 
     public String[][] getTypesFoodEachRestaurant(){
-        String idRestaurant [][] = new String[3][3];
+        String idRestaurant [][] = new String[32][32];
         int columnNumber = 0;
         int rowsNumber = 0;
         try {
@@ -784,6 +784,185 @@ public class DatabaseConnection {
             return "Promoción Registrada con éxito";
         } catch(SQLException ex){
             return ex.getMessage();
+        }
+    }
+
+    public String getRestaurantNumberByCity(String IDCity){
+        String numberRestaurants = "";
+        try {
+            Connection conexion=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+db,user ,pss);
+            PreparedStatement ps = conexion.prepareStatement("SELECT COUNT(restaurante) FROM `restaurante` WHERE IDCiudad = " +IDCity);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                numberRestaurants = rs.getString(1);
+            }
+            conexion.close();
+        } catch(SQLException ex){
+            numberRestaurants = ex.getMessage();
+            return numberRestaurants;
+        }
+        return numberRestaurants;
+    }
+
+    public String getCityRestaurant(String IDRestaurante){
+        String IDCiudad = "";
+        try {
+            Connection conexion=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+db,user ,pss);
+            PreparedStatement ps = conexion.prepareStatement("SELECT IDciudad FROM `restaurante` WHERE IDRestaurante = " +IDRestaurante);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                IDCiudad = rs.getString(1);
+            }
+            conexion.close();
+        } catch(SQLException ex){
+            IDCiudad = ex.getMessage();
+            return IDCiudad;
+        }
+        return IDCiudad;
+    }
+
+    public String[] getRestaurantData(String IDRestaurante){
+        String[] data = new String[6];
+        try {
+            Connection conexion=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+db,user ,pss);
+            PreparedStatement ps = conexion.prepareStatement("SELECT Restaurante, Direccion, NumTel, ServicioDomicilio, Reservacion, URLMenu FROM `restaurante` WHERE IDRestaurante = " +IDRestaurante);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                data[0] = rs.getString(1);
+                data[1] = rs.getString(2);
+                data[2] = rs.getString(3);
+                data[3] = rs.getString(4);
+                data[4] = rs.getString(5);
+                data[5] = rs.getString(6);
+            }
+            conexion.close();
+        } catch(SQLException ex){
+            data[0] = ex.getMessage();
+            return data;
+        }
+        return data;
+    }
+
+    public byte[] getLogoRestaurant(String ID) {
+        String bytesImages = "";
+        ResultSet rs = null;
+        byte[] input = null;
+        try {
+            Connection conexion=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+db,user ,pss);
+            PreparedStatement ps = conexion.prepareStatement("select Logo from restaurante where IDRestaurante=?");
+            ps.setString(1, ID);
+            rs = ps.executeQuery();
+            if (rs.next()){
+                input = rs.getBytes(1);
+                return input;
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
+
+    public ArrayList<String[]> getRestaurantsThatSellCoffee(String IDCiudad){
+        ArrayList<String[]> dataAllRestaurant = new ArrayList<String[]>();
+        try {
+            Connection conexion=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+db,user ,pss);
+            PreparedStatement ps = conexion.prepareStatement("select r.IDRestaurante, r.Direccion, r.Restaurante, r.Descripcion, r.NumTel, r.ServicioDomicilio, r.Reservacion from restaurante r, tiporestur t " +
+                    "where r.IDRestaurante = t.IDRestaurante and (t.IDTipocomida1 = 13  or t.IDTipocomida2 = 13 or t.IDTipocomida3 = 13) and r.IDCiudad = ?");
+            ps.setString(1, IDCiudad);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                String dataRestaurant[] = new String[7];
+                dataRestaurant[0] = rs.getString(1);
+                dataRestaurant[1] = rs.getString(2);
+                dataRestaurant[2] = rs.getString(3);
+                dataRestaurant[3] = rs.getString(4);
+                dataRestaurant[4] = rs.getString(5);
+                dataRestaurant[5] = rs.getString(6);
+                dataRestaurant[6] = rs.getString(7);
+                dataAllRestaurant.add(dataRestaurant);
+            }
+            conexion.close();
+            return dataAllRestaurant;
+        } catch(SQLException ex){
+            return dataAllRestaurant;
+        }
+    }
+
+    public ArrayList<String[]> getRestaurantsBar(String IDCiudad){
+        ArrayList<String[]> dataAllRestaurant = new ArrayList<String[]>();
+        try {
+            Connection conexion=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+db,user ,pss);
+            PreparedStatement ps = conexion.prepareStatement("select r.IDRestaurante, r.Direccion, r.Restaurante, r.Descripcion, r.NumTel, r.ServicioDomicilio, r.Reservacion from restaurante r, tiporestur t " +
+                    "where r.IDRestaurante = t.IDRestaurante and (t.IDTipocomida1 = 6  or t.IDTipocomida2 = 6 or t.IDTipocomida3 = 6) and r.IDCiudad = ?");
+            ps.setString(1, IDCiudad);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                String dataRestaurant[] = new String[7];
+                dataRestaurant[0] = rs.getString(1);
+                dataRestaurant[1] = rs.getString(2);
+                dataRestaurant[2] = rs.getString(3);
+                dataRestaurant[3] = rs.getString(4);
+                dataRestaurant[4] = rs.getString(5);
+                dataRestaurant[5] = rs.getString(6);
+                dataRestaurant[6] = rs.getString(7);
+                dataAllRestaurant.add(dataRestaurant);
+            }
+            conexion.close();
+            return dataAllRestaurant;
+        } catch(SQLException ex){
+            return dataAllRestaurant;
+        }
+    }
+    public ArrayList<String[]> getAllRestaurants(String IDCiudad){
+        ArrayList<String[]> dataAllRestaurant = new ArrayList<String[]>();
+        try {
+            Connection conexion=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+db,user ,pss);
+            PreparedStatement ps = conexion.prepareStatement("select r.IDRestaurante, r.Direccion, r.Restaurante, r.Descripcion, r.NumTel, r.ServicioDomicilio, r.Reservacion from restaurante r, tiporestur t " +
+                    "where r.IDRestaurante = t.IDRestaurante and r.IDCiudad = ?");
+            ps.setString(1, IDCiudad);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                String dataRestaurant[] = new String[7];
+                dataRestaurant[0] = rs.getString(1);
+                dataRestaurant[1] = rs.getString(2);
+                dataRestaurant[2] = rs.getString(3);
+                dataRestaurant[3] = rs.getString(4);
+                dataRestaurant[4] = rs.getString(5);
+                dataRestaurant[5] = rs.getString(6);
+                dataRestaurant[6] = rs.getString(7);
+                dataAllRestaurant.add(dataRestaurant);
+            }
+            conexion.close();
+            return dataAllRestaurant;
+        } catch(SQLException ex){
+            return dataAllRestaurant;
+        }
+    }
+
+    public ArrayList<String[]> getAllRestaurantsWithTypeOfFood(String IDCiudad){
+        ArrayList<String[]> dataAllRestaurant = new ArrayList<String[]>();
+        try {
+            Connection conexion=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+db,user ,pss);
+            PreparedStatement ps = conexion.prepareStatement("select r.IDRestaurante, r.Direccion, r.Restaurante, r.Descripcion, r.NumTel, r.ServicioDomicilio, r.Reservacion, tp.Tipocomida from restaurante r, " +
+                    "tiporestur t, tipocomida tp where r.IDRestaurante = t.IDRestaurante and tp.IDComida =t.IDTipocomida1 and r.IDCiudad = ?");
+            ps.setString(1, IDCiudad);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                String dataRestaurant[] = new String[8];
+                dataRestaurant[0] = rs.getString(1);
+                dataRestaurant[1] = rs.getString(2);
+                dataRestaurant[2] = rs.getString(3);
+                dataRestaurant[3] = rs.getString(4);
+                dataRestaurant[4] = rs.getString(5);
+                dataRestaurant[5] = rs.getString(6);
+                dataRestaurant[6] = rs.getString(7);
+                dataRestaurant[7] = rs.getString(8);
+                dataAllRestaurant.add(dataRestaurant);
+            }
+            conexion.close();
+            return dataAllRestaurant;
+        } catch(SQLException ex){
+            return dataAllRestaurant;
         }
     }
 }

@@ -83,7 +83,141 @@
                         android:text="Mostrar Restaurantes añadidos"
                         android:textColor="@color/orange"
                         android:textSize="30sp" />
+                    <TextView
+                        android:id="@+id/newNameRestaurantRegisterTV"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Nombre del restaurante"
+                        android:textColor="@color/yellow"
+                        android:textSize="20sp"
+                        android:visibility="gone"/>
 
+                    <EditText
+                        android:id="@+id/newNameRestaurantRegisterET"
+                        android:layout_width="300dp"
+                        android:layout_height="35dp"
+                        android:layout_gravity="center"
+                        android:layout_marginVertical="5dp"
+                        android:layout_marginTop="50dp"
+                        android:layout_marginBottom="12dp"
+                        android:background="@color/yellowEditText"
+                        android:textColor="@color/black"
+                        android:visibility="gone"/>
+                    <TextView
+                        android:id="@+id/newDescriptionRestaurantRegisterTV"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Descripción del restaurante"
+                        android:textColor="@color/yellow"
+                        android:textSize="20sp"
+                        android:visibility="gone"/>
+
+                    <EditText
+                        android:id="@+id/newDescriptionRestaurantRegisterET"
+                        android:layout_width="300dp"
+                        android:layout_height="35dp"
+                        android:layout_gravity="center"
+                        android:layout_marginVertical="5dp"
+                        android:layout_marginTop="50dp"
+                        android:layout_marginBottom="12dp"
+                        android:background="@color/yellowEditText"
+                        android:textColor="@color/black"
+                        android:visibility="gone"/>
+
+                    <TextView
+                        android:id="@+id/newAddressRestaurantRegisterTV"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Domicilio del restaurante"
+                        android:textColor="@color/yellow"
+                        android:textSize="20sp"
+                        android:visibility="gone"/>
+
+                    <EditText
+                        android:id="@+id/newAddressRestaurantRegisterET"
+                        android:layout_width="300dp"
+                        android:layout_height="35dp"
+                        android:layout_gravity="center"
+                        android:layout_marginVertical="5dp"
+                        android:layout_marginTop="50dp"
+                        android:layout_marginBottom="12dp"
+                        android:background="@color/yellowEditText"
+                        android:textColor="@color/black"
+                        android:visibility="gone"/>
+
+                    <TextView
+                        android:id="@+id/newPhoneRestaurantRegisterTV"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Teléfono del restaurante"
+                        android:textColor="@color/yellow"
+                        android:textSize="20sp"
+                        android:visibility="gone"/>
+
+                    <EditText
+                        android:id="@+id/newPhoneRestaurantRegisterET"
+                        android:layout_width="300dp"
+                        android:layout_height="35dp"
+                        android:layout_gravity="center"
+                        android:layout_marginVertical="5dp"
+                        android:layout_marginTop="50dp"
+                        android:layout_marginBottom="12dp"
+                        android:background="@color/yellowEditText"
+                        android:textColor="@color/black"
+                        android:visibility="gone"/>
+                    <TextView
+                        android:id="@+id/mailToRestaurantRegisterTV"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Correo"
+                        android:textColor="@color/yellow"
+                        android:textSize="20sp"
+                        android:visibility="gone"/>
+
+                    <EditText
+                        android:id="@+id/mailToRestaurantRegisterET"
+                        android:layout_width="300dp"
+                        android:layout_height="35dp"
+                        android:layout_gravity="center"
+                        android:layout_marginVertical="5dp"
+                        android:layout_marginTop="50dp"
+                        android:layout_marginBottom="12dp"
+                        android:background="@color/yellowEditText"
+                        android:textColor="@color/black"
+                        android:visibility="gone"/>
+                    <CheckBox
+                        android:id="@+id/homeServiceRegisterCB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/yellow"
+                        android:textSize="25sp"
+                        android:text="Servicio a domicilio"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:visibility="gone"/>
+
+                    <CheckBox
+                        android:id="@+id/bookingRegisterCB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/yellow"
+                        android:textSize="25sp"
+                        android:text="Reserva"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:visibility="gone"/>
+                    <Button
+                        android:id="@+id/btnRegisterNewRestaurant"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Enviar registro"
+                        android:layout_gravity="center"
+                        android:visibility="gone"/>
                     <Spinner
                         android:id="@+id/spinnerRestaurantBusiness"
                         android:layout_width="wrap_content"

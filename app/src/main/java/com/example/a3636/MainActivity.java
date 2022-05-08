@@ -38,6 +38,7 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.example.a3636.database.DatabaseConnection;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -54,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         TextView txtSearchingAddress = findViewById(R.id.txtSearchingAddress);
         LottieAnimationView imageAnimationLocation = findViewById(R.id.imageAnimationLocation);
+        DatabaseConnection connection = new DatabaseConnection();
+        connection.CONN();
         imageAnimationLocation.addAnimatorListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
@@ -93,30 +96,76 @@ public class MainActivity extends AppCompatActivity {
                             ciudad = textElements[2].substring(index);
 
                             if(ciudad.equals("Irapuato")){
-                                ((MyLocation)getApplication()).setLocation("Irapuato");
-                                Intent showCityRestaurants = new Intent(MainActivity.this, Interface3636.class);
-                                showCityRestaurants.putExtra("userName","not logged in");
-                                startActivity(showCityRestaurants);
+                                connection.CONN();
+                                String numberRestaurants = connection.getRestaurantNumberByCity("3");
+                                if(!numberRestaurants.equals("0")) {
+                                    ((MyLocation) getApplication()).setLocation("Irapuato");
+                                    Intent showCityRestaurants = new Intent(MainActivity.this, Interface3636.class);
+                                    showCityRestaurants.putExtra("userName", "not logged in");
+                                    startActivity(showCityRestaurants);
+                                }else{
+                                    messageError();
+                                }
                             }else
                             if(ciudad.equals("Guanajuato")){
-                                ((MyLocation)getApplication()).setLocation("Guanajuato");
-                                elementsError();
+                                connection.CONN();
+                                String numberRestaurants = connection.getRestaurantNumberByCity("1");
+                                if(!numberRestaurants.equals("0")) {
+                                    ((MyLocation) getApplication()).setLocation("Guanajuato");
+                                    Intent showCityRestaurants = new Intent(MainActivity.this, Interface3636.class);
+                                    showCityRestaurants.putExtra("userName", "not logged in");
+                                    startActivity(showCityRestaurants);
+                                }else{
+                                    messageError();
+                                }
                             }else
                             if(ciudad.equals("León")){
-                                ((MyLocation)getApplication()).setLocation("León");
-                                elementsError();
+                                connection.CONN();
+                                String numberRestaurants = connection.getRestaurantNumberByCity("2");
+                                if(!numberRestaurants.equals("0")) {
+                                    ((MyLocation) getApplication()).setLocation("León");
+                                    Intent showCityRestaurants = new Intent(MainActivity.this, Interface3636.class);
+                                    showCityRestaurants.putExtra("userName", "not logged in");
+                                    startActivity(showCityRestaurants);
+                                }else{
+                                    messageError();
+                                }
                             }else
                             if(ciudad.equals("Celaya")){
-                                ((MyLocation)getApplication()).setLocation("Celaya");
-                                elementsError();
+                                connection.CONN();
+                                String numberRestaurants = connection.getRestaurantNumberByCity("4");
+                                if(!numberRestaurants.equals("0")) {
+                                    ((MyLocation) getApplication()).setLocation("Celaya");
+                                    Intent showCityRestaurants = new Intent(MainActivity.this, Interface3636.class);
+                                    showCityRestaurants.putExtra("userName", "not logged in");
+                                    startActivity(showCityRestaurants);
+                                }else{
+                                    messageError();
+                                }
                             }else
                             if(ciudad.equals("Chihuahua")){
-                                ((MyLocation)getApplication()).setLocation("Chihuahua");
-                                elementsError();
+                                connection.CONN();
+                                String numberRestaurants = connection.getRestaurantNumberByCity("5");
+                                if(!numberRestaurants.equals("0")) {
+                                    ((MyLocation) getApplication()).setLocation("Chihuahua");
+                                    Intent showCityRestaurants = new Intent(MainActivity.this, Interface3636.class);
+                                    showCityRestaurants.putExtra("userName", "not logged in");
+                                    startActivity(showCityRestaurants);
+                                }else{
+                                    messageError();
+                                }
                             }else
-                            if(ciudad.equals("Juarez")) {
-                                ((MyLocation)getApplication()).setLocation("Juarez");
-                                elementsError();
+                            if(ciudad.equals("Juárez")) {
+                                connection.CONN();
+                                String numberRestaurants = connection.getRestaurantNumberByCity("6");
+                                if(!numberRestaurants.equals("0")) {
+                                    ((MyLocation) getApplication()).setLocation("Juárez");
+                                    Intent showCityRestaurants = new Intent(MainActivity.this, Interface3636.class);
+                                    showCityRestaurants.putExtra("userName", "not logged in");
+                                    startActivity(showCityRestaurants);
+                                }else{
+                                    messageError();
+                                }
                             }else {
                                 elementsError();
                                 btnSearch.setVisibility(View.GONE);
@@ -227,10 +276,11 @@ public class MainActivity extends AppCompatActivity {
         layoutButton.addView(tvSelectSpinner);
         layout.addView(layoutButton);
         /**/
+        DatabaseConnection databaseConnection = new DatabaseConnection();
         LinearLayout layout = findViewById(R.id.layoutError);
         layout.setVisibility(View.VISIBLE);
         Spinner spinnerCiudad = findViewById(R.id.spinnerCiudad);
-        String cities[] = {"Seleccione la ciudad", "Irapuato", "Guanajuato", "León", "Celaya", "Chihuahua", "Juarez"};
+        String cities[] = {"Seleccione la ciudad", "Irapuato", "Guanajuato", "León", "Celaya", "Chihuahua", "Juárez"};
         ArrayAdapter<CharSequence> adapter= new ArrayAdapter<>(this, R.layout.spinner_text_style, cities);
         adapter.setDropDownViewResource(R.layout.spinner_item_style);
         spinnerCiudad.setAdapter(adapter);
@@ -241,25 +291,76 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this,"Debe seleccionar una ciudad antes de continuar", Toast.LENGTH_LONG).show();
             }else{
                 if(city.equals("Irapuato")){
-                    ((MyLocation)getApplication()).setLocation("Irapuato");
-                    Intent showCityRestaurants = new Intent(this, Interface3636.class);
-                    showCityRestaurants.putExtra("userName","not logged in");
-                    startActivity(showCityRestaurants);
+                    databaseConnection.CONN();
+                    String numberRestaurants = databaseConnection.getRestaurantNumberByCity("3");
+                    if(!numberRestaurants.equals("0")) {
+                        ((MyLocation) getApplication()).setLocation("Irapuato");
+                        Intent showCityRestaurants = new Intent(this, Interface3636.class);
+                        showCityRestaurants.putExtra("userName", "not logged in");
+                        startActivity(showCityRestaurants);
+                    }else{
+                        messageError();
+                    }
                 }else
                 if(city.equals("León")){
-                    messageError();
+                    databaseConnection.CONN();
+                    String numberRestaurants = databaseConnection.getRestaurantNumberByCity("2");
+                    if(!numberRestaurants.equals("0")) {
+                        ((MyLocation) getApplication()).setLocation("León");
+                        Intent showCityRestaurants = new Intent(this, Interface3636.class);
+                        showCityRestaurants.putExtra("userName", "not logged in");
+                        startActivity(showCityRestaurants);
+                    }else{
+                        messageError();
+                    }
                 }else
                 if(city.equals("Guanajuato")){
-                    messageError();
+                    databaseConnection.CONN();
+                    String numberRestaurants = databaseConnection.getRestaurantNumberByCity("1");
+                    if(!numberRestaurants.equals("0")) {
+                        ((MyLocation) getApplication()).setLocation("Guanajuato");
+                        Intent showCityRestaurants = new Intent(this, Interface3636.class);
+                        showCityRestaurants.putExtra("userName", "not logged in");
+                        startActivity(showCityRestaurants);
+                    }else{
+                        messageError();
+                    }
                 }else
                 if(city.equals("Chihuahua")){
-                    messageError();
+                    databaseConnection.CONN();
+                    String numberRestaurants = databaseConnection.getRestaurantNumberByCity("5");
+                    if(!numberRestaurants.equals("0")) {
+                        ((MyLocation) getApplication()).setLocation("Chihuahua");
+                        Intent showCityRestaurants = new Intent(this, Interface3636.class);
+                        showCityRestaurants.putExtra("userName", "not logged in");
+                        startActivity(showCityRestaurants);
+                    }else{
+                        messageError();
+                    }
                 }else
-                if(city.equals("Juarez")){
-                    messageError();
+                if(city.equals("Juárez")){
+                    databaseConnection.CONN();
+                    String numberRestaurants = databaseConnection.getRestaurantNumberByCity("6");
+                    if(!numberRestaurants.equals("0")) {
+                        ((MyLocation) getApplication()).setLocation("Juárez");
+                        Intent showCityRestaurants = new Intent(this, Interface3636.class);
+                        showCityRestaurants.putExtra("userName", "not logged in");
+                        startActivity(showCityRestaurants);
+                    }else{
+                        messageError();
+                    }
                 }else
                 if(city.equals("Celaya")){
-                    messageError();
+                    databaseConnection.CONN();
+                    String numberRestaurants = databaseConnection.getRestaurantNumberByCity("4");
+                    if(!numberRestaurants.equals("0")) {
+                        ((MyLocation) getApplication()).setLocation("Celaya");
+                        Intent showCityRestaurants = new Intent(this, Interface3636.class);
+                        showCityRestaurants.putExtra("userName", "not logged in");
+                        startActivity(showCityRestaurants);
+                    }else{
+                        messageError();
+                    }
                 }
             }
         });
@@ -360,7 +461,7 @@ public class MainActivity extends AppCompatActivity {
     public void messageError(){
         new AlertDialog.Builder(this)
                 .setTitle("Error")
-                .setMessage("No hay restaurantes registrados en  esta ciudad. \nSeleccione una ciuda diferente.")
+                .setMessage("No hay restaurantes registrados en  esta ciudad. \nSeleccione una ciudad diferente.")
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
