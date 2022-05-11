@@ -43,6 +43,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
 public class MainActivity extends AppCompatActivity {
     TextView tv1;
     TextView latitud,longitud;
@@ -187,6 +192,7 @@ public class MainActivity extends AppCompatActivity {
                     btnTest.setOnClickListener(view -> {
                         DatabaseConnection connection = new DatabaseConnection();
                         connection.CONN();
+
                         //String inf = connection.getDayClosedRestaurant("1","1");
                         //ArrayList<String[]> test = connection.getRestaurantInformationByUserAdmin("17");
                         /*if(test == null || test.size()==0){

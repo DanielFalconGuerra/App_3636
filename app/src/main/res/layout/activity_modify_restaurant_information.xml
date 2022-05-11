@@ -327,14 +327,15 @@
                         android:background="@color/yellowEditText"
                         android:textColor="@color/black"
                         android:layout_marginBottom="12dp"
-                        android:visibility="gone"/>
+                        android:visibility="gone"
+                        android:enabled="false"/>
 
                     <TextView
                         android:id="@+id/newLinkBookingTV"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="URL para servicio a domicilio"
+                        android:text="URL para Reservacion"
                         android:textColor="@color/yellow"
                         android:textSize="20sp"
                         android:visibility="gone"/>
@@ -347,7 +348,8 @@
                         android:background="@color/yellowEditText"
                         android:textColor="@color/black"
                         android:layout_marginBottom="12dp"
-                        android:visibility="gone"/>
+                        android:visibility="gone"
+                        android:enabled="false"/>
 
                     <Button
                         android:id="@+id/btnUpdateInformationRestaurant"

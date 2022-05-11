@@ -299,7 +299,7 @@ public class ModifyRestaurantInformation extends AppCompatActivity {
                                 newDescriptionRestaurantET.setText(restaurantsAdded.get(IDRestaurant)[3]);
                                 newPhoneRestaurantET.setText(restaurantsAdded.get(IDRestaurant)[4]);
 
-                                if(!restaurantsAdded.get(IDRestaurant)[5].equals("'NO'")){
+                                if(!restaurantsAdded.get(IDRestaurant)[5].equals("'NO'")||!restaurantsAdded.get(IDRestaurant)[5].equals("NO")){
                                     newLinkHomeServiceTV.setVisibility(View.VISIBLE);
                                     newLinkHomeServiceET.setVisibility(View.VISIBLE);
                                     if(!restaurantsAdded.get(IDRestaurant)[5].equals("SI")){
@@ -307,7 +307,7 @@ public class ModifyRestaurantInformation extends AppCompatActivity {
                                     }
                                 }
 
-                                if(!restaurantsAdded.get(IDRestaurant)[6].equals("'NO'")){
+                                if(!restaurantsAdded.get(IDRestaurant)[6].equals("'NO'")||!restaurantsAdded.get(IDRestaurant)[6].equals("NO")){
                                     newLinkBookingTV.setVisibility(View.VISIBLE);
                                     newLinkBookingET.setVisibility(View.VISIBLE);
                                     if(!restaurantsAdded.get(IDRestaurant)[6].equals("SI")){

@@ -83,6 +83,11 @@ public class Administrator extends AppCompatActivity {
         CheckBox stateChihuahuaCB = findViewById(R.id.stateChihuahuaCB);
         CheckBox stateGtoCB = findViewById(R.id.stateGtoCB);
 
+        TextView newLinkHomeServiceAdminTV = findViewById(R.id.newLinkHomeServiceAdminTV);
+        EditText newLinkHomeOfficeAdminET = findViewById(R.id.newLinkHomeOfficeAdminET);
+        TextView newLinkBookingAdminTV = findViewById(R.id.newLinkBookingAdminTV);
+        EditText newLinkBookingAdminET = findViewById(R.id.newLinkBookingAdminET);
+
         btnRegisterRestaurant.setBackgroundColor(Color.rgb(255, 128, 0));
 
         stateGtoCB.setChecked(true);
@@ -159,6 +164,31 @@ public class Administrator extends AppCompatActivity {
             CelayaCB.setChecked(false);
             ChihuahuaCB.setChecked(false);
         });
+        final int[] cont = {0};
+        homeServiceCB.setOnClickListener(view -> {
+            if(cont[0] == 0){
+                newLinkHomeServiceAdminTV.setVisibility(View.VISIBLE);
+                newLinkHomeOfficeAdminET.setVisibility(View.VISIBLE);
+                cont[0] = 1;
+            }else{
+                newLinkHomeServiceAdminTV.setVisibility(View.GONE);
+                newLinkHomeOfficeAdminET.setVisibility(View.GONE);
+                cont[0] = 0;
+            }
+        });
+
+        final int[] contBooking = {0};
+        bookingCB.setOnClickListener(view -> {
+            if(contBooking[0] == 0){
+                newLinkBookingAdminTV.setVisibility(View.VISIBLE);
+                newLinkBookingAdminET.setVisibility(View.VISIBLE);
+                contBooking[0] = 1;
+            }else{
+                newLinkBookingAdminTV.setVisibility(View.GONE);
+                newLinkBookingAdminET.setVisibility(View.GONE);
+                contBooking[0] = 0;
+            }
+        });
 
         try{
             connection.CONN();
@@ -212,12 +242,18 @@ public class Administrator extends AppCompatActivity {
                                 ciudad = "6";
                             }else
                                 ciudad = "0";
+                            //String linkHomeOffice = ".";
+                            //String linkBooking = ".";
                             if(homeServiceCB.isChecked()){
-                                homeService = "SI";
-                            }
+                                //homeService = "SI";
+                                homeService = newLinkHomeOfficeAdminET.getText().toString();
+                            }else
+                                homeService = "NO";
                             if(bookingCB.isChecked()){
-                                booking = "SI";
-                            }
+                                //booking = "SI";
+                                booking = newLinkBookingAdminET.getText().toString();
+                            }else
+                                booking = "NO";
                             String userAdministratorRestaurant = spinnerUserAdminRestaurantBusiness.getSelectedItem().toString();
                             connection.CONN();
                             String IDUser = connection.getIDUser(userAdministratorRestaurant);

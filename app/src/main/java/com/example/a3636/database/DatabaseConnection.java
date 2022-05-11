@@ -17,6 +17,10 @@ public class DatabaseConnection {
     private final String user = "softappe_android";
     private final String pss = "__Wzd__";
     private final String db = "softappe_android";
+    /*private final String ip = "192.168.0.34";
+    private final String user = "daniel";
+    private final String pss = "1234";
+    private final String db = "demo2";*/
     public Connection CONN()
     {
 

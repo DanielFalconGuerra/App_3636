@@ -27,6 +27,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -56,12 +60,17 @@ public class Interface3636 extends AppCompatActivity {
         ArrayList<String[]> dataBar = null;
         int[] cont = {0};
         if(location.equals("León")){
-            connection.CONN();
-            dataCoffee = connection.getRestaurantsThatSellCoffee("2");
-            connection.CONN();
-            dataRest = connection.getAllRestaurants("2");
-            connection.CONN();
-            dataBar = connection.getRestaurantsBar("2");
+            try {
+                connection.CONN();
+                dataCoffee = connection.getRestaurantsThatSellCoffee("2");
+                connection.CONN();
+                dataRest = connection.getAllRestaurants("2");
+                connection.CONN();
+                dataBar = connection.getRestaurantsBar("2");
+
+            }catch (Exception e){
+                Toast.makeText(this,"Error", Toast.LENGTH_LONG).show();
+            }
         }
         String userName = getIntent().getStringExtra("userName");
 
@@ -307,12 +316,16 @@ public class Interface3636 extends AppCompatActivity {
                    //availabilityText.setText(CostillaWinebarlechon.getAvailabilityText());
                    //Obtener imagen de restaurante
                    String IDRestaurant = finalDataRest.get(cont[0])[0];
-                   byte[] logo = connection.getLogoRestaurant(IDRestaurant);
-                   if(logo != null){
-                       Bitmap bitmap = BitmapFactory.decodeByteArray(logo, 0, logo.length);
-                       logoRestaurant.setImageBitmap(bitmap);
-                   }else{
-                       logoRestaurant.setImageResource(R.drawable.iconscubiertos);
+                   try {
+                       byte[] logo = connection.getLogoRestaurant(IDRestaurant);
+                       if(logo != null){
+                           Bitmap bitmap = BitmapFactory.decodeByteArray(logo, 0, logo.length);
+                           logoRestaurant.setImageBitmap(bitmap);
+                       }else{
+                           logoRestaurant.setImageResource(R.drawable.iconscubiertos);
+                       }
+                   }catch (Exception e) {
+                       e.printStackTrace();
                    }
                }else{
                    Toast.makeText(this,"No hay restaurantes de este tipo registrados",Toast.LENGTH_SHORT).show();
@@ -365,13 +378,17 @@ public class Interface3636 extends AppCompatActivity {
                         //availabilityText.setText(CostillaWinebarlechon.getAvailabilityText());
                         //Obtener imagen de restaurante
                         String IDRestaurant = finalData.get(cont[0])[0];
-                        byte[] logo = connection.getLogoRestaurant(IDRestaurant);
-                    if(logo != null){
-                        Bitmap bitmap = BitmapFactory.decodeByteArray(logo, 0, logo.length);
-                        logoRestaurant.setImageBitmap(bitmap);
-                    }else{
-                        logoRestaurant.setImageResource(R.drawable.iconscubiertos);
-                    }
+                        try {
+                            byte[] logo = connection.getLogoRestaurant(IDRestaurant);
+                            if(logo != null){
+                                Bitmap bitmap = BitmapFactory.decodeByteArray(logo, 0, logo.length);
+                                logoRestaurant.setImageBitmap(bitmap);
+                            }else{
+                                logoRestaurant.setImageResource(R.drawable.iconscubiertos);
+                            }
+                        }catch (Exception e) {
+                            e.printStackTrace();
+                        }
                 }else{
                     Toast.makeText(this,"No hay restaurantes de este tipo registrados",Toast.LENGTH_SHORT).show();
                     nameText.setVisibility(View.INVISIBLE);
@@ -419,12 +436,16 @@ public class Interface3636 extends AppCompatActivity {
                    //availabilityText.setText(CostillaWinebarlechon.getAvailabilityText());
                    //Obtener imagen de restaurante
                    String IDRestaurant = finalDataBar.get(cont[0])[0];
-                   byte[] logo = connection.getLogoRestaurant(IDRestaurant);
-                   if(logo != null){
-                       Bitmap bitmap = BitmapFactory.decodeByteArray(logo, 0, logo.length);
-                       logoRestaurant.setImageBitmap(bitmap);
-                   }else{
-                       logoRestaurant.setImageResource(R.drawable.iconscubiertos);
+                   try {
+                       byte[] logo = connection.getLogoRestaurant(IDRestaurant);
+                       if(logo != null){
+                           Bitmap bitmap = BitmapFactory.decodeByteArray(logo, 0, logo.length);
+                           logoRestaurant.setImageBitmap(bitmap);
+                       }else{
+                           logoRestaurant.setImageResource(R.drawable.iconscubiertos);
+                       }
+                   }catch (Exception e) {
+                       e.printStackTrace();
                    }
                 }else{
                     Toast.makeText(this,"No hay restaurantes de este tipo registrados",Toast.LENGTH_SHORT).show();
@@ -484,12 +505,16 @@ public class Interface3636 extends AppCompatActivity {
                         //availabilityText.setText(CostillaWinebarlechon.getAvailabilityText());
                         //Obtener imagen de restaurante
                         String IDRestaurant = finalDataRest.get(cont[0])[0];
-                        byte[] logo = connection.getLogoRestaurant(IDRestaurant);
-                        if(logo != null){
-                            Bitmap bitmap = BitmapFactory.decodeByteArray(logo, 0, logo.length);
-                            logoRestaurant.setImageBitmap(bitmap);
-                        }else{
-                            logoRestaurant.setImageResource(R.drawable.iconscubiertos);
+                        try {
+                            byte[] logo = connection.getLogoRestaurant(IDRestaurant);
+                            if(logo != null){
+                                Bitmap bitmap = BitmapFactory.decodeByteArray(logo, 0, logo.length);
+                                logoRestaurant.setImageBitmap(bitmap);
+                            }else{
+                                logoRestaurant.setImageResource(R.drawable.iconscubiertos);
+                            }
+                        }catch (Exception e) {
+                            e.printStackTrace();
                         }
                         cont[0] = finalDataRest.size() - 1;
                     }else{
@@ -500,12 +525,16 @@ public class Interface3636 extends AppCompatActivity {
                         //availabilityText.setText(CostillaWinebarlechon.getAvailabilityText());
                         //Obtener imagen de restaurante
                         String IDRestaurant = finalDataRest.get(cont[0])[0];
-                        byte[] logo = connection.getLogoRestaurant(IDRestaurant);
-                        if(logo != null){
-                            Bitmap bitmap = BitmapFactory.decodeByteArray(logo, 0, logo.length);
-                            logoRestaurant.setImageBitmap(bitmap);
-                        }else{
-                            logoRestaurant.setImageResource(R.drawable.iconscubiertos);
+                        try {
+                            byte[] logo = connection.getLogoRestaurant(IDRestaurant);
+                            if(logo != null){
+                                Bitmap bitmap = BitmapFactory.decodeByteArray(logo, 0, logo.length);
+                                logoRestaurant.setImageBitmap(bitmap);
+                            }else{
+                                logoRestaurant.setImageResource(R.drawable.iconscubiertos);
+                            }
+                        }catch (Exception e) {
+                            e.printStackTrace();
                         }
 
                         cont[0]--;
@@ -534,12 +563,16 @@ public class Interface3636 extends AppCompatActivity {
                         //availabilityText.setText(CostillaWinebarlechon.getAvailabilityText());
                         //Obtener imagen de restaurante
                         String IDRestaurant = finalData.get(cont[0])[0];
-                        byte[] logo = connection.getLogoRestaurant(IDRestaurant);
-                        if(logo != null){
-                            Bitmap bitmap = BitmapFactory.decodeByteArray(logo, 0, logo.length);
-                            logoRestaurant.setImageBitmap(bitmap);
-                        }else{
-                            logoRestaurant.setImageResource(R.drawable.iconscubiertos);
+                        try {
+                            byte[] logo = connection.getLogoRestaurant(IDRestaurant);
+                            if(logo != null){
+                                Bitmap bitmap = BitmapFactory.decodeByteArray(logo, 0, logo.length);
+                                logoRestaurant.setImageBitmap(bitmap);
+                            }else{
+                                logoRestaurant.setImageResource(R.drawable.iconscubiertos);
+                            }
+                        }catch (Exception e) {
+                            e.printStackTrace();
                         }
                         cont[0] = finalData.size() - 1;
                     }else{
@@ -550,12 +583,16 @@ public class Interface3636 extends AppCompatActivity {
                         //availabilityText.setText(CostillaWinebarlechon.getAvailabilityText());
                         //Obtener imagen de restaurante
                         String IDRestaurant = finalData.get(cont[0])[0];
-                        byte[] logo = connection.getLogoRestaurant(IDRestaurant);
-                        if(logo != null){
-                            Bitmap bitmap = BitmapFactory.decodeByteArray(logo, 0, logo.length);
-                            logoRestaurant.setImageBitmap(bitmap);
-                        }else{
-                            logoRestaurant.setImageResource(R.drawable.iconscubiertos);
+                        try {
+                            byte[] logo = connection.getLogoRestaurant(IDRestaurant);
+                            if(logo != null){
+                                Bitmap bitmap = BitmapFactory.decodeByteArray(logo, 0, logo.length);
+                                logoRestaurant.setImageBitmap(bitmap);
+                            }else{
+                                logoRestaurant.setImageResource(R.drawable.iconscubiertos);
+                            }
+                        }catch (Exception e) {
+                            e.printStackTrace();
                         }
 
                         cont[0]--;
@@ -607,12 +644,16 @@ public class Interface3636 extends AppCompatActivity {
                         //availabilityText.setText(CostillaWinebarlechon.getAvailabilityText());
                         //Obtener imagen de restaurante
                         String IDRestaurant = finalDataBar.get(cont[0])[0];
-                        byte[] logo = connection.getLogoRestaurant(IDRestaurant);
-                        if(logo != null){
-                            Bitmap bitmap = BitmapFactory.decodeByteArray(logo, 0, logo.length);
-                            logoRestaurant.setImageBitmap(bitmap);
-                        }else{
-                            logoRestaurant.setImageResource(R.drawable.iconscubiertos);
+                        try {
+                            byte[] logo = connection.getLogoRestaurant(IDRestaurant);
+                            if(logo != null){
+                                Bitmap bitmap = BitmapFactory.decodeByteArray(logo, 0, logo.length);
+                                logoRestaurant.setImageBitmap(bitmap);
+                            }else{
+                                logoRestaurant.setImageResource(R.drawable.iconscubiertos);
+                            }
+                        }catch (Exception e) {
+                            e.printStackTrace();
                         }
                         cont[0] = finalDataBar.size() - 1;
                     }else{
@@ -623,12 +664,16 @@ public class Interface3636 extends AppCompatActivity {
                         //availabilityText.setText(CostillaWinebarlechon.getAvailabilityText());
                         //Obtener imagen de restaurante
                         String IDRestaurant = finalDataBar.get(cont[0])[0];
-                        byte[] logo = connection.getLogoRestaurant(IDRestaurant);
-                        if(logo != null){
-                            Bitmap bitmap = BitmapFactory.decodeByteArray(logo, 0, logo.length);
-                            logoRestaurant.setImageBitmap(bitmap);
-                        }else{
-                            logoRestaurant.setImageResource(R.drawable.iconscubiertos);
+                        try {
+                            byte[] logo = connection.getLogoRestaurant(IDRestaurant);
+                            if(logo != null){
+                                Bitmap bitmap = BitmapFactory.decodeByteArray(logo, 0, logo.length);
+                                logoRestaurant.setImageBitmap(bitmap);
+                            }else{
+                                logoRestaurant.setImageResource(R.drawable.iconscubiertos);
+                            }
+                        }catch (Exception e) {
+                            e.printStackTrace();
                         }
 
                         cont[0]--;
@@ -682,12 +727,16 @@ public class Interface3636 extends AppCompatActivity {
                         //availabilityText.setText(CostillaWinebarlechon.getAvailabilityText());
                         //Obtener imagen de restaurante
                         String IDRestaurant = finalDataRest.get(cont[0])[0];
-                        byte[] logo = connection.getLogoRestaurant(IDRestaurant);
-                        if(logo != null){
-                            Bitmap bitmap = BitmapFactory.decodeByteArray(logo, 0, logo.length);
-                            logoRestaurant.setImageBitmap(bitmap);
-                        }else{
-                            logoRestaurant.setImageResource(R.drawable.iconscubiertos);
+                        try {
+                            byte[] logo = connection.getLogoRestaurant(IDRestaurant);
+                            if(logo != null){
+                                Bitmap bitmap = BitmapFactory.decodeByteArray(logo, 0, logo.length);
+                                logoRestaurant.setImageBitmap(bitmap);
+                            }else{
+                                logoRestaurant.setImageResource(R.drawable.iconscubiertos);
+                            }
+                        }catch (Exception e) {
+                            e.printStackTrace();
                         }
                         cont[0] = 0;
                     }else{
@@ -698,12 +747,16 @@ public class Interface3636 extends AppCompatActivity {
                         //availabilityText.setText(CostillaWinebarlechon.getAvailabilityText());
                         //Obtener imagen de restaurante
                         String IDRestaurant = finalDataRest.get(cont[0])[0];
-                        byte[] logo = connection.getLogoRestaurant(IDRestaurant);
-                        if(logo != null){
-                            Bitmap bitmap = BitmapFactory.decodeByteArray(logo, 0, logo.length);
-                            logoRestaurant.setImageBitmap(bitmap);
-                        }else{
-                            logoRestaurant.setImageResource(R.drawable.iconscubiertos);
+                        try {
+                            byte[] logo = connection.getLogoRestaurant(IDRestaurant);
+                            if(logo != null){
+                                Bitmap bitmap = BitmapFactory.decodeByteArray(logo, 0, logo.length);
+                                logoRestaurant.setImageBitmap(bitmap);
+                            }else{
+                                logoRestaurant.setImageResource(R.drawable.iconscubiertos);
+                            }
+                        }catch (Exception e) {
+                            e.printStackTrace();
                         }
 
                         cont[0]++;
@@ -732,12 +785,16 @@ public class Interface3636 extends AppCompatActivity {
                         //availabilityText.setText(CostillaWinebarlechon.getAvailabilityText());
                         //Obtener imagen de restaurante
                         String IDRestaurant = finalData.get(cont[0])[0];
-                        byte[] logo = connection.getLogoRestaurant(IDRestaurant);
-                        if(logo != null){
-                            Bitmap bitmap = BitmapFactory.decodeByteArray(logo, 0, logo.length);
-                            logoRestaurant.setImageBitmap(bitmap);
-                        }else{
-                            logoRestaurant.setImageResource(R.drawable.iconscubiertos);
+                        try {
+                            byte[] logo = connection.getLogoRestaurant(IDRestaurant);
+                            if(logo != null){
+                                Bitmap bitmap = BitmapFactory.decodeByteArray(logo, 0, logo.length);
+                                logoRestaurant.setImageBitmap(bitmap);
+                            }else{
+                                logoRestaurant.setImageResource(R.drawable.iconscubiertos);
+                            }
+                        }catch (Exception e) {
+                            e.printStackTrace();
                         }
                         cont[0] = 0;
                     }else{
@@ -748,12 +805,16 @@ public class Interface3636 extends AppCompatActivity {
                         //availabilityText.setText(CostillaWinebarlechon.getAvailabilityText());
                         //Obtener imagen de restaurante
                         String IDRestaurant = finalData.get(cont[0])[0];
-                        byte[] logo = connection.getLogoRestaurant(IDRestaurant);
-                        if(logo != null){
-                            Bitmap bitmap = BitmapFactory.decodeByteArray(logo, 0, logo.length);
-                            logoRestaurant.setImageBitmap(bitmap);
-                        }else{
-                            logoRestaurant.setImageResource(R.drawable.iconscubiertos);
+                        try {
+                            byte[] logo = connection.getLogoRestaurant(IDRestaurant);
+                            if(logo != null){
+                                Bitmap bitmap = BitmapFactory.decodeByteArray(logo, 0, logo.length);
+                                logoRestaurant.setImageBitmap(bitmap);
+                            }else{
+                                logoRestaurant.setImageResource(R.drawable.iconscubiertos);
+                            }
+                        }catch (Exception e) {
+                            e.printStackTrace();
                         }
 
                         cont[0]++;
@@ -805,12 +866,16 @@ public class Interface3636 extends AppCompatActivity {
                         //availabilityText.setText(CostillaWinebarlechon.getAvailabilityText());
                         //Obtener imagen de restaurante
                         String IDRestaurant = finalDataBar.get(cont[0])[0];
-                        byte[] logo = connection.getLogoRestaurant(IDRestaurant);
-                        if(logo != null){
-                            Bitmap bitmap = BitmapFactory.decodeByteArray(logo, 0, logo.length);
-                            logoRestaurant.setImageBitmap(bitmap);
-                        }else{
-                            logoRestaurant.setImageResource(R.drawable.iconscubiertos);
+                        try {
+                            byte[] logo = connection.getLogoRestaurant(IDRestaurant);
+                            if(logo != null){
+                                Bitmap bitmap = BitmapFactory.decodeByteArray(logo, 0, logo.length);
+                                logoRestaurant.setImageBitmap(bitmap);
+                            }else{
+                                logoRestaurant.setImageResource(R.drawable.iconscubiertos);
+                            }
+                        }catch (Exception e) {
+                            e.printStackTrace();
                         }
                         cont[0] = 0;
                     }else{
@@ -821,12 +886,16 @@ public class Interface3636 extends AppCompatActivity {
                         //availabilityText.setText(CostillaWinebarlechon.getAvailabilityText());
                         //Obtener imagen de restaurante
                         String IDRestaurant = finalDataBar.get(cont[0])[0];
-                        byte[] logo = connection.getLogoRestaurant(IDRestaurant);
-                        if(logo != null){
-                            Bitmap bitmap = BitmapFactory.decodeByteArray(logo, 0, logo.length);
-                            logoRestaurant.setImageBitmap(bitmap);
-                        }else{
-                            logoRestaurant.setImageResource(R.drawable.iconscubiertos);
+                        try {
+                            byte[] logo = connection.getLogoRestaurant(IDRestaurant);
+                            if(logo != null){
+                                Bitmap bitmap = BitmapFactory.decodeByteArray(logo, 0, logo.length);
+                                logoRestaurant.setImageBitmap(bitmap);
+                            }else{
+                                logoRestaurant.setImageResource(R.drawable.iconscubiertos);
+                            }
+                        }catch (Exception e) {
+                            e.printStackTrace();
                         }
 
                         cont[0]++;
@@ -862,8 +931,27 @@ public class Interface3636 extends AppCompatActivity {
         TextView availabilityBusiness = new TextView(this);
         ImageView logoBusiness = new ImageView(this);
         Button btnShowMenu = new Button(this);
+
+        LinearLayout layoutBTN = new LinearLayout(this);
+        layoutBTN.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        layoutBTN.setGravity(Gravity.CENTER);
+        btnShowMenu.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        btnShowMenu.setGravity(Gravity.CENTER);
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) btnShowMenu.getLayoutParams();
+        params.setMarginStart(20);
         Button booking = new Button(this);
+        booking.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        booking.setGravity(Gravity.CENTER);
+        LinearLayout.LayoutParams paramsBooking = (LinearLayout.LayoutParams) booking.getLayoutParams();
+        paramsBooking.setMarginStart(20);
         Button homeService = new Button(this);
+        homeService.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        homeService.setGravity(Gravity.CENTER);
+        LinearLayout.LayoutParams paramsHomeService = (LinearLayout.LayoutParams) homeService.getLayoutParams();
+        paramsHomeService.setMarginStart(20);
+        layoutBTN.addView(btnShowMenu);
+        layoutBTN.addView(homeService);
+        layoutBTN.addView(booking);
 
         nameBusiness.setGravity(Gravity.CENTER);
         nameBusiness.setTextSize(TypedValue.COMPLEX_UNIT_SP,24);
@@ -1011,7 +1099,7 @@ public class Interface3636 extends AppCompatActivity {
         btnShowMenu.setBackgroundColor(Color.rgb(255, 128, 0));
 
         homeService.setBackgroundColor(Color.rgb(255, 128, 0));
-        homeService.setText("Servicio a domiclio");
+        homeService.setText("Servicio a domicilio");
 
         booking.setBackgroundColor(Color.rgb(255, 128, 0));
         booking.setText("Reservaciones");
@@ -1023,9 +1111,10 @@ public class Interface3636 extends AppCompatActivity {
         layout.addView(typeOfFoodBusiness);
         layout.addView(phoneBusiness);
         layout.addView(availabilityBusiness);
-        layout.addView(btnShowMenu);
+        layout.addView(layoutBTN);
+        /*layout.addView(btnShowMenu);
         layout.addView(booking);
-        layout.addView(homeService);
+        layout.addView(homeService);*/
         return layout;
     }
 }

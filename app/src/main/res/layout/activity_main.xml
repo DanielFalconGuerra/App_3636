@@ -167,7 +167,6 @@
                         android:textSize="18sp"
                         android:textStyle="bold"
                         android:visibility="gone"
-                        tools:ignore="MissingConstraints"
                         tools:layout_editor_absoluteY="351dp" />
 
                     <LinearLayout
