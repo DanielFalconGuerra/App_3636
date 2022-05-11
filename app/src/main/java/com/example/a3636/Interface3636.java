@@ -971,7 +971,7 @@ public class Interface3636 extends AppCompatActivity {
 
         if(location.equals("Irapuato")){
             if(idRestaurant.equals("1")){
-                btnShowMenu.setGravity(View.VISIBLE);
+                btnShowMenu.setVisibility(View.VISIBLE);
                 nameBusiness.setText("La Genarería");
                 addressBusiness.setText("Dirección: Irapuato, Guanajuato. Plaza 3636 Gómez Morín");
                 typeOfFoodBusiness.setText("Tipos de Comida: Americana, Restaurante - Bar, Bar");
@@ -991,7 +991,7 @@ public class Interface3636 extends AppCompatActivity {
                 });
             }else
             if(idRestaurant.equals("2")){
-                btnShowMenu.setGravity(View.VISIBLE);
+                btnShowMenu.setVisibility(View.VISIBLE);
                 nameBusiness.setText("Arena 88");
                 addressBusiness.setText("Dirección: Irapuato, Guanajuato. Plaza 3636 Gómez Morín");
                 typeOfFoodBusiness.setText("Tipos de Comida: Bar, Restaurante - Bar, Mariscos");
@@ -1011,7 +1011,7 @@ public class Interface3636 extends AppCompatActivity {
                 });
             }else
             if(idRestaurant.equals("16")){
-                btnShowMenu.setGravity(View.VISIBLE);
+                btnShowMenu.setVisibility(View.VISIBLE);
                 nameBusiness.setText("Costilla Winebarlechon");
                 addressBusiness.setText("Dirección: Irapuato, Guanajuato. Plaza 3636 Gómez Morín");
                 typeOfFoodBusiness.setText("Tipos de Comida: Bar, Restaurante - Bar, Café");
