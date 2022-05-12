@@ -248,12 +248,12 @@ public class Administrator extends AppCompatActivity {
                                 //homeService = "SI";
                                 homeService = newLinkHomeOfficeAdminET.getText().toString();
                             }else
-                                homeService = "NO";
+                                homeService = "'NO'";
                             if(bookingCB.isChecked()){
                                 //booking = "SI";
                                 booking = newLinkBookingAdminET.getText().toString();
                             }else
-                                booking = "NO";
+                                booking = "'NO'";
                             String userAdministratorRestaurant = spinnerUserAdminRestaurantBusiness.getSelectedItem().toString();
                             connection.CONN();
                             String IDUser = connection.getIDUser(userAdministratorRestaurant);
