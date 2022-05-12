@@ -989,6 +989,31 @@ public class Interface3636 extends AppCompatActivity {
                     showDigitalMenu.putExtras(url);
                     startActivity(showDigitalMenu);
                 });
+                //Obtener enlace de servicio a domicilio y reservaciones
+                connection.CONN();
+                String[] data = connection.getRestaurantData("1");
+                if(!data[3].equals("'NO'")){
+                    homeService.setVisibility(View.VISIBLE);
+                    homeService.setOnClickListener(view -> {
+                        String urlMenu = data[3];
+                        Bundle url = new Bundle();
+                        url.putString("url", urlMenu);
+                        Intent showDigitalMenu = new Intent(this, ShowDigitalMenu.class);
+                        showDigitalMenu.putExtras(url);
+                        startActivity(showDigitalMenu);
+                    });
+                }
+                if(!data[4].equals("'NO'")){
+                    booking.setVisibility(View.VISIBLE);
+                    booking.setOnClickListener(view -> {
+                        String urlMenu = data[4];
+                        Bundle url = new Bundle();
+                        url.putString("url", urlMenu);
+                        Intent showDigitalMenu = new Intent(this, ShowDigitalMenu.class);
+                        showDigitalMenu.putExtras(url);
+                        startActivity(showDigitalMenu);
+                    });
+                }
             }else
             if(idRestaurant.equals("2")){
                 btnShowMenu.setVisibility(View.VISIBLE);
@@ -1009,6 +1034,30 @@ public class Interface3636 extends AppCompatActivity {
                     showDigitalMenu.putExtras(url);
                     startActivity(showDigitalMenu);
                 });
+                connection.CONN();
+                String[] data = connection.getRestaurantData("2");
+                if(!data[3].equals("'NO'")){
+                    homeService.setVisibility(View.VISIBLE);
+                    homeService.setOnClickListener(view -> {
+                        String urlMenu = data[3];
+                        Bundle url = new Bundle();
+                        url.putString("url", urlMenu);
+                        Intent showDigitalMenu = new Intent(this, ShowDigitalMenu.class);
+                        showDigitalMenu.putExtras(url);
+                        startActivity(showDigitalMenu);
+                    });
+                }
+                if(!data[4].equals("'NO'")){
+                    booking.setVisibility(View.VISIBLE);
+                    booking.setOnClickListener(view -> {
+                        String urlMenu = data[4];
+                        Bundle url = new Bundle();
+                        url.putString("url", urlMenu);
+                        Intent showDigitalMenu = new Intent(this, ShowDigitalMenu.class);
+                        showDigitalMenu.putExtras(url);
+                        startActivity(showDigitalMenu);
+                    });
+                }
             }else
             if(idRestaurant.equals("16")){
                 btnShowMenu.setVisibility(View.VISIBLE);
@@ -1029,6 +1078,30 @@ public class Interface3636 extends AppCompatActivity {
                     showDigitalMenu.putExtras(url);
                     startActivity(showDigitalMenu);
                 });
+                connection.CONN();
+                String[] data = connection.getRestaurantData("16");
+                if(!data[3].equals("'NO'")){
+                    homeService.setVisibility(View.VISIBLE);
+                    homeService.setOnClickListener(view -> {
+                        String urlMenu = data[3];
+                        Bundle url = new Bundle();
+                        url.putString("url", urlMenu);
+                        Intent showDigitalMenu = new Intent(this, ShowDigitalMenu.class);
+                        showDigitalMenu.putExtras(url);
+                        startActivity(showDigitalMenu);
+                    });
+                }
+                if(!data[4].equals("'NO'")){
+                    booking.setVisibility(View.VISIBLE);
+                    booking.setOnClickListener(view -> {
+                        String urlMenu = data[4];
+                        Bundle url = new Bundle();
+                        url.putString("url", urlMenu);
+                        Intent showDigitalMenu = new Intent(this, ShowDigitalMenu.class);
+                        showDigitalMenu.putExtras(url);
+                        startActivity(showDigitalMenu);
+                    });
+                }
             }else
                 nameBusiness.setText("Error");
         }else{
