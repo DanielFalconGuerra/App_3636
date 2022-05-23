@@ -18,5 +18,5 @@ Se uso para la interacción de la APP con la bases de datos. Versión **5.1.23**
 ### Java
 Versión 8 Actualización 321
 ## SDK
-Target SDK Version 32 ""API 32: Android"" - Min SDK Version 21
+Target SDK Version 32 **API 32: Android** - Min SDK Version 21
 
