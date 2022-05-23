@@ -11,5 +11,6 @@ Android Studio **Chipmunk** | 2021.2.1
 ![](https://i.blogs.es/68844e/androidstudioo/450_1000.jpg)
 ### Base de datos
 Xampp v3.3.0 y MySQL como motor de base de datos.
+## Plugins
 ### JDBC
 Se uso para la interacción de la APP con la bases de datos. Versión **5.1.23**.
