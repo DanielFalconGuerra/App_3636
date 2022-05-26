@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -19,18 +21,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.a3636.database.DatabaseConnection;
 import com.example.a3636.findrestaurants.FindRestaurantsByTypeOfFoodAndHorary;
 import com.example.a3636.restaurantdata.RestaurantInformation;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -38,10 +36,18 @@ public class Interface3636 extends AppCompatActivity {
     DatabaseConnection connection = new DatabaseConnection();
     String numberNotificationReceived = "";
     String date = "";
+    String[] restaurants;
+    LinearLayout layoutShowRestaurantFound;
+    String typeFood;
+    String hour;
+    String location;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_interface3636);
+
+        //Recuper ubicacion
+        location = ((MyLocation)getApplication()).getLocation();
 
         TextView nameUserSession = findViewById(R.id.nameUserSession);
         ImageView imageUser = (ImageView) findViewById(R.id.imageUserSession);
@@ -50,10 +56,8 @@ public class Interface3636 extends AppCompatActivity {
         ImageView settingsIM = findViewById(R.id.settingsIM);
         ImageView notificationsIM = findViewById(R.id.notificationsIM);
 
-        LinearLayout layoutShowRestaurantFound = findViewById(R.id.layoutShowRestaurantFound);
+        layoutShowRestaurantFound = findViewById(R.id.layoutShowRestaurantFound);
 
-        //Recuper ubicacion
-        String location = ((MyLocation)getApplication()).getLocation();
 
         ArrayList<String[]> dataCoffee = null;
         ArrayList<String[]> dataRest = null;
@@ -163,8 +167,8 @@ public class Interface3636 extends AppCompatActivity {
             btnSearchRestaurant.setBackgroundColor(Color.rgb(255, 128, 0));
             btnSearchRestaurant.setOnClickListener(view -> {
                 layoutShowRestaurantFound.setVisibility(View.VISIBLE);
-                String typeFood = spinnerTipoComida.getSelectedItem().toString();
-                String hour = spinnerHorario.getSelectedItem().toString();
+                typeFood = spinnerTipoComida.getSelectedItem().toString();
+                hour = spinnerHorario.getSelectedItem().toString();
                 if(!(typeFood.equals("Seleccione el tipo de comida")||(hour.equals("Selecciona la hora")))){
                     /*Intent showRestaurantFound = new Intent(this, ShowRestaurantsFound.class);
                     showRestaurantFound.putExtra("typeFood", typeFood);
@@ -173,51 +177,11 @@ public class Interface3636 extends AppCompatActivity {
                     if (layoutShowRestaurantFound.getChildCount() > 0)
                         layoutShowRestaurantFound.removeAllViews();
 
-                    FindRestaurantsByTypeOfFoodAndHorary findRestaurantsObj = new FindRestaurantsByTypeOfFoodAndHorary();
-                    String restaurants[] = findRestaurantsObj.findRestaurants(typeFood, hour);
+                    new TestAsync().execute();
 
 
-                        for(int i = 0; i < restaurants.length; i++){
-                            Log.e("Test3", restaurants[i]);
-                            if(!restaurants[i].equals("")&&!restaurants[i].equals("No se encontraron restaurantes")&&!restaurants[i].equals("Error")){
-                                Log.e("Test4", "Funciona");
-                                if(location.equals("Irapuato")) {
-                                    connection.CONN();
-                                    String IDCiudad = connection.getCityRestaurant(restaurants[i]);
-                                    if (IDCiudad.equals("3")) {
-                                        layoutShowRestaurantFound.addView(showRestaurantsFound(restaurants[i], location));
-                                    }
-                                }
-                                if(location.equals("León")) {
-                                    connection.CONN();
-                                    String IDCiudad = connection.getCityRestaurant(restaurants[i]);
-                                    if (IDCiudad.equals("2")) {
-                                        layoutShowRestaurantFound.addView(showRestaurantsFound(restaurants[i], location));
-                                    }
-                                }
-                                if(location.equals("Guanajuato")) {
-                                    connection.CONN();
-                                    String IDCiudad = connection.getCityRestaurant(restaurants[i]);
-                                    if (IDCiudad.equals("1")) {
-                                        layoutShowRestaurantFound.addView(showRestaurantsFound(restaurants[i], location));
-                                    }
-                                }
-                            }
-                        }
-                        if(layoutShowRestaurantFound.getChildCount() == 0){
-                            TextView errorTV = new TextView(this);
-                            errorTV.setText("No se encontraron restaurantes");
-                            errorTV.setTextColor(Color.GRAY);
-                            errorTV.setTextSize(20);
-                            errorTV.setGravity(Gravity.CENTER);
-                            layoutShowRestaurantFound.addView(errorTV);
-                        }
-
-                    if(location.equals("León")){}
-                    if(location.equals("Guanajuato")){}
-                    if(location.equals("Celaya")){}
-                    if(location.equals("Chihuahua")){}
-                    if(location.equals("Juárez")){}
+                }else{
+                    Toast.makeText(this,"Error, debes seleccionar el tipo de comida y la hora", Toast.LENGTH_LONG).show();
                 }
             });
         }catch (Exception e){
@@ -1189,5 +1153,85 @@ public class Interface3636 extends AppCompatActivity {
         layout.addView(booking);
         layout.addView(homeService);*/
         return layout;
+    }
+    class TestAsync extends AsyncTask<String, String, String> {
+        String TAG = getClass().getSimpleName();
+        //LottieAnimationView animationSearchRestaurant = new LottieAnimationView(Interface3636.this);
+        LinearLayout layoutAnimationShowRestaurantFound = findViewById(R.id.layoutAnimationShowRestaurantFound);
+        LottieAnimationView imageAnimationSearchRestaurant = findViewById(R.id.imageAnimationSearchRestaurant);
+
+        protected void onPreExecute() {
+            super.onPreExecute();
+            Log.e(TAG + " PreExceute","On pre Exceute......");
+            layoutAnimationShowRestaurantFound.setVisibility(View.VISIBLE);
+            /*layoutAnimationShowRestaurantFound.addView(animationSearchRestaurant);
+            animationSearchRestaurant.setVisibility(View.VISIBLE);
+            animationSearchRestaurant.setAnimation(R.raw.jumpingsquares);
+            animationSearchRestaurant.loop(true);
+            animationSearchRestaurant.playAnimation();
+            /*final Handler handler = new Handler();
+            handler.postDelayed(() -> {
+                animationSearchRestaurant.setVisibility(View.GONE);
+                //btnAnimation.setEnabled(true);
+            }, 10000);*/
+        }
+
+
+        protected String doInBackground(String...strings) {
+            Log.e(TAG + " DoINBackGround", "On doInBackground...");
+            FindRestaurantsByTypeOfFoodAndHorary findRestaurantsObj = new FindRestaurantsByTypeOfFoodAndHorary();
+            restaurants = findRestaurantsObj.findRestaurants(typeFood, hour);
+
+            return "";
+        }
+
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+            Log.e(TAG + " onPostExecute", "" + result);
+            for(int i = 0; i < restaurants.length; i++){
+                Log.e("Test3", restaurants[i]);
+                if(!restaurants[i].equals("")&&!restaurants[i].equals("No se encontraron restaurantes")&&!restaurants[i].equals("Error")){
+                    Log.e("Test4", "Funciona");
+                    if(location.equals("Irapuato")) {
+                        connection.CONN();
+                        String IDCiudad = connection.getCityRestaurant(restaurants[i]);
+                        if (IDCiudad.equals("3")) {
+                            layoutShowRestaurantFound.addView(showRestaurantsFound(restaurants[i], location));
+                        }
+                    }
+                    if(location.equals("León")) {
+                        connection.CONN();
+                        String IDCiudad = connection.getCityRestaurant(restaurants[i]);
+                        if (IDCiudad.equals("2")) {
+                            layoutShowRestaurantFound.addView(showRestaurantsFound(restaurants[i], location));
+                        }
+                    }
+                    if(location.equals("Guanajuato")) {
+                        connection.CONN();
+                        String IDCiudad = connection.getCityRestaurant(restaurants[i]);
+                        if (IDCiudad.equals("1")) {
+                            layoutShowRestaurantFound.addView(showRestaurantsFound(restaurants[i], location));
+                        }
+                    }
+                }
+            }
+            if(layoutShowRestaurantFound.getChildCount() == 0){
+                TextView errorTV = new TextView(Interface3636.this);
+                errorTV.setText("No se encontraron restaurantes");
+                errorTV.setTextColor(Color.GRAY);
+                errorTV.setTextSize(20);
+                errorTV.setGravity(Gravity.CENTER);
+                layoutShowRestaurantFound.addView(errorTV);
+            }
+
+            if(location.equals("León")){}
+            if(location.equals("Guanajuato")){}
+            if(location.equals("Celaya")){}
+            if(location.equals("Chihuahua")){}
+            if(location.equals("Juárez")){}
+
+            layoutAnimationShowRestaurantFound.setVisibility(View.GONE);
+        }
     }
 }

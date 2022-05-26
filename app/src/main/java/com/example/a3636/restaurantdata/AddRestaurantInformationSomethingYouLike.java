@@ -3,9 +3,14 @@ package com.example.a3636.restaurantdata;
 import com.example.a3636.R;
 
 public class AddRestaurantInformationSomethingYouLike {
+    private int id;
     private String businessName = "";
     private String businessDescription = "";
     private int businessLogo = R.mipmap.logo3636;
+
+    public int getId() { return id; }
+
+    public void setId(int id) { this.id = id; }
 
     public String getBusinessName() {
         return businessName;

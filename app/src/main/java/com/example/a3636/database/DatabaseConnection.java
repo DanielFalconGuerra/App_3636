@@ -20,7 +20,7 @@ public class DatabaseConnection {
     /*private final String ip = "192.168.0.34";
     private final String user = "daniel";
     private final String pss = "1234";
-    private final String db = "demo2";*/
+    private final String db = "softappetit_1"*/;
     public Connection CONN()
     {
 
